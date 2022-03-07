@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LogoUTC from '../../assets/LogoUTC.png';
+import LogoUTC from '../../../assets/LogoUTC.png';
 
 export default function ItemContest() {
   return (

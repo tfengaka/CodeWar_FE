@@ -2,7 +2,7 @@ import Problem from 'features/pages/problem/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
-import Contest from '../features/contest/Contest';
+import Contest from '../features/pages/contest/Contest';
 
 export function ClientRoutes() {
   return (
