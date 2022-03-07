@@ -10,7 +10,6 @@
   margin: 0;
 }
 
-
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -27,6 +26,7 @@ body {
 html,
 body {
   height: 100%;
+  width: 1000px;
 }
 
 img,
@@ -67,8 +67,7 @@ a:hover {
   color: $main-color;
 }
 
-@each $color,
-$val in $colors {
+@each $color, $val in $colors {
   .color-#{$color} {
     color: $val;
   }
