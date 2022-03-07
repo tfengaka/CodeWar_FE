@@ -1,0 +1,71 @@
+.panel__body {
+  grid-area: item;
+  ol {
+    list-style: none;
+    padding: 0;
+    .body__item {
+      background-color: $main-background;
+      box-shadow: $item-color 0px 1px 0px;
+      margin-bottom: 1px;
+      padding: 2rem;
+      .row__flex {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .logo {
+          width: 8%;
+          width: 58px;
+        }
+        .content__main {
+          width: 75%;
+          .title {
+            font-size: large;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            &:hover {
+              transition: all 0.3s ease-out;
+              color: $main-color;
+              opacity: 0.8;
+              border-color: $main-color;
+            }
+          }
+          ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            li {
+              display: flex;
+              align-items: center;
+              padding-top: 10px;
+              padding-right: 20px;
+              i {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+        .status {
+          width: 15%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 10px;
+          &__tag {
+            display: flex;
+            align-items: center;
+            background-color: $main-background;
+            box-shadow: $item-color 0px 0px 0px 1px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            i {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
