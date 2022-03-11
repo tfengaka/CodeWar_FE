@@ -5,7 +5,11 @@ import ItemContest from './ItemContest';
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Trạng thái');
-  const options = ['Đang diễn ra', 'Đã kết thúc'];
+  const options = [
+    { key: 'all', value: 'all', text: 'Tất cả' },
+    { key: 'happen', value: 'happen', text: 'Đang diễn ra' },
+    { key: 'finish', value: 'finish', text: 'Đã kết thúc' },
+  ];
   return (
     <div className="content">
       <div className="panel__title">Tất cả cuộc thi</div>
@@ -19,28 +23,25 @@ export default function Contest() {
             >
               <div className="dropdown__btn">
                 <span>{selected}</span>
-                <i class="bx bxs-down-arrow"></i>
+                <i className="bx bxs-down-arrow"></i>
               </div>
               {isActive && (
                 <div className="dropdown__content">
-                  <div
-                    className="dropdown__content__item"
-                    onClick={(e) => {
-                      setSelected('Trạng thái');
-                      setIsActive(false);
-                    }}
-                  >
-                    Tất cả
-                  </div>
-                  {options.map((option) => (
+                  {options.map((item, index) => (
                     <div
+                      key={index}
                       className="dropdown__content__item"
-                      onClick={(e) => {
-                        setSelected(option);
-                        setIsActive(false);
+                      onClick={() => {
+                        if (index === 0) {
+                          setSelected('Trạng thái');
+                          setIsActive(false);
+                        } else {
+                          setSelected(item.text);
+                          setIsActive(false);
+                        }
                       }}
                     >
-                      {option}
+                      {item.text}
                     </div>
                   ))}
                 </div>
@@ -55,7 +56,7 @@ export default function Contest() {
                 type="text"
                 placeholder="Từ khóa"
               ></input>
-              <i class="bx bx-search-alt-2"></i>
+              <i className="bx bx-search-alt-2"></i>
             </div>
           </li>
         </ul>

@@ -13,17 +13,17 @@ export default function ItemContest() {
               <p className="title">Nội dung</p>
               <ul className="detail">
                 <li>
-                  <i class="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
+                  <i className="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
                   Ngày giờ tổ chức
                 </li>
                 <li>
-                  <i class="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
+                  <i className="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
                 </li>
               </ul>
             </div>
             <div className="status">
               <div className="status__tag">
-                <i class="bx bxs-circle" style={{ color: '#00dd55' }}></i> Đang diễn ra
+                <i className="bx bxs-circle" style={{ color: '#00dd55' }}></i> Đang diễn ra
               </div>
             </div>
           </div>
@@ -35,17 +35,17 @@ export default function ItemContest() {
               <p className="title">Nội dung</p>
               <ul className="detail">
                 <li>
-                  <i class="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
+                  <i className="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
                   Ngày giờ tổ chức
                 </li>
                 <li>
-                  <i class="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
+                  <i className="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
                 </li>
               </ul>
             </div>
             <div className="status">
               <div className="status__tag">
-                <i class="bx bxs-circle" style={{ color: '#ed4014' }}></i> Đã kết thúc
+                <i className="bx bxs-circle" style={{ color: '#ed4014' }}></i> Đã kết thúc
               </div>
             </div>
           </div>
