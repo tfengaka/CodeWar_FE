@@ -3,53 +3,49 @@ import React from 'react';
 import LogoUTC from '../../../assets/LogoUTC.png';
 
 export default function ItemContest() {
+  const options = [
+    {
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đang diễn ra',
+      color: '#00dd55',
+    },
+    {
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đã kết thúc',
+      color: '#ed4014',
+    },
+  ];
   return (
     <div className="panel__body">
       <ol>
-        <li className="body__item">
-          <div className="row__flex">
-            <img src={LogoUTC} alt="" className="logo" />
-            <div className="content__main">
-              <p className="title">Nội dung</p>
-              <ul className="detail">
-                <li>
-                  <i className="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
-                  Ngày giờ tổ chức
-                </li>
-                <li>
-                  <i className="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
-                </li>
-              </ul>
-            </div>
-            <div className="status">
-              <div className="status__tag">
-                <i className="bx bxs-circle" style={{ color: '#00dd55' }}></i> Đang diễn ra
+        {options.map((item, index) => (
+          <li key={index} className="body__item">
+            <div className="row__flex">
+              <img src={LogoUTC} alt="" className="logo" />
+              <div className="content__main">
+                <p className="title">{item.content}</p>
+                <ul className="detail">
+                  <li>
+                    <i className="bx bx-calendar"></i>
+                    {item.time}
+                  </li>
+                  <li>
+                    <i className="bx bx-time"></i> {item.day}
+                  </li>
+                </ul>
+              </div>
+              <div className="status">
+                <div className="status__tag">
+                  <i className="bx bxs-circle" style={item}></i> {item.text}
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-        <li className="body__item">
-          <div className="row__flex">
-            <img src={LogoUTC} alt="" className="logo" />
-            <div className="content__main">
-              <p className="title">Nội dung</p>
-              <ul className="detail">
-                <li>
-                  <i className="bx bx-calendar" style={{ color: '#f07e5e' }}></i>
-                  Ngày giờ tổ chức
-                </li>
-                <li>
-                  <i className="bx bx-time" style={{ color: '#f07e5e' }}></i> Số ngày diễn ra
-                </li>
-              </ul>
-            </div>
-            <div className="status">
-              <div className="status__tag">
-                <i className="bx bxs-circle" style={{ color: '#ed4014' }}></i> Đã kết thúc
-              </div>
-            </div>
-          </div>
-        </li>
+          </li>
+        ))}
       </ol>
     </div>
   );
