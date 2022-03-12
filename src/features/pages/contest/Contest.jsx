@@ -5,11 +5,30 @@ import ItemContest from './ItemContest';
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Trạng thái');
-  const options = [
-    { key: 'all', value: 'all', text: 'Tất cả' },
-    { key: 'happen', value: 'happen', text: 'Đang diễn ra' },
-    { key: 'finish', value: 'finish', text: 'Đã kết thúc' },
+  const itemContest = [
+    {
+      id: 1,
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đang diễn ra',
+      color: '#00dd55',
+    },
+    {
+      id: 2,
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đã kết thúc',
+      color: '#ed4014',
+    },
   ];
+  const options = [
+    { id: 0, value: 'all', text: 'Tất cả' },
+    { id: 1, value: 'happen', text: 'Đang diễn ra' },
+    { id: 2, value: 'finish', text: 'Đã kết thúc' },
+  ];
+
   return (
     <div className="content">
       <div className="panel__title">Tất cả cuộc thi</div>
@@ -27,12 +46,12 @@ export default function Contest() {
               </div>
               {isActive && (
                 <div className="dropdown__content">
-                  {options.map((item, index) => (
+                  {options.map((item) => (
                     <div
-                      key={index}
+                      key={item.id}
                       className="dropdown__content__item"
                       onClick={() => {
-                        if (index === 0) {
+                        if (item.id === 0) {
                           setSelected('Trạng thái');
                           setIsActive(false);
                         } else {
@@ -61,7 +80,7 @@ export default function Contest() {
           </li>
         </ul>
       </div>
-      <ItemContest />
+      <ItemContest itemProps={itemContest} />
     </div>
   );
 }

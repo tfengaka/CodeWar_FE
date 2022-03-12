@@ -2,23 +2,9 @@ import React from 'react';
 
 import LogoUTC from '../../../assets/LogoUTC.png';
 
-export default function ItemContest() {
-  const options = [
-    {
-      content: 'Nội dung',
-      time: 'Ngày giờ tổ chức',
-      day: 'Số ngày diễn ra',
-      text: 'Đang diễn ra',
-      color: '#00dd55',
-    },
-    {
-      content: 'Nội dung',
-      time: 'Ngày giờ tổ chức',
-      day: 'Số ngày diễn ra',
-      text: 'Đã kết thúc',
-      color: '#ed4014',
-    },
-  ];
+export default function ItemContest(props) {
+  const options = props.itemProps;
+
   return (
     <div className="panel__body">
       <ol>
