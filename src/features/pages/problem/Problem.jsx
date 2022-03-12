@@ -1,11 +1,10 @@
 import React from 'react';
 import Card from './category/Card';
-import Title from './category/Title';
 
 const Problem = () => {
   return (
     <div className="body">
-      <Title />
+      <span> Thuật toán </span>
 
       <Card />
     </div>
