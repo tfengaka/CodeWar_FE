@@ -29,6 +29,17 @@ export default function Contest() {
     { id: 2, value: 'finish', text: 'Đã kết thúc' },
   ];
 
+  const data = itemContest
+    .filter((b) => b.text === selected)
+    .map(({ content, time, day, text, color }) => ({ content, time, day, text, color }));
+  let comp;
+
+  if (selected === 'Trạng thái') {
+    comp = itemContest;
+  } else {
+    comp = data;
+  }
+
   return (
     <div className="content">
       <div className="panel__title">Tất cả cuộc thi</div>
@@ -80,7 +91,7 @@ export default function Contest() {
           </li>
         </ul>
       </div>
-      <ItemContest itemProps={itemContest} />
+      <ItemContest itemProps={comp} />
     </div>
   );
 }
