@@ -4,6 +4,10 @@
 
 @import './components/header';
 @import './components/button';
-@import './components/login';
-@import './components/contest';
-@import './components/card';
+
+@import './components/auth/loginpage';
+@import './components/auth/modal';
+
+@import './components/contest/contest';
+
+@import './components/problem/card';
