@@ -5,7 +5,41 @@ import ItemContest from './ItemContest';
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Trạng thái');
-  const options = ['Đang diễn ra', 'Đã kết thúc'];
+  const itemContest = [
+    {
+      id: 1,
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đang diễn ra',
+      color: '#00dd55',
+    },
+    {
+      id: 2,
+      content: 'Nội dung',
+      time: 'Ngày giờ tổ chức',
+      day: 'Số ngày diễn ra',
+      text: 'Đã kết thúc',
+      color: '#ed4014',
+    },
+  ];
+  const options = [
+    { id: 0, value: 'all', text: 'Tất cả' },
+    { id: 1, value: 'happen', text: 'Đang diễn ra' },
+    { id: 2, value: 'finish', text: 'Đã kết thúc' },
+  ];
+
+  const data = itemContest
+    .filter((b) => b.text === selected)
+    .map(({ content, time, day, text, color }) => ({ content, time, day, text, color }));
+  let comp;
+
+  if (selected === 'Trạng thái') {
+    comp = itemContest;
+  } else {
+    comp = data;
+  }
+
   return (
     <div className="content">
       <div className="panel__title">Tất cả cuộc thi</div>
@@ -19,28 +53,25 @@ export default function Contest() {
             >
               <div className="dropdown__btn">
                 <span>{selected}</span>
-                <i class="bx bxs-down-arrow"></i>
+                <i className="bx bxs-down-arrow"></i>
               </div>
               {isActive && (
                 <div className="dropdown__content">
-                  <div
-                    className="dropdown__content__item"
-                    onClick={(e) => {
-                      setSelected('Trạng thái');
-                      setIsActive(false);
-                    }}
-                  >
-                    Tất cả
-                  </div>
-                  {options.map((option) => (
+                  {options.map((item) => (
                     <div
+                      key={item.id}
                       className="dropdown__content__item"
-                      onClick={(e) => {
-                        setSelected(option);
-                        setIsActive(false);
+                      onClick={() => {
+                        if (item.id === 0) {
+                          setSelected('Trạng thái');
+                          setIsActive(false);
+                        } else {
+                          setSelected(item.text);
+                          setIsActive(false);
+                        }
                       }}
                     >
-                      {option}
+                      {item.text}
                     </div>
                   ))}
                 </div>
@@ -55,12 +86,12 @@ export default function Contest() {
                 type="text"
                 placeholder="Từ khóa"
               ></input>
-              <i class="bx bx-search-alt-2"></i>
+              <i className="bx bx-search-alt-2"></i>
             </div>
           </li>
         </ul>
       </div>
-      <ItemContest />
+      <ItemContest itemProps={comp} />
     </div>
   );
 }
