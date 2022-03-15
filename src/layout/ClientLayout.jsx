@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ClientRoutes } from 'routes';
 import Navigation from '../components/Navigation';
 
