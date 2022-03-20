@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import ItemContest from './ItemContest';
+import ItemContest from '../components/ItemContest';
 
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
@@ -41,26 +41,26 @@ export default function Contest() {
   }
 
   return (
-    <div className="content">
-      <div className="panel__title">Tất cả cuộc thi</div>
-      <div className="panel__extra">
-        <ul className="filter">
+    <div className='content'>
+      <div className='panel__title'>Tất cả cuộc thi</div>
+      <div className='panel__extra'>
+        <ul className='filter'>
           <li>
             <div
-              className="dropdown"
+              className='dropdown'
               onMouseEnter={(e) => setIsActive(!isActive)}
               onMouseLeave={(e) => setIsActive(false)}
             >
-              <div className="dropdown__btn">
+              <div className='dropdown__btn'>
                 <span>{selected}</span>
-                <i className="bx bxs-down-arrow"></i>
+                <i className='bx bxs-down-arrow'></i>
               </div>
               {isActive && (
-                <div className="dropdown__content">
+                <div className='dropdown__content'>
                   {options.map((item) => (
                     <div
                       key={item.id}
-                      className="dropdown__content__item"
+                      className='dropdown__content__item'
                       onClick={() => {
                         if (item.id === 0) {
                           setSelected('Trạng thái');
@@ -79,14 +79,14 @@ export default function Contest() {
             </div>
           </li>
           <li>
-            <div className="input__wrapper">
+            <div className='input__wrapper'>
               <input
-                autoComplete="off"
-                spellCheck="false"
-                type="text"
-                placeholder="Từ khóa"
+                autoComplete='off'
+                spellCheck='false'
+                type='text'
+                placeholder='Từ khóa'
               ></input>
-              <i className="bx bx-search-alt-2"></i>
+              <i className='bx bx-search-alt-2'></i>
             </div>
           </li>
         </ul>

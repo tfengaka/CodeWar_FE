@@ -1,6 +1,7 @@
 import Button from 'components/Button';
 import Modal from 'features/auth/client/Modal';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import banner from '../assets/banner.png';
 const routing = [
@@ -9,11 +10,11 @@ const routing = [
   { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
   { path: '/upload', display: 'Bài nộp', icon: 'bx bxs-cloud-upload' },
 ];
-export default function Navigation({ user }) {
+export default function Navigation() {
   const { pathname } = useLocation();
   const activeNav = routing.findIndex((e) => e.path === pathname);
   const [showModal, setShowModal] = useState(false);
-
+  const user = useSelector((state) => state.auth.user.info);
   return (
     <>
       <div className='header'>
@@ -38,13 +39,10 @@ export default function Navigation({ user }) {
 
           <div className='header__account'>
             {/* use auth is true to show account info or show button loggin  */}
-
             {user ? (
               <div className='header__account__info'>
-                <span>{user.Name}</span>
-                <div className='header__account__info-avatar'>
-                  <img src={user.avatarURl} alt='' />
-                </div>
+                <span>{user.fullName}</span>
+                <i className='bx bxs-down-arrow'></i>
               </div>
             ) : (
               <Button backgroundColor='main' onClick={() => setShowModal(true)}>
