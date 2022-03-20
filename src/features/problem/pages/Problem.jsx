@@ -1,9 +1,11 @@
 import React from 'react';
-import Card from './category/CardList';
+import Card from '../components/CardList';
 
 const Problem = () => {
   return (
-    <div className="cards">
+    <div className='cards'>
+      <Card />
+      <Card />
       <Card />
       <Card />
       <Card />

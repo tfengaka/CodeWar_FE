@@ -5,12 +5,7 @@ function Button(props) {
 
   return (
     <button type={props.type} className={`btn ${backgroundColor} ${size}`} onClick={props.onClick}>
-      {props.icon ? (
-        <span className='btn__icon'>
-          <i className={props.icon}></i>
-        </span>
-      ) : null}
-      <span className='btn__text'>{props.children}</span>
+      {props.children}
     </button>
   );
 }

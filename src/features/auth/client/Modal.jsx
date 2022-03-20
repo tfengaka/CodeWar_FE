@@ -27,9 +27,9 @@ const Modal = ({ onShowModal }) => {
         </div>
         <div className='divider'></div>
         {isRegister ? (
-          <Register onChangeRegister={setIsRegister} />
+          <Register onChangeRegister={setIsRegister} onChangeModal={onShowModal} />
         ) : (
-          <Login onChangeRegister={setIsRegister} />
+          <Login onChangeRegister={setIsRegister} onChangeModal={onShowModal} />
         )}
       </div>
     </div>
