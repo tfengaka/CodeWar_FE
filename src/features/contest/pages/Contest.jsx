@@ -1,28 +1,12 @@
 import { useState } from 'react';
 
 import ItemContest from '../components/ItemContest';
+import Data from '../data/Data.json';
 
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Trạng thái');
-  const itemContest = [
-    {
-      id: 1,
-      content: 'Nội dung',
-      time: 'Ngày giờ tổ chức',
-      day: 'Số ngày diễn ra',
-      text: 'Đang diễn ra',
-      color: '#00dd55',
-    },
-    {
-      id: 2,
-      content: 'Nội dung',
-      time: 'Ngày giờ tổ chức',
-      day: 'Số ngày diễn ra',
-      text: 'Đã kết thúc',
-      color: '#ed4014',
-    },
-  ];
+  const itemContest = Data;
   const options = [
     { id: 0, value: 'all', text: 'Tất cả' },
     { id: 1, value: 'happen', text: 'Đang diễn ra' },
@@ -31,7 +15,16 @@ export default function Contest() {
 
   const data = itemContest
     .filter((b) => b.text === selected)
-    .map(({ content, time, day, text, color }) => ({ content, time, day, text, color }));
+    .map(({ id, title, content, timeFrom, timeEnd, day, text, color }) => ({
+      id,
+      title,
+      content,
+      timeFrom,
+      timeEnd,
+      day,
+      text,
+      color,
+    }));
   let comp;
 
   if (selected === 'Trạng thái') {
