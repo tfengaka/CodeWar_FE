@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import ItemContest from './ItemContest';
-import Data from './data/Data.json';
+import ItemContest from '../components/ItemContest';
+import Data from '../data/Data.json';
 
 export default function Contest() {
   const [isActive, setIsActive] = useState(false);
