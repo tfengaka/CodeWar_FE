@@ -1,11 +1,11 @@
 import NotFound from 'components/NotFound';
 import Coding from 'features/pages/problem/Coding';
-
 import Problem from 'features/pages/problem/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
-import Contest from '../features/pages/contest/Contest';
+import Contest from '../features/contest/pages/Contest';
+import ContentContest from '../features/contest/info/ContentContest';
 
 export function ClientRoutes() {
   return (

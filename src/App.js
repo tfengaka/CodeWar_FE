@@ -1,33 +1,27 @@
-import { ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
-import LoginPage from 'features/auth/admin/page/LoginPage';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import LoginPage from 'features/auth/pages/LoginPage';
 import { Route, Routes as Switch } from 'react-router-dom';
 import { PrivateRoute } from 'routes';
 import { AdminLayout, ClientLayout } from './layout';
+const httpLink = createHttpLink({
+  uri: 'http://localhost:8080/v1/graphql',
+});
 
-const httpLink = new HttpLink({ uri: 'http://localhost:8080/v1/graphql' });
-const authLink = new ApolloLink((operation, forward) => {
-  //* Retrieve the authorization token from redux store
-  const token = '';
-  //* Use the setContext method to set the HTTP headers.
-  operation.setContext({
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
     headers: {
+      ...headers,
       authorization: token ? `Bearer ${token}` : '',
     },
-  });
-  //* Call the next link in the middleware chain.
-  return forward(operation);
-});
-const client = new ApolloClient({
-  link: authLink.concat(httpLink), // Chain it with the HttpLink
-  cache: new InMemoryCache(),
+  };
 });
 
-// const client = new ApolloClient({
-//   link: new HttpLink({
-//     uri: 'http://localhost:8080/v1/graphql',
-//   }),
-//   cache: new InMemoryCache(),
-// });
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
