@@ -2,7 +2,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFailure, loginStart, loginSuccess } from 'app/authSlice';
 import Button from 'components/Button';
-import { userLogin } from 'graphql/Mutation';
+import { SIGN_IN } from 'graphql/Mutation';
 import { queyUser } from 'graphql/Queries';
 import jwt_decode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
@@ -16,7 +16,7 @@ const schemaValidation = Yup.object({
 
 const Login = ({ onChangeRegister, onChangeModal }) => {
   const dispatch = useDispatch();
-  const [login] = useMutation(userLogin, {
+  const [signIn] = useMutation(SIGN_IN, {
     onCompleted: async (data) => {
       const newToken = data.login.access_token;
       const oldToken = localStorage.getItem('token');
@@ -47,7 +47,7 @@ const Login = ({ onChangeRegister, onChangeModal }) => {
   });
   const handleLogin = async (values) => {
     dispatch(loginStart());
-    await login({
+    await signIn({
       variables: {
         email: values.userEmail,
         password: values.password,

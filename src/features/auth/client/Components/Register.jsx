@@ -1,10 +1,11 @@
+import { useMutation } from '@apollo/client';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Button from 'components/Button';
+import { SIGN_UP } from 'graphql/Mutation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useMutation } from '@apollo/client';
-import { userLogin } from 'graphql/Mutation';
+
 const registerValidation = Yup.object({
   userName: Yup.string().required('Tên không được để trống'),
   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
@@ -15,6 +16,8 @@ const registerValidation = Yup.object({
 });
 
 const Register = ({ onChangeRegister }) => {
+  const [signUp] = useMutation(SIGN_UP);
+
   const {
     register,
     handleSubmit,
