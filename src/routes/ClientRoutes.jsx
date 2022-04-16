@@ -1,6 +1,6 @@
 import NotFound from 'components/NotFound';
-import Coding from 'features/pages/problem/Coding';
-import Problem from 'features/pages/problem/Problem';
+import Coding from 'features/problem/pages/Coding';
+import Problem from 'features/problem/pages/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
