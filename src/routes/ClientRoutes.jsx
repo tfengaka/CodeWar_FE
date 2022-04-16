@@ -1,4 +1,5 @@
 import NotFound from 'components/NotFound';
+import Coding from 'features/problem/pages/Coding';
 import Problem from 'features/problem/pages/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
@@ -11,8 +12,9 @@ export function ClientRoutes() {
     <Switch>
       <Route path='/' element={<Navigate to='/problem' />} />
       <Route path='/problem' element={<Problem />} />
+      <Route path='/problem/:slug' element={<Coding />} />
       <Route path='/contest' element={<Contest />} />
-      <Route path='/contest/:slug.:id.html' element={<ContentContest />} />
+      {/* <Route path='/contest/:slug.:id.html' element={<ContentContest />} /> */}
       <Route path='/rank' element={<div>Rank page</div>} />
       <Route path='/upload' element={<div>upload page</div>} />
       <Route path='*' element={<NotFound />} />

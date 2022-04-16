@@ -1,53 +1,45 @@
 /* card-list */
 .cards {
-  @include flex(flex-start, center);
-  flex-wrap: wrap;
+  display: flex;
 
   .card {
+    cursor: pointer;
     border-radius: 20px;
     overflow: hidden;
-    background-color: $main-background;
+    background-color: $main-color;
     box-shadow: $box-shadow;
     width: 350px;
-    margin: 16px 8px;
+    margin: 0 16px;
 
-    &__image {
-      height: 200px;
-      width: 100%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    &__content {
-      flex: 1;
+    &__body {
+      padding: 50px;
       display: flex;
       flex-direction: column;
-    }
-
-    &__top {
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
+      justify-self: content-align;
+      align-items: center;
       flex: 1;
-
       &__title {
         cursor: pointer;
         font-weight: 500;
-        margin-bottom: 25px;
+        line-height: 1.8rem;
+        color: $text-white;
+        margin: 10px;
         word-break: break-all;
-        display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
         word-break: break-word;
+        overflow: hidden;
+        display: block;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
       }
-
       &__user {
         @include flex(center, center);
         margin-top: auto;
         flex-shrink: 0;
-
         &-avatar {
           width: 40px;
           height: 40px;
@@ -55,7 +47,6 @@
           object-fit: cover;
           flex-shrink: 0;
         }
-
         &-info {
           padding-left: 20px;
           flex: 1;
@@ -65,15 +56,14 @@
             align-items: center;
             margin-bottom: 2px;
           }
-
           &__name {
+            color: $text-white;
             font-weight: 500;
             font-size: 14px;
             line-height: 1;
           }
-
           &__position {
-            color: #999;
+            color: $text-white;
             font-weight: 300;
             font-size: 13px;
           }
