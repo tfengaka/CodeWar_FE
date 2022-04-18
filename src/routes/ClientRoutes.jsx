@@ -1,4 +1,5 @@
 import NotFound from 'components/NotFound';
+import ProblemSolve from 'components/ProblemSolve';
 import Problem from 'features/problem/pages/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
@@ -11,6 +12,7 @@ export function ClientRoutes() {
     <Switch>
       <Route path='/' element={<Navigate to='/problem' />} />
       <Route path='/problem' element={<Problem />} />
+      <Route path='/coding' element={<ProblemSolve />} />
       <Route path='/discuss' element={<DiscussPage />} />
       <Route path='/contest/*' element={<Contest />}>
         <Route path=':slug' element={<ContentContest />} />

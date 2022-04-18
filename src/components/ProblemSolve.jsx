@@ -1,6 +1,7 @@
 import Editor from '@monaco-editor/react';
 import React from 'react';
 import Button from './Button';
+import axios from 'axios';
 
 const languageOptions = [
   {
@@ -27,10 +28,33 @@ const languageOptions = [
 
 const ProblemSolve = () => {
   const [language, setLanguage] = React.useState('c');
+  const [code, setCode] = React.useState('');
+  const [input, setInput] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
   function handleEditorChange(value, event) {
-    console.log('Code: ', value);
+    setCode(value);
   }
+
+  const handleSubmit = async () => {
+    var program = {
+      stdin: input,
+      files: [
+        {
+          name: `main.${language}`,
+          content: code,
+        },
+      ],
+    };
+    axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+    await axios
+      .post(
+        `https://corsanywhere.herokuapp.com/https://glot.io/api/run/${language}/latest`,
+        program
+      )
+      .then((res) => console.log(res.data));
+  };
 
   return (
     <div className='container'>
@@ -101,7 +125,7 @@ const ProblemSolve = () => {
             onChange={handleEditorChange}
           />
           <div className='editor_submit'>
-            <Button>Submit</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
           </div>
         </div>
       </div>
