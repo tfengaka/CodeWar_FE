@@ -14,11 +14,11 @@ export function ClientRoutes() {
       <Route path='/problem' element={<Problem />} />
       <Route path='/coding' element={<ProblemSolve />} />
       <Route path='/discuss' element={<DiscussPage />} />
-      <Route path='/contest/*' element={<Contest />}>
-        <Route path=':slug' element={<ContentContest />} />
-      </Route>
+      <Route path='/contest' element={<Contest />} />
+      <Route path='/contest/:id' element={<ContentContest />} />
       <Route path='/rank' element={<div>Rank page</div>} />
       <Route path='/upload' element={<div>upload page</div>} />
+      <Route path='/editor' element={<ProblemSolve />} />
       <Route path='*' element={<NotFound />} />
     </Switch>
   );

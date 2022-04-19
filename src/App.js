@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import LoginPage from 'features/auth/pages/LoginPage';
+import { AuthProvider } from 'hooks/useAuth';
 import { Route, Routes as Switch } from 'react-router-dom';
 import { PrivateRoute } from 'routes';
 import { AdminLayout, ClientLayout } from './layout';
@@ -26,13 +27,15 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Switch>
-        <Route path='/*' element={<ClientLayout />} />
-        <Route path='/admin/login' element={<LoginPage />} />
-        <Route element={<PrivateRoute />}>
-          <Route path='/admin/*' element={<AdminLayout />} />
-        </Route>
-      </Switch>
+      <AuthProvider>
+        <Switch>
+          <Route path='/*' element={<ClientLayout />} />
+          <Route path='/admin/login' element={<LoginPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/admin/*' element={<AdminLayout />} />
+          </Route>
+        </Switch>
+      </AuthProvider>
     </ApolloProvider>
   );
 }

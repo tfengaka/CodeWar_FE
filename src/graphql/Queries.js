@@ -1,15 +1,14 @@
 import { gql } from '@apollo/client';
 
-const queyUser = gql`
-  query Account($userID: String!) {
-    account(where: { id: { _eq: $userID } }) {
+const GET_USER_INFO = gql`
+  query GET_USER_INFO($ID: String!) {
+    account_by_pk(id: $ID) {
       id
       email
       fullName
-      created_at
       role
     }
   }
 `;
 
-export { queyUser };
+export { GET_USER_INFO };

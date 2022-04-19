@@ -1,21 +1,17 @@
+import { useAuth } from 'hooks/useAuth';
 import React from 'react';
 import Login from './Components/Login';
 import Register from './Components/Register';
 
 const Modal = ({ onShowModal }) => {
   const [isRegister, setIsRegister] = React.useState(false);
-  // const modalRef = React.useRef(null);
-  // React.useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       onShowModal(false);
-  //     }
-  //   };
-  //   document.addEventListener('click', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, [onShowModal]);
+  const auth = useAuth();
+  React.useEffect(() => {
+    if (auth.user) {
+      onShowModal(false);
+    }
+  }, [auth.user, onShowModal]);
+
   return (
     <div className='modal'>
       <div className='modal__container'>
