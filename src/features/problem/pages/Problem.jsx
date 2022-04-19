@@ -7,6 +7,8 @@ import TableItem from './TableItem';
 const Problem = () => {
   const { loading, error, data } = useQuery(getExercises);
 
+  console.log(data);
+
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 

@@ -11,20 +11,6 @@ const GET_USER_INFO = gql`
   }
 `;
 
-export { GET_USER_INFO };
-
-const queyUser = gql`
-  query Account($userID: String!) {
-    account(where: { id: { _eq: $userID } }) {
-      id
-      email
-      fullName
-      created_at
-      role
-    }
-  }
-`;
-
 const getExercises = gql`
   query getExercises {
     exercises {
@@ -35,4 +21,4 @@ const getExercises = gql`
   }
 `;
 
-export { queyUser, getExercises };
+export { GET_USER_INFO, getExercises };

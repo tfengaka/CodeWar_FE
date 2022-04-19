@@ -1,4 +1,5 @@
 import Editor from '@monaco-editor/react';
+import axios from 'axios';
 import React from 'react';
 import Button from './Button';
 
@@ -25,12 +26,34 @@ const languageOptions = [
   },
 ];
 
-const ProblemSolve = () => {
+const ProblemSolve = (props) => {
   const [language, setLanguage] = React.useState('c');
+  const [code, setCode] = React.useState('');
+  const [input, setInput] = React.useState('1 2');
   const [showDropdown, setShowDropdown] = React.useState(false);
   function handleEditorChange(value, event) {
     console.log('Code: ', value);
   }
+
+  const handleSubmit = async () => {
+    let program = {
+      stdin: input,
+      files: [
+        {
+          name: `main.${language}`,
+          content: code,
+        },
+      ],
+    };
+    axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+    const res = await axios.post(
+      `https://corsanywhere.herokuapp.com/https://glot.io/api/run/${language}/latest`,
+      program
+    );
+    console.log(res);
+  };
 
   return (
     <div className='container'>
@@ -92,6 +115,9 @@ const ProblemSolve = () => {
             width='100%'
             height='500px'
             options={{
+              minimap: {
+                enabled: false,
+              },
               fontSize: 16,
               cursorStyle: 'line',
               wordWrap: 'on',
