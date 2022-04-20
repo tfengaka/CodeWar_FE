@@ -11,8 +11,6 @@ export const SIGN_UP = gql`
   mutation SIGN_UP($email: String!, $password: String!, $display_name: String!) {
     createAccount(data: { email: $email, full_name: $display_name, password: $password }) {
       id
-      email
-      full_name
       access_token
     }
   }
