@@ -11,8 +11,11 @@ export const SIGN_UP = gql`
   mutation SIGN_UP($email: String!, $password: String!, $display_name: String!) {
     createAccount(data: { email: $email, full_name: $display_name, password: $password }) {
       id
+<<<<<<< HEAD
       full_name
       email
+=======
+>>>>>>> 52ac959 (fixed err SignUp cant get displayName)
       access_token
     }
   }

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from 'components/Button';
-import { SIGN_UP } from 'graphql/Mutation';
+import { useAuth } from 'hooks/useAuth';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
