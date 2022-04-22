@@ -12,3 +12,27 @@ const GET_USER_INFO = gql`
 `;
 
 export { GET_USER_INFO };
+
+const queyUser = gql`
+  query Account($userID: String!) {
+    account(where: { id: { _eq: $userID } }) {
+      id
+      email
+      fullName
+      created_at
+      role
+    }
+  }
+`;
+
+const getExercises = gql`
+  query getExercises($ID: String!) {
+    exercises(where: { id: { _eq: $ID } }) {
+      id
+      name
+      level
+    }
+  }
+`;
+
+export { queyUser, getExercises };

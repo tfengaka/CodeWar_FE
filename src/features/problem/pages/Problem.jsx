@@ -1,37 +1,47 @@
 import React from 'react';
-import Card from './category/Card';
+
+import { useQuery } from '@apollo/client';
+import { getExercises } from 'graphql/Queries';
+
 const fakeData = [
   {
     id: 1,
     title: 'Luyện tập về thuật toán nhị phân bla bla bla',
-    name: 'Trần Thị Dung',
-    position: 'Giáo viên',
+    level: 'Dễ',
   },
   {
     id: 2,
-    title:
-      'thuat toan sap sap nhi phan nhi phannhi phannhi phannhi phan  thuat toan sap sap nhi phan nhi phannhi phannhi phannhi phan',
-    name: 'Phạm Thị Miên',
-    position: 'Giáo viên',
+    title: 'thuat toan sap sap nhi phan nhi phannhi  ',
+    level: 'Dễ',
   },
   {
     id: 3,
     title: 'thuat toan sap sap chen ',
-    name: 'Nguyễn Lê Minh',
-    position: 'Giáo viên',
-  },
-  {
-    id: 4,
-    title: 'thuat toan sap sap chon',
-    name: 'Trần Phong Nhã',
-    position: 'Giáo viên',
+    level: 'Dễ',
   },
 ];
 const Problem = () => {
+  const { id, name, level } = useQuery(getExercises);
+
   return (
-    <div className='cards'>
+    <div className='table'>
+      <div className='table_header'>
+        <div className='table_header-left'>Danh dách bài tập </div>
+        <div className='table_header-right'>Độ khó</div>
+      </div>
+
+      <div className='table_title'>
+        <div>ID</div>
+        <div className='table_title-desc'>Tiêu đề</div>
+        <div>Mức</div>
+      </div>
+
       {fakeData.map((item) => (
-        <Card key={item.id} data={item} />
+        <div className='table_item'>
+          <div>{item.id}</div>
+          <div className='table_item-desc'>{item.title}</div>
+          <div>{item.level}</div>
+        </div>
       ))}
     </div>
   );
