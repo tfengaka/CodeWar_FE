@@ -94,31 +94,27 @@ a:hover {
 }
 
 .loading {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: relative;
   margin: 0 auto;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    border: 2px solid transparent;
-    border-right-color: $text-white;
-    border-bottom-color: $text-white;
-    animation: circleLoading 1s forwards infinite linear;
-  }
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+  border-top-width: 2px;
+  opacity: 1;
+  border-color: rgb(255, 255, 255);
+  border-top-color: transparent;
+  border-radius: 9999px;
+  z-index: 9999;
+  animation: spin 1s linear infinite;
 }
 footer {
   height: 1px;
   width: 100%;
 }
-@keyframes circleLoading {
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
   to {
     transform: rotate(360deg);
   }

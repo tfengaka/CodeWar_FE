@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from 'components/Button';
-import { useAuth } from 'hooks/useAuth';
+import { SIGN_UP } from 'graphql/Mutation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 const registerValidation = Yup.object({
-  displayName: Yup.string().required('Tên không được để trống'),
+  userName: Yup.string().required('Tên không được để trống'),
   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
   password: Yup.string().required('Mật khẩu không được để trống'),
   repassword: Yup.string()
@@ -15,7 +15,8 @@ const registerValidation = Yup.object({
 });
 
 const Register = ({ onChangeRegister }) => {
-  const auth = useAuth();
+  const [signUp] = useMutation(SIGN_UP);
+
   const {
     register,
     handleSubmit,
@@ -28,21 +29,18 @@ const Register = ({ onChangeRegister }) => {
   return (
     <>
       <div className='modal__body'>
-        <form onSubmit={handleSubmit(auth.signUp)} autoComplete='off'>
+        <form onSubmit={handleSubmit()} autoComplete='off'>
           <div className='modal__body-control'>
-            <input
-              type='text'
-              id='displayName'
-              placeholder='Họ và tên'
-              {...register('displayName')}
-            />
-            {errors?.displayName && (
+            {/* <label htmlFor='userName'>Họ và tên</label> */}
+            <input type='text' id='userName' placeholder='Họ và tên' {...register('userName')} />
+            {errors?.userName && (
               <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
-                {errors.displayName?.message}
+                {errors.userName?.message}
               </div>
             )}
           </div>
           <div className='modal__body-control'>
+            {/* <label htmlFor='email'>Email</label> */}
             <input type='text' id='email' placeholder='Email' {...register('email')} />
             {errors?.email && (
               <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
@@ -51,6 +49,7 @@ const Register = ({ onChangeRegister }) => {
             )}
           </div>
           <div className='modal__body-control'>
+            {/* <label htmlFor='password'>Mật khẩu</label> */}
             <input type='password' id='password' placeholder='Mật khẩu' {...register('password')} />
             {errors?.password && (
               <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
@@ -59,6 +58,7 @@ const Register = ({ onChangeRegister }) => {
             )}
           </div>
           <div className='modal__body-control'>
+            {/* <label htmlFor='repassword'>Nhập lại mật khẩu</label> */}
             <input
               type='password'
               id='repassword'
@@ -73,7 +73,7 @@ const Register = ({ onChangeRegister }) => {
           </div>
           <div className='modal__body-submit'>
             <Button type='submit' size='lg'>
-              {auth.loading ? <div className='loading'></div> : 'Đăng kí'}
+              Đăng Kí
             </Button>
           </div>
         </form>

@@ -2,26 +2,13 @@ import React from 'react';
 
 import { useQuery } from '@apollo/client';
 import { getExercises } from 'graphql/Queries';
+import TableItem from './TableItem';
 
-const fakeData = [
-  {
-    id: 1,
-    title: 'Luyện tập về thuật toán nhị phân bla bla bla',
-    level: 'Dễ',
-  },
-  {
-    id: 2,
-    title: 'thuat toan sap sap nhi phan nhi phannhi  ',
-    level: 'Dễ',
-  },
-  {
-    id: 3,
-    title: 'thuat toan sap sap chen ',
-    level: 'Dễ',
-  },
-];
 const Problem = () => {
-  const { id, name, level } = useQuery(getExercises);
+  const { loading, error, data } = useQuery(getExercises);
+
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
 
   return (
     <div className='table'>
@@ -36,12 +23,8 @@ const Problem = () => {
         <div>Mức</div>
       </div>
 
-      {fakeData.map((item) => (
-        <div className='table_item'>
-          <div>{item.id}</div>
-          <div className='table_item-desc'>{item.title}</div>
-          <div>{item.level}</div>
-        </div>
+      {data?.exercises?.map((item) => (
+        <TableItem key={item.id} data={item} />
       ))}
     </div>
   );

@@ -26,11 +26,11 @@ const queyUser = gql`
 `;
 
 const getExercises = gql`
-  query getExercises($ID: String!) {
-    exercises(where: { id: { _eq: $ID } }) {
+  query getExercises {
+    exercises {
       id
-      name
       level
+      name
     }
   }
 `;

@@ -1,7 +1,7 @@
 import Button from 'components/Button';
 import Modal from 'features/auth/client/Modal';
-import { useAuth } from 'hooks/useAuth';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import banner from '../assets/banner.png';
 const routing = [
@@ -12,10 +12,9 @@ const routing = [
 ];
 export default function Navigation() {
   const { pathname } = useLocation();
-  const activeNav = routing.findIndex((e) => pathname.includes(e.path));
+  const activeNav = routing.findIndex((e) => e.path === pathname);
   const [showModal, setShowModal] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const auth = useAuth();
+  const user = useSelector((state) => state.auth.user.info);
   return (
     <>
       <div className='header'>
@@ -40,27 +39,14 @@ export default function Navigation() {
 
           <div className='header__account'>
             {/* use auth is true to show account info or show button loggin  */}
-            {auth.user ? (
-              <>
-                <div
-                  className={`header__account__info ${showDropdown && 'active'}`}
-                  onClick={() => setShowDropdown(!showDropdown)}
-                >
-                  <span>{auth.user.fullName}</span>
-                  <i className='bx bxs-down-arrow'></i>
-                </div>
-                <div className={`header__account__dropdown ${showDropdown && 'active'}`}>
-                  <div className='header__account__dropdown_item'>
-                    <span>Hồ Sơ</span>
-                  </div>
-                  <div className='header__account__dropdown_item' onClick={() => auth.signOut()}>
-                    <span>Đăng xuất</span>
-                  </div>
-                </div>
-              </>
+            {user ? (
+              <div className='header__account__info'>
+                <span>{user.fullName}</span>
+                <i className='bx bxs-down-arrow'></i>
+              </div>
             ) : (
               <Button backgroundColor='main' onClick={() => setShowModal(true)}>
-                {auth.loading ? <div className='loading'></div> : 'Đăng Nhập'}
+                Đăng nhập
               </Button>
             )}
           </div>
