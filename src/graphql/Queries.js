@@ -11,4 +11,14 @@ const GET_USER_INFO = gql`
   }
 `;
 
-export { GET_USER_INFO };
+const getExercises = gql`
+  query getExercises {
+    exercises {
+      id
+      level
+      name
+    }
+  }
+`;
+
+export { GET_USER_INFO, getExercises };

@@ -1,7 +1,7 @@
 import Editor from '@monaco-editor/react';
+import axios from 'axios';
 import React from 'react';
 import Button from './Button';
-import axios from 'axios';
 
 const languageOptions = [
   {
@@ -32,7 +32,7 @@ const ProblemSolve = (props) => {
   const [input, setInput] = React.useState('1 2');
   const [showDropdown, setShowDropdown] = React.useState(false);
   function handleEditorChange(value, event) {
-    setCode(value);
+    console.log('Code: ', value);
   }
 
   const handleSubmit = async () => {
@@ -127,7 +127,7 @@ const ProblemSolve = (props) => {
             onChange={handleEditorChange}
           />
           <div className='editor_submit'>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button>Submit</Button>
           </div>
         </div>
       </div>

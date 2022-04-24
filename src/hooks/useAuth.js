@@ -79,14 +79,12 @@ function useAuthProvider() {
     signup({
       variables: { email, password, display_name: displayName },
       onCompleted: (data) => {
-        if (data.createAccount) {
-          const { id, access_token } = data.createAccount;
-          localStorage.setItem('token', access_token);
-          const user = { id, email, fullName: displayName };
-          setUser(user);
-          setLoading(false);
-          setIsLogged(true);
-        }
+        const { id, email, full_name, access_token } = data.createAccount;
+        localStorage.setItem('token', access_token);
+        const user = { id, email, displayName: full_name };
+        setUser(user);
+        setLoading(false);
+        setIsLogged(true);
       },
       onError: (error) => {
         console.log(error.message);
