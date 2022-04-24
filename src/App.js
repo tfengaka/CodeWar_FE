@@ -1,18 +1,42 @@
-import NotFound from 'components/NotFound';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import LoginPage from 'features/auth/pages/LoginPage';
+import { AuthProvider } from 'hooks/useAuth';
 import { Route, Routes as Switch } from 'react-router-dom';
-import { AdminLayout, ClientLayout } from './layout';
 import { PrivateRoute } from 'routes';
-import AdminLogin from 'components/AdminLogin';
+import { AdminLayout, ClientLayout } from './layout';
+const httpLink = createHttpLink({
+  uri: 'http://localhost:8080/v1/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <Switch>
-      <Route path="/*" element={<ClientLayout />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route element={<PrivateRoute />}>
-        <Route path="/admin/*" element={<AdminLayout />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Switch>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <Switch>
+          <Route path='/*' element={<ClientLayout />} />
+          <Route path='/admin/login' element={<LoginPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/admin/*' element={<AdminLayout />} />
+          </Route>
+        </Switch>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }
 
