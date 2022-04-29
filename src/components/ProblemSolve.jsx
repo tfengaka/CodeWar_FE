@@ -44,10 +44,7 @@ const ProblemSolve = (props) => {
     axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-    const res = await axios.post(
-      `https://corsanywhere.herokuapp.com/https://glot.io/api/run/${language}/latest`,
-      program
-    );
+    const res = await axios.post(`/api/run/${language}/latest`, program);
     console.log(res);
   };
 

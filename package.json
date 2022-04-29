@@ -2,6 +2,7 @@
   "name": "codewar_fe",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://glot.io",
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@hookform/resolvers": "^2.8.8",
