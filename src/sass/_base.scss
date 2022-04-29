@@ -67,6 +67,12 @@ a:hover {
   color: $main-color;
 }
 
+button {
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+
 @each $color, $val in $colors {
   .color-#{$color} {
     color: $val;

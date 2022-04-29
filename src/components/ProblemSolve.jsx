@@ -29,15 +29,11 @@ const languageOptions = [
 const ProblemSolve = (props) => {
   const [language, setLanguage] = React.useState('c');
   const [code, setCode] = React.useState('');
-  const [input, setInput] = React.useState('1 2');
   const [showDropdown, setShowDropdown] = React.useState(false);
-  function handleEditorChange(value, event) {
-    console.log('Code: ', value);
-  }
 
   const handleSubmit = async () => {
     let program = {
-      stdin: input,
+      stdin: '1 2',
       files: [
         {
           name: `main.${language}`,
@@ -124,10 +120,10 @@ const ProblemSolve = (props) => {
             }}
             theme='vs-dark'
             language={language}
-            onChange={handleEditorChange}
+            onChange={(value, event) => setCode(value)}
           />
           <div className='editor_submit'>
-            <Button>Submit</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
           </div>
         </div>
       </div>

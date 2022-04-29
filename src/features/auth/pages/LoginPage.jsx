@@ -1,24 +1,53 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import Button from 'components/Button';
+import { useAuth } from 'hooks/useAuth';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+const schemaValidation = Yup.object({
+  email: Yup.string().email('Email không hợp lệ').required('Email không được để trống'),
+  password: Yup.string().required('Mật khẩu không được để trống'),
+});
 
 function LoginPage() {
+  const auth = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaValidation),
+    mode: 'onSubmit',
+  });
   return (
-    <div className="login">
-      <div className="container">
-        <div className="login__title">
-          <h3>Đăng Nhập</h3>
+    <div className='login'>
+      <div className='container'>
+        <div className='login__title'>
+          <span>ĐĂNG NHẬP</span>
         </div>
-        <div className="divider"></div>
-        <div className="login__body">
-          <form className="login__form">
-            <div className="login__form-control">
-              <input type="text" placeholder="UserName" />
+        <div className='divider'></div>
+        <div className='login__body'>
+          <form className='login__form' onSubmit={handleSubmit(auth.signIn)} autoComplete='off'>
+            <div className='login__form-control'>
+              <input type='text' placeholder='Email' {...register('email')} />
+              {errors?.email ? (
+                <div className='message-error'>{errors.email?.message}</div>
+              ) : (
+                <div style={{ height: '16px' }}></div>
+              )}
             </div>
-            <div className="login__form-control">
-              <input type="password" placeholder="Password" />
+            <div className='login__form-control'>
+              <input type='password' placeholder='Password' {...register('password')} />
+              {errors?.password ? (
+                <div className='message-error'>{errors.password?.message}</div>
+              ) : (
+                <div style={{ height: '16px' }}></div>
+              )}
             </div>
-            <div className="login__form-submit">
-              <Button size="lg">Đăng Nhập</Button>
+            <div className='login__form-submit'>
+              <Button size='lg' type='submit'>
+                Đăng Nhập
+              </Button>
             </div>
           </form>
         </div>

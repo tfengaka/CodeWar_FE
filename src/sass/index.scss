@@ -1,5 +1,4 @@
 @import './variables';
-@import './mixins';
 @import './base';
 
 @import './components/header';
@@ -13,5 +12,4 @@
 @import './components/contest/itemContest';
 @import './components/contest/contentContest';
 
-@import './components/problem/row';
-@import './components/problem/broblem';
+@import './components/problem/problem';

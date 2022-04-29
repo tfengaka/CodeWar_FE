@@ -14,7 +14,8 @@ $header-height: 60px;
 $input-color: #ccc;
 $item-color: rgba(149, 157, 165, 0.2);
 
-$colors: ('blue': #4267b2,
+$colors: (
+  'blue': #4267b2,
   'green': #5db85c,
   'orange': #fbb96b,
   'pink': #fe7e73,
@@ -23,3 +24,9 @@ $colors: ('blue': #4267b2,
   'main': $main-color,
   'red': #ff0000,
 );
+
+@mixin flex($align-item, $justify-content) {
+  display: flex;
+  align-items: $align-item;
+  justify-content: $justify-content;
+}

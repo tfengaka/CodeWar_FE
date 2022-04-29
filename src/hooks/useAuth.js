@@ -32,7 +32,6 @@ function useAuthProvider() {
     await getInfo({
       variables: { ID: id },
       onCompleted: (data) => {
-        // console.log(data);
         if (data) {
           setUser(data.account_by_pk);
           setIsLogged(true);
