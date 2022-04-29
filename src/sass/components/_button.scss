@@ -4,25 +4,15 @@
   color: $text-white;
   font-size: 1.5rem;
   font-weight: 500;
-  border: none;
-  outline: none;
-  overflow: hidden;
   cursor: pointer;
   border-radius: 4px;
   padding: 6px 20px;
   transition: all 0.2s ease-out;
   text-align: center;
 
-
   &-lg {
-    font-size: 1.6rem;
     width: 100%;
     padding: 1rem 2rem;
-  }
-
-  &-sm {
-    padding: 6px 8px;
-    font-size: 1.3rem;
   }
 
   &:hover {

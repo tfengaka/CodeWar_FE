@@ -123,3 +123,14 @@
     height: 85px;
   }
 }
+
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 85px;
+  }
+}

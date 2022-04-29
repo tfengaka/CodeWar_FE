@@ -37,26 +37,16 @@ const Register = ({ onChangeRegister }) => {
               {...register('displayName')}
             />
             {errors?.displayName && (
-              <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
-                {errors.displayName?.message}
-              </div>
+              <div className='message-error'>{errors.displayName?.message}</div>
             )}
           </div>
           <div className='modal__body-control'>
             <input type='text' id='email' placeholder='Email' {...register('email')} />
-            {errors?.email && (
-              <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
-                {errors.email?.message}
-              </div>
-            )}
+            {errors?.email && <div className='message-error'>{errors.email?.message}</div>}
           </div>
           <div className='modal__body-control'>
             <input type='password' id='password' placeholder='Mật khẩu' {...register('password')} />
-            {errors?.password && (
-              <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
-                {errors.password?.message}
-              </div>
-            )}
+            {errors?.password && <div className='message-error'>{errors.password?.message}</div>}
           </div>
           <div className='modal__body-control'>
             <input
@@ -66,9 +56,7 @@ const Register = ({ onChangeRegister }) => {
               {...register('repassword')}
             />
             {errors?.repassword && (
-              <div style={{ color: 'red', fontSize: '13px', padding: ' 3px 6px' }}>
-                {errors.repassword?.message}
-              </div>
+              <div className='message-error'>{errors.repassword?.message}</div>
             )}
           </div>
           <div className='modal__body-submit'>

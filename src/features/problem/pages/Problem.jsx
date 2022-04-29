@@ -1,37 +1,30 @@
 import React from 'react';
-import Card from './category/Card';
-const fakeData = [
-  {
-    id: 1,
-    title: 'Luyện tập về thuật toán nhị phân bla bla bla',
-    name: 'Trần Thị Dung',
-    position: 'Giáo viên',
-  },
-  {
-    id: 2,
-    title:
-      'thuat toan sap sap nhi phan nhi phannhi phannhi phannhi phan  thuat toan sap sap nhi phan nhi phannhi phannhi phannhi phan',
-    name: 'Phạm Thị Miên',
-    position: 'Giáo viên',
-  },
-  {
-    id: 3,
-    title: 'thuat toan sap sap chen ',
-    name: 'Nguyễn Lê Minh',
-    position: 'Giáo viên',
-  },
-  {
-    id: 4,
-    title: 'thuat toan sap sap chon',
-    name: 'Trần Phong Nhã',
-    position: 'Giáo viên',
-  },
-];
+
+import { useQuery } from '@apollo/client';
+import { getExercises } from 'graphql/Queries';
+import TableItem from './TableItem';
+
 const Problem = () => {
+  const { loading, error, data } = useQuery(getExercises);
+
+  if (loading) return <div className='loading'></div>;
+  if (error) return <div>Load data failed</div>;
+
   return (
-    <div className='cards'>
-      {fakeData.map((item) => (
-        <Card key={item.id} data={item} />
+    <div className='table'>
+      <div className='table_header'>
+        <div className='table_header-left'>Danh dách bài tập </div>
+        <div className='table_header-right'>Độ khó</div>
+      </div>
+
+      <div className='table_title'>
+        <div>ID</div>
+        <div className='table_title-desc'>Tiêu đề</div>
+        <div>Mức</div>
+      </div>
+
+      {data?.exercises?.map((item) => (
+        <TableItem key={item.id} data={item} />
       ))}
     </div>
   );
