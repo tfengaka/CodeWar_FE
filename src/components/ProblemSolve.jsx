@@ -1,5 +1,6 @@
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
+import TestCase from 'features/problem/pages/TestCase';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from './Button';
@@ -24,6 +25,37 @@ const languageOptions = [
   {
     id: 5,
     value: 'javascript',
+  },
+];
+
+const fakeData = [
+  {
+    input: '1 2',
+    output: 3,
+  },
+  {
+    input: '5 5',
+    output: 10,
+  },
+  {
+    input: '10 2',
+    output: 12,
+  },
+  {
+    input: '10 2',
+    output: 12,
+  },
+  {
+    input: '10 2',
+    output: 12,
+  },
+  {
+    input: '10 2',
+    output: 12,
+  },
+  {
+    input: '10 2',
+    output: 12,
   },
 ];
 
@@ -52,18 +84,16 @@ const ProblemSolve = (props) => {
   };
 
   return (
-    <div className='container_editor'>
+    <div className='container'>
       <div className='editor'>
-        <div className='content'>
-          <div className='content_problem'>
-            <div className='content_problem_header'>
-              <h3>{data?.name}</h3>
-            </div>
-            <div className='content_problem_body'>
-              <div className='content_problem_body_content'>
-                <h4>Đề bài</h4>
-                <pre>{data?.des}</pre>
-              </div>
+        <div className='editor_problem'>
+          <div className='editor_problem_header'>
+            <h3>{data?.name}</h3>
+          </div>
+          <div className='editor_problem_body'>
+            <div className='editor_problem_body_content'>
+              <h4>Đề bài</h4>
+              <pre>{data?.des}</pre>
             </div>
           </div>
         </div>
@@ -109,6 +139,7 @@ const ProblemSolve = (props) => {
             language={language}
             onChange={(value, event) => setCode(value)}
           />
+          <TestCase data={fakeData} />
           <div className='editor_submit'>
             <Button onClick={handleSubmit}>Submit</Button>
           </div>
