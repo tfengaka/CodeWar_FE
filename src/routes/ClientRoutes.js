@@ -12,12 +12,12 @@ export function ClientRoutes() {
     <Switch>
       <Route path='/' element={<Navigate to='/problem' />} />
       <Route path='/problem' element={<Problem />} />
+      <Route path='/problem/:id' element={<ProblemSolve />} />
       <Route path='/discuss' element={<DiscussPage />} />
       <Route path='/contest' element={<Contest />} />
       <Route path='/contest/:id' element={<ContentContest />} />
       <Route path='/rank' element={<div>Rank page</div>} />
       <Route path='/upload' element={<div>upload page</div>} />
-      <Route path='/editor' element={<ProblemSolve />} />
       <Route path='*' element={<NotFound />} />
     </Switch>
   );

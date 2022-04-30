@@ -1,6 +1,7 @@
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Button from './Button';
 
 const languageOptions = [
@@ -27,6 +28,8 @@ const languageOptions = [
 ];
 
 const ProblemSolve = (props) => {
+  const location = useLocation();
+  const { data } = location.state;
   const [language, setLanguage] = React.useState('c');
   const [code, setCode] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
@@ -49,31 +52,18 @@ const ProblemSolve = (props) => {
   };
 
   return (
-    <div className='container'>
+    <div className='container_editor'>
       <div className='editor'>
-        <div className='editor_problem'>
-          <div className='editor_problem_header'>
-            <h3>Tiêu Đề</h3>
-          </div>
-          <div className='editor_problem_body'>
-            <div className='editor_problem_body_content'>
-              <h4>Đề bài</h4>
-              <p>
-                Viết chương trình cho phép nhập số nguyên a và b từ bàn phím. Tính và in kết quả a +
-                b
-              </p>
+        <div className='content'>
+          <div className='content_problem'>
+            <div className='content_problem_header'>
+              <h3>{data?.name}</h3>
             </div>
-            <div className='editor_problem_body_content'>
-              <h4>Dữ liệu vào</h4>
-              <ul>
-                <li>2 số nguyên aa và bb cách nhau 1 dấu cách</li>
-              </ul>
-            </div>
-            <div className='editor_problem_body_content'>
-              <h4>Dữ liệu ra</h4>
-              <ul>
-                <li>Tổng của a và b</li>
-              </ul>
+            <div className='content_problem_body'>
+              <div className='content_problem_body_content'>
+                <h4>Đề bài</h4>
+                <pre>{data?.des}</pre>
+              </div>
             </div>
           </div>
         </div>
