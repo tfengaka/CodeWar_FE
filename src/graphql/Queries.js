@@ -17,6 +17,9 @@ export const getExercises = gql`
       id
       level
       name
+      input
+      output
+      des
     }
   }
 `;
