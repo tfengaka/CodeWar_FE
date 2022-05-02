@@ -1,20 +1,14 @@
 import React from 'react';
 
-// import { useQuery } from '@apollo/client';
-// import { getExercises } from 'graphql/Queries';
+import { useQuery } from '@apollo/client';
+import { getExercises } from 'graphql/Queries';
 import TableItem from './TableItem';
 
-const fakeData = {
-  exercises: [{ id: 1, name: 'Bài tập 1', des: 'cong 2 sos', level: 'Dễ' }],
-};
-
 const Problem = () => {
-  // let { loading, error, data } = useQuery(getExercises);
+  let { loading, error, data } = useQuery(getExercises);
 
-  const data = fakeData;
-
-  // if (loading) return <div className='loading'></div>;
-  // if (error) return <div>Load data failed</div>;
+  if (loading) return <div className='loading'></div>;
+  if (error) return <div>Load data failed</div>;
 
   return (
     <div className='table'>

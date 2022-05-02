@@ -13,22 +13,23 @@ function TestCase(props) {
     currentBtn = index;
     setCurrentCase(index);
   };
-  // console.log(testCase);
+
+  const renderTestCase = testCase || data.input;
 
   return (
     <div className='container_test-case'>
       <h2>Test Case</h2>
       <div className='test-case'>
         <div className='test-case_list'>
-          {data.map((_, index) => (
+          {renderTestCase.map((item, index) => (
             <button
               key={index}
               style={{ background: index === currentBtn ? colorHover : colorNotHover }}
               onClick={() => handleClick(index)}
             >
               Case {index + 1}
-              {testCase?.data &&
-                (testCase.data.stdout === data[currentCase]?.output && testCase.index === index ? (
+              {testCase &&
+                (item.data.status.description === 'Accepted' ? (
                   <FontAwesomeIcon icon={faCheck} color='green' />
                 ) : (
                   <FontAwesomeIcon icon={faExclamation} color='red' />
@@ -37,8 +38,18 @@ function TestCase(props) {
           ))}
         </div>
         <div className='test-case_content'>
-          <div>Input: {data[currentCase]?.input} </div>
-          <div>Output: {data[currentCase]?.output} </div>
+          <div>Input: {data.input[currentCase].content} </div>
+          <div>Output: {data.output[currentCase].content} </div>
+          <div>Point: {data.output[currentCase].point} </div>
+          {testCase && (
+            <div>
+              <div>
+                Result: {testCase[currentCase].data.stdout || testCase[currentCase].data.stderr}
+              </div>
+              <div>Excute time: {testCase[currentCase].data.time}</div>
+              <div>Memory: {testCase[currentCase].data.memory}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

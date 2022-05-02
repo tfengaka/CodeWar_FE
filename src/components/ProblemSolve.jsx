@@ -5,67 +5,33 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from './Button';
 
-const languageOptions = [
-  {
-    id: 1,
+const languageOptions = {
+  C: {
+    id: 75,
     value: 'c',
   },
-  {
-    id: 2,
+  CPP: {
+    id: 76,
     value: 'cpp',
   },
-  {
-    id: 3,
+  CSharp: {
+    id: 17,
     value: 'csharp',
   },
-  {
-    id: 4,
+  Java: {
+    id: 62,
     value: 'java',
   },
-  {
-    id: 5,
+  JavaScript: {
+    id: 63,
     value: 'javascript',
   },
-];
-
-const fakeData = [
-  {
-    input: '1 2',
-    output: '3',
-  },
-  {
-    input: '5 5',
-    output: '10',
-  },
-  {
-    input: '10 2',
-    output: '12',
-  },
-  {
-    input: '10 5',
-    output: '15',
-  },
-  // {
-  //   input: '10 2',
-  //   output: 12,
-  // },
-  // {
-  //   input: '10 2',
-  //   output: 12,
-  // },
-  // {
-  //   input: '10 2',
-  //   output: 12,
-  // },
-];
-
-axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+};
 
 const ProblemSolve = (props) => {
   const location = useLocation();
   const { data } = location.state;
-  const [language, setLanguage] = React.useState('c');
+  const [language, setLanguage] = React.useState(languageOptions.C);
   const [code, setCode] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [checkAllCase, setCheckAllCase] = React.useState(null);
@@ -74,22 +40,22 @@ const ProblemSolve = (props) => {
     let program = null;
 
     try {
-      await Promise.all(
-        fakeData.map(async (item, index) => {
+      const result = await Promise.all(
+        data.input.map(async (item, index) => {
           program = {
-            stdin: item.input,
-            files: [
-              {
-                name: `main.${language}`,
-                content: code,
-              },
-            ],
+            stdin: item.content,
+            source_code: code,
+            language_id: language.id,
+            expected_output: data.output[index].content,
           };
 
-          const res = await axios.post(`/api/run/${language}/latest`, program);
-          console.log(res);
+          return axios.post(
+            `http://localhost:2358/submissions/?base64_encoded=false&wait=true`,
+            program
+          );
         })
       );
+      setCheckAllCase(result);
     } catch (error) {
       console.log(error);
     }
@@ -118,16 +84,16 @@ const ProblemSolve = (props) => {
               className='editor_header_language_input'
               onClick={() => setShowDropdown(!showDropdown)}
             >
-              <span>{language}</span>
+              <span>{language.value}</span>
               <i className='bx bx-chevron-down'></i>
               <div className={`editor_header_language_dropdown ${showDropdown ? 'active' : ''}`}>
-                {languageOptions.map((item) => (
+                {Object.keys(languageOptions).map((key, index) => (
                   <div
                     className='editor_header_language_dropdown_item'
-                    key={item.id}
-                    onClick={() => setLanguage(item.value)}
+                    key={index}
+                    onClick={() => setLanguage(languageOptions[key])}
                   >
-                    {item.value}
+                    {languageOptions[key].value}
                   </div>
                 ))}
               </div>
@@ -148,10 +114,10 @@ const ProblemSolve = (props) => {
               wordWrap: 'on',
             }}
             theme='vs-dark'
-            language={language}
+            language={language.value}
             onChange={(value, event) => setCode(value)}
           />
-          <TestCase data={fakeData} testCase={checkAllCase} />
+          <TestCase data={data} testCase={checkAllCase} />
           <div className='editor_submit'>
             <Button onClick={handleSubmit}>Submit</Button>
           </div>
