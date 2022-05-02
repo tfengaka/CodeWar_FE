@@ -1,3 +1,5 @@
+import { useQuery } from '@apollo/client';
+import { getContests } from 'graphql/Queries';
 import { useState } from 'react';
 
 import ItemContest from '../components/ItemContest';
@@ -13,7 +15,11 @@ export default function Contest() {
     { id: 2, value: 'finish', text: 'Đã kết thúc' },
   ];
 
-  const data = itemContest
+  const { loading, error, data } = useQuery(getContests);
+  // if (loading) return <dix className='loading'></dix>;
+  // if (error) return <div>Load data failed</div>;
+  console.log(data);
+  const dataw = itemContest
     .filter((b) => b.text === selected)
     .map(({ id, title, content, timeFrom, timeEnd, day, text, color }) => ({
       id,
@@ -30,7 +36,7 @@ export default function Contest() {
   if (selected === 'Trạng thái') {
     comp = itemContest;
   } else {
-    comp = data;
+    comp = dataw;
   }
 
   return (
