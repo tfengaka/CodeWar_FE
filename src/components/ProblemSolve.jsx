@@ -31,33 +31,36 @@ const languageOptions = [
 const fakeData = [
   {
     input: '1 2',
-    output: 3,
+    output: '3',
   },
   {
     input: '5 5',
-    output: 10,
+    output: '10',
   },
   {
     input: '10 2',
-    output: 12,
+    output: '12',
   },
   {
-    input: '10 2',
-    output: 12,
+    input: '10 5',
+    output: '15',
   },
-  {
-    input: '10 2',
-    output: 12,
-  },
-  {
-    input: '10 2',
-    output: 12,
-  },
-  {
-    input: '10 2',
-    output: 12,
-  },
+  // {
+  //   input: '10 2',
+  //   output: 12,
+  // },
+  // {
+  //   input: '10 2',
+  //   output: 12,
+  // },
+  // {
+  //   input: '10 2',
+  //   output: 12,
+  // },
 ];
+
+axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const ProblemSolve = (props) => {
   const location = useLocation();
@@ -65,22 +68,31 @@ const ProblemSolve = (props) => {
   const [language, setLanguage] = React.useState('c');
   const [code, setCode] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
+  const [checkAllCase, setCheckAllCase] = React.useState(null);
 
   const handleSubmit = async () => {
-    let program = {
-      stdin: '1 2',
-      files: [
-        {
-          name: `main.${language}`,
-          content: code,
-        },
-      ],
-    };
-    axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
+    let program = null;
 
-    const res = await axios.post(`/api/run/${language}/latest`, program);
-    console.log(res);
+    try {
+      await Promise.all(
+        fakeData.map(async (item, index) => {
+          program = {
+            stdin: item.input,
+            files: [
+              {
+                name: `main.${language}`,
+                content: code,
+              },
+            ],
+          };
+
+          const res = await axios.post(`/api/run/${language}/latest`, program);
+          console.log(res);
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -139,7 +151,7 @@ const ProblemSolve = (props) => {
             language={language}
             onChange={(value, event) => setCode(value)}
           />
-          <TestCase data={fakeData} />
+          <TestCase data={fakeData} testCase={checkAllCase} />
           <div className='editor_submit'>
             <Button onClick={handleSubmit}>Submit</Button>
           </div>
