@@ -4,26 +4,28 @@
   border-radius: 6px;
   padding: 16px;
   margin-bottom: 32px;
-  &_problem {
-    padding: 8px;
+  content {
+    &_problem {
+      padding: 8px;
 
-    &_header {
-      text-align: center;
-    }
-    &_body {
-      margin-top: 16px;
+      &_header {
+        text-align: center;
+      }
+      &_body {
+        margin-top: 16px;
 
-      &_content {
-        margin: 24px 0;
-        & > h4 {
-          text-decoration: underline;
-        }
-        & > p {
-          margin-left: 25px;
-        }
-        & > ul,
-        & > p {
-          margin-top: 8px;
+        &_content {
+          margin: 24px 0;
+          & > h4 {
+            text-decoration: underline;
+          }
+          & > p {
+            margin-left: 25px;
+          }
+          & > ul,
+          & > p {
+            margin-top: 8px;
+          }
         }
       }
     }
@@ -105,5 +107,46 @@
   to {
     opacity: 1;
     height: 160px;
+  }
+}
+
+.container_test-case {
+  margin-top: 10px;
+  background-color: #232432;
+  color: white;
+
+  & > h2 {
+    margin-left: 10px;
+  }
+}
+
+.test-case {
+  display: grid;
+  grid-template-columns: 6% 94%;
+  margin-top: 10px;
+
+  &_list {
+    background-color: #1e1f26;
+    height: 150px;
+    overflow: auto;
+
+    & > button {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      background-color: #1e1f26;
+      color: white;
+      cursor: pointer;
+      border-bottom: solid 2px #ebebeb;
+    }
+
+    & > button:hover {
+      background-color: #3b3c54;
+    }
+  }
+
+  &_content {
+    padding: 5px 0px 0px 10px;
+    background-color: #3b3c54;
   }
 }
