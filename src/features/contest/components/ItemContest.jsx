@@ -1,66 +1,103 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import LogoUTC from '../../../assets/LogoUTC.png';
+import { conversionURL } from '../info/ConversionURL';
+import { format, parse } from 'date-fns';
 
-export default function ItemContest(props) {
+const ItemContest = (props) => {
   const options = props.itemProps;
 
-  function conversionURL(str) {
-    // Chuyển hết sang chữ thường
-    str = str.toLowerCase();
+  const colorStart = '#00dd55';
+  const colorEnd = '#ed4014';
 
-    // xóa dấu
-    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-    str = str.replace(/(đ)/g, 'd');
+  const itemStart = options
+    .filter((b) => b.status === 'Đang diễn ra')
+    .map(({ id, name, des, startDate, endDate, status }) => ({
+      id,
+      name,
+      des,
+      startDate,
+      endDate,
+      status,
+      colorStart,
+    }));
 
-    // Xóa ký tự đặc biệt
-    str = str.replace(/([^0-9a-z-\s])/g, '');
-
-    // Xóa khoảng trắng thay bằng ký tự -
-    str = str.replace(/(\s+)/g, '-');
-
-    // xóa phần dự - ở đầu
-    str = str.replace(/^-+/g, '');
-
-    // xóa phần dư - ở cuối
-    str = str.replace(/-+$/g, '');
-
-    // return
-    return str;
-  }
+  const itemEnd = options
+    .filter((b) => b.status === 'Đã kết thúc')
+    .map(({ id, name, des, startDate, endDate, status }) => ({
+      id,
+      name,
+      des,
+      startDate,
+      endDate,
+      status,
+      colorEnd,
+    }));
 
   return (
     <div className='panel__body'>
       <ol>
-        {options.map((item) => (
+        {itemStart.map((item) => (
           <li key={item.id} className='body__item'>
             <div className='row__flex'>
               <img src={LogoUTC} alt='' className='logo' />
               <div className='content__main'>
                 <p className='title'>
-                  <Link to={'/contest/' + conversionURL(item.title) + '.' + item.id + '.html'}>
-                    {item.title}
+                  <Link to={'/contest/' + conversionURL(item.name) + '.' + item.id + '.html'}>
+                    {item.name}
                   </Link>
                 </p>
                 <ul className='detail'>
                   <li>
                     <i className='bx bx-calendar'></i>
-                    {item.timeFrom}
+                    {'Bắt đầu: ' +
+                      format(
+                        parse(item.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                        'dd-MM-yyyy h:mm aa'
+                      )}
                   </li>
-                  <li>
-                    <i className='bx bx-time'></i> {item.day}
-                  </li>
+                  {/* <li>
+                    <i className='bx bx-time'></i>{' '}
+                    {(new Date(item.endDate).getTime() - new Date(item.startDate).getTime()) /
+                      (1000 * 3600 * 24)}
+                  </li> */}
                 </ul>
               </div>
               <div className='status'>
                 <div className='status__tag'>
-                  <i className='bx bxs-circle' style={item}></i> {item.text}
+                  <i className='bx bxs-circle' style={{ color: item.colorStart }}></i> {item.status}
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+        {itemEnd.map((item) => (
+          <li key={item.id} className='body__item'>
+            <div className='row__flex'>
+              <img src={LogoUTC} alt='' className='logo' />
+              <div className='content__main'>
+                <p className='title'>
+                  <Link to={'/contest/' + conversionURL(item.name) + '.' + item.id + '.html'}>
+                    {item.name}
+                  </Link>
+                </p>
+                <ul className='detail'>
+                  <li>
+                    <i className='bx bx-calendar'></i>
+                    {'Bắt đầu: ' +
+                      format(
+                        parse(item.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                        'dd-MM-yyyy h:mm aa'
+                      )}
+                  </li>
+                  {/* <li>
+                    <i className='bx bx-time'></i> {item.endDate}
+                  </li> */}
+                </ul>
+              </div>
+              <div className='status'>
+                <div className='status__tag'>
+                  <i className='bx bxs-circle' style={{ color: item.colorEnd }}></i> {item.status}
                 </div>
               </div>
             </div>
@@ -69,4 +106,6 @@ export default function ItemContest(props) {
       </ol>
     </div>
   );
-}
+};
+
+export default ItemContest;

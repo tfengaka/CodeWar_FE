@@ -1,94 +1,86 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Data from '../data/Data.json';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { getContests } from 'graphql/Queries';
+import { conversionURL } from './ConversionURL';
+import { format, parse } from 'date-fns';
 
-export default function ContentContest() {
+const ContentContest = () => {
   const location = useLocation();
   const pathName = location.pathname;
-  function conversionURL(str) {
-    // Chuyển hết sang chữ thường
-    str = str.toLowerCase();
 
-    // xóa dấu
-    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-    str = str.replace(/(đ)/g, 'd');
+  const colorStart = '#00dd55';
+  const colorEnd = '#ed4014';
 
-    // Xóa ký tự đặc biệt
-    str = str.replace(/([^0-9a-z-\s])/g, '');
+  const { loading, error, data } = useQuery(getContests);
+  if (loading) return <div className='loading'></div>;
+  if (error) return <div>Load data failed</div>;
 
-    // Xóa khoảng trắng thay bằng ký tự -
-    str = str.replace(/(\s+)/g, '-');
+  const itemStart = data?.contests
+    ?.filter(
+      (b) =>
+        '/contest/' + conversionURL(b.name) + '.' + b.id + '.html' === pathName &&
+        b.status === 'Đang diễn ra'
+    )
+    .map(({ id, name, des, startDate, endDate, status, createdBy }) => ({
+      id,
+      name,
+      des,
+      startDate,
+      endDate,
+      status,
+      createdBy,
+      colorStart,
+    }));
 
-    // xóa phần dự - ở đầu
-    str = str.replace(/^-+/g, '');
-
-    // xóa phần dư - ở cuối
-    str = str.replace(/-+$/g, '');
-
-    // return
-    return str;
-  }
-
-  const itemStart = Data.filter(
-    (b) =>
-      '/contest/' + conversionURL(b.title) + '.' + b.id + '.html' === pathName &&
-      b.text === 'Đang diễn ra'
-  ).map(({ id, title, content, timeFrom, timeEnd, day, creator, text, color }) => ({
-    id,
-    title,
-    content,
-    timeFrom,
-    timeEnd,
-    day,
-    creator,
-    text,
-    color,
-  }));
-
-  const itemEnd = Data.filter(
-    (b) =>
-      '/contest/' + conversionURL(b.title) + '.' + b.id + '.html' === pathName &&
-      b.text === 'Đã kết thúc'
-  ).map(({ id, title, content, timeFrom, timeEnd, day, creator, text, color }) => ({
-    id,
-    title,
-    content,
-    timeFrom,
-    timeEnd,
-    day,
-    creator,
-    text,
-    color,
-  }));
+  const itemEnd = data?.contests
+    .filter(
+      (b) =>
+        '/contest/' + conversionURL(b.name) + '.' + b.id + '.html' === pathName &&
+        b.status === 'Đã kết thúc'
+    )
+    .map(({ id, name, des, startDate, endDate, status, createdBy }) => ({
+      id,
+      name,
+      des,
+      startDate,
+      endDate,
+      status,
+      createdBy,
+      colorEnd,
+    }));
 
   return (
     <div className='content__container'>
       {itemStart.map((value) => (
         <div key={value.id} className='content__description'>
           <div className='content__card'>
-            <div className='content__card--head'>{value.title}</div>
+            <div className='content__card--head'>{value.name}</div>
             <div className='content__card--extra'>
-              <i className='bx bxs-circle' style={value}></i> {value.text}
+              <i className='bx bxs-circle' style={{ color: value.colorStart }}></i> {value.status}
             </div>
-            <div className='content__card--body'>{value.content}</div>
-            {/* <Link to={'/contest'}> */}
+            <div className='content__card--body'>{value.des}</div>
             <button className='content__card--button'>Làm bài</button>
-            {/* </Link> */}
           </div>
           <div className='content__table'>
             <div className='content__table--item'> Bắt đầu</div>
             <div className='content__table--item'> Kết thúc</div>
-            <div className='content__table--item'> Số ngày diễn ra</div>
+            {/* <div className='content__table--item'> Số ngày diễn ra</div> */}
             <div className='content__table--item'> Người tạo</div>
-            <div>{value.timeFrom}</div>
-            <div>{value.timeEnd}</div>
-            <div>{value.day}</div>
-            <div>{value.creator}</div>
+            <div>
+              {format(
+                parse(value.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                'dd-MM-yyyy h:mm aa'
+              )}
+            </div>
+            <div>
+              {format(
+                parse(value.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                'dd-MM-yyyy h:mm aa'
+              )}
+            </div>
+            {/* <div>{value.day}</div> */}
+            <div>{value.createdBy}</div>
           </div>
         </div>
       ))}
@@ -96,24 +88,36 @@ export default function ContentContest() {
       {itemEnd.map((value) => (
         <div key={value.id} className='content__description'>
           <div className='content__card'>
-            <div className='content__card--head'>{value.title}</div>
+            <div className='content__card--head'>{value.name}</div>
             <div className='content__card--extra'>
-              <i className='bx bxs-circle' style={value}></i> {value.text}
+              <i className='bx bxs-circle' style={{ color: value.colorEnd }}></i> {value.status}
             </div>
-            <div className='content__card--body'>{value.content}</div>
+            <div className='content__card--body'>{value.des}</div>
           </div>
           <div className='content__table'>
             <div className='content__table--item'> Bắt đầu</div>
             <div className='content__table--item'> Kết thúc</div>
-            <div className='content__table--item'> Số ngày diễn ra</div>
+            {/* <div className='content__table--item'> Số ngày diễn ra</div> */}
             <div className='content__table--item'> Người tạo</div>
-            <div>{value.timeFrom}</div>
-            <div>{value.timeEnd}</div>
-            <div>{value.day}</div>
-            <div>{value.creator}</div>
+            <div>
+              {format(
+                parse(value.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                'dd-MM-yyyy h:mm aa'
+              )}
+            </div>
+            <div>
+              {format(
+                parse(value.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()),
+                'dd-MM-yyyy h:mm aa'
+              )}
+            </div>
+            {/* <div>{value.day}</div> */}
+            <div>{value.createdBy}</div>
           </div>
         </div>
       ))}
     </div>
   );
-}
+};
+
+export default ContentContest;
