@@ -3,6 +3,8 @@ import axios from 'axios';
 import TestCase from 'features/problem/pages/TestCase';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import Modal from '../features/auth/client/Modal';
 import Button from './Button';
 
 const languageOptions = {
@@ -31,12 +33,18 @@ const languageOptions = {
 const ProblemSolve = (props) => {
   const location = useLocation();
   const { data } = location.state;
+  const { isLogged } = useAuth();
+  const [showModal, setShowModal] = React.useState(false);
   const [language, setLanguage] = React.useState(languageOptions.C);
   const [code, setCode] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [checkAllCase, setCheckAllCase] = React.useState(null);
 
-  const handleSubmit = async () => {
+  const handleRun = async () => {
+    if (!code) {
+      return;
+    }
+
     let program = null;
 
     try {
@@ -58,6 +66,13 @@ const ProblemSolve = (props) => {
       setCheckAllCase(result);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isLogged) {
+      setShowModal(true);
+      return;
     }
   };
 
@@ -119,11 +134,13 @@ const ProblemSolve = (props) => {
           />
           <TestCase data={data} testCase={checkAllCase} />
           <div className='editor_submit'>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={handleRun}>Chạy thử</Button>
+            <Button onClick={handleSubmit}>Nộp bài</Button>
           </div>
         </div>
       </div>
       <footer></footer>
+      {showModal && <Modal onShowModal={setShowModal} />}
     </div>
   );
 };

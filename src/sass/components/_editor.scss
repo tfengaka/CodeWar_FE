@@ -96,6 +96,10 @@
   &_submit {
     margin-top: 16px;
     @include flex(center, flex-end);
+
+    & > button {
+      margin-left: 15px;
+    }
   }
 }
 
@@ -115,15 +119,24 @@
   background-color: #232432;
   color: white;
 
-  & > h2 {
-    margin-left: 10px;
+  .header_test-case{
+    display: grid;
+    grid-template-columns: 10% 10% 80%;
+    & > button{
+      height: 50px;
+      background-color: #232432;
+      color: #fff;
+      font-size: large;
+      cursor: pointer;
+    };
+
+
   }
 }
 
 .test-case {
   display: grid;
-  grid-template-columns: 6% 94%;
-  margin-top: 10px;
+  grid-template-columns: 10% 90%;
 
   &_list {
     background-color: #1e1f26;
