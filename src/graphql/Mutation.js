@@ -9,7 +9,7 @@ export const SIGN_IN = gql`
 `;
 export const SIGN_UP = gql`
   mutation SIGN_UP($email: String!, $password: String!, $display_name: String!) {
-    createAccount(data: { email: $email, full_name: $display_name, password: $password }) {
+    createAccount(data: { email: $email, full_name: $display_name, password: $password, role: "user" }) {
       id
       email
       full_name
@@ -19,12 +19,7 @@ export const SIGN_UP = gql`
 `;
 
 export const SUBMIT_CODE = gql`
-  mutation SUBMIT_CODE(
-    $exerciseId: String!
-    $excuteTime: Float!
-    $memory: Integer!
-    $point: Float
-  ) {
+  mutation SUBMIT_CODE($exerciseId: String!, $excuteTime: Float!, $memory: Integer!, $point: Float) {
     insert_pratice_results(
       objects: { exerciseId: $exerciseId, excuteTime: $excuteTime, memory: $memory, point: $point }
     ) {

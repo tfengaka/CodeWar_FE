@@ -57,11 +57,8 @@ const ProblemSolve = (props) => {
             expected_output: data.output[index].content,
           };
 
-          return axios.post(
-            `http://localhost:2358/submissions/?base64_encoded=false&wait=true`,
-            program
-          );
-        })
+          return axios.post(`http://localhost:2358/submissions/?base64_encoded=false&wait=true`, program);
+        }),
       );
       setCheckAllCase(result);
     } catch (error) {
@@ -77,34 +74,31 @@ const ProblemSolve = (props) => {
   };
 
   return (
-    <div className='container'>
-      <div className='editor'>
-        <div className='editor_problem'>
-          <div className='editor_problem_header'>
+    <div className="container">
+      <div className="editor">
+        <div className="editor_problem">
+          <div className="editor_problem_header">
             <h3>{data?.name}</h3>
           </div>
-          <div className='editor_problem_body'>
-            <div className='editor_problem_body_content'>
+          <div className="editor_problem_body">
+            <div className="editor_problem_body_content">
               <h4>Đề bài</h4>
-              <pre>{data?.des}</pre>
+              <p>{data?.des}</p>
             </div>
           </div>
         </div>
       </div>
-      <div className='editor'>
-        <div className='editor_header'>
-          <div className='editor_header_language'>
+      <div className="editor">
+        <div className="editor_header">
+          <div className="editor_header_language">
             <span>Ngôn ngữ </span>
-            <div
-              className='editor_header_language_input'
-              onClick={() => setShowDropdown(!showDropdown)}
-            >
+            <div className="editor_header_language_input" onClick={() => setShowDropdown(!showDropdown)}>
               <span>{language.value}</span>
-              <i className='bx bx-chevron-down'></i>
+              <i className="bx bx-chevron-down"></i>
               <div className={`editor_header_language_dropdown ${showDropdown ? 'active' : ''}`}>
                 {Object.keys(languageOptions).map((key, index) => (
                   <div
-                    className='editor_header_language_dropdown_item'
+                    className="editor_header_language_dropdown_item"
                     key={index}
                     onClick={() => setLanguage(languageOptions[key])}
                   >
@@ -115,11 +109,11 @@ const ProblemSolve = (props) => {
             </div>
           </div>
         </div>
-        <div className='editor_body'>
+        <div className="editor_body">
           <Editor
-            className='code-area'
-            width='100%'
-            height='500px'
+            className="code-area"
+            width="100%"
+            height="500px"
             options={{
               minimap: {
                 enabled: false,
@@ -128,13 +122,15 @@ const ProblemSolve = (props) => {
               cursorStyle: 'line',
               wordWrap: 'on',
             }}
-            theme='vs-dark'
+            theme="vs-dark"
             language={language.value}
             onChange={(value, event) => setCode(value)}
           />
           <TestCase data={data} testCase={checkAllCase} />
-          <div className='editor_submit'>
-            <Button onClick={handleRun}>Chạy thử</Button>
+          <div className="editor_submit">
+            <Button onClick={handleRun} backgroundColor="green">
+              Chạy thử
+            </Button>
             <Button onClick={handleSubmit}>Nộp bài</Button>
           </div>
         </div>
