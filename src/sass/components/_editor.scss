@@ -4,6 +4,7 @@
   border-radius: 6px;
   padding: 16px;
   margin-bottom: 32px;
+
   &_problem {
     padding: 8px;
 
@@ -94,6 +95,10 @@
   &_submit {
     margin-top: 16px;
     @include flex(center, flex-end);
+
+    & > button {
+      margin-left: 15px;
+    }
   }
 }
 
@@ -105,5 +110,55 @@
   to {
     opacity: 1;
     height: 160px;
+  }
+}
+
+.container_test-case {
+  margin-top: 10px;
+  background-color: #232432;
+  color: white;
+
+  .header_test-case{
+    display: grid;
+    grid-template-columns: 10% 10% 80%;
+    & > button{
+      height: 50px;
+      background-color: #232432;
+      color: #fff;
+      font-size: large;
+      cursor: pointer;
+    };
+
+
+  }
+}
+
+.test-case {
+  display: grid;
+  grid-template-columns: 10% 90%;
+
+  &_list {
+    background-color: #1e1f26;
+    height: 150px;
+    overflow: auto;
+
+    & > button {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      background-color: #1e1f26;
+      color: white;
+      cursor: pointer;
+      border-bottom: solid 2px #ebebeb;
+    }
+
+    & > button:hover {
+      background-color: #3b3c54;
+    }
+  }
+
+  &_content {
+    padding: 5px 0px 0px 10px;
+    background-color: #3b3c54;
   }
 }

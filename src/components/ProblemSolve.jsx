@@ -1,115 +1,119 @@
 import Editor from '@monaco-editor/react';
 import axios from 'axios';
+import TestCase from 'features/problem/pages/TestCase';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import Modal from '../features/auth/client/Modal';
 import Button from './Button';
 
-const languageOptions = [
-  {
-    id: 1,
+const languageOptions = {
+  C: {
+    id: 75,
     value: 'c',
   },
-  {
-    id: 2,
+  CPP: {
+    id: 76,
     value: 'cpp',
   },
-  {
-    id: 3,
+  CSharp: {
+    id: 17,
     value: 'csharp',
   },
-  {
-    id: 4,
+  Java: {
+    id: 62,
     value: 'java',
   },
-  {
-    id: 5,
+  JavaScript: {
+    id: 63,
     value: 'javascript',
   },
-];
+};
 
 const ProblemSolve = (props) => {
-  const [language, setLanguage] = React.useState('c');
+  const location = useLocation();
+  const { data } = location.state;
+  const { isLogged } = useAuth();
+  const [showModal, setShowModal] = React.useState(false);
+  const [language, setLanguage] = React.useState(languageOptions.C);
   const [code, setCode] = React.useState('');
   const [showDropdown, setShowDropdown] = React.useState(false);
+  const [checkAllCase, setCheckAllCase] = React.useState(null);
+
+  const handleRun = async () => {
+    if (!code) {
+      return;
+    }
+
+    let program = null;
+
+    try {
+      const result = await Promise.all(
+        data.input.map(async (item, index) => {
+          program = {
+            stdin: item.content,
+            source_code: code,
+            language_id: language.id,
+            expected_output: data.output[index].content,
+          };
+
+          return axios.post(`http://localhost:2358/submissions/?base64_encoded=false&wait=true`, program);
+        }),
+      );
+      setCheckAllCase(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async () => {
-    let program = {
-      stdin: '1 2',
-      files: [
-        {
-          name: `main.${language}`,
-          content: code,
-        },
-      ],
-    };
-    axios.defaults.headers.common['Authorization'] = 'Token 256d9800-329c-40ee-b483-708344d30ec5';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-    const res = await axios.post(
-      `https://corsanywhere.herokuapp.com/https://glot.io/api/run/${language}/latest`,
-      program
-    );
-    console.log(res);
+    if (!isLogged) {
+      setShowModal(true);
+      return;
+    }
   };
 
   return (
-    <div className='container'>
-      <div className='editor'>
-        <div className='editor_problem'>
-          <div className='editor_problem_header'>
-            <h3>Tiêu Đề</h3>
+    <div className="container">
+      <div className="editor">
+        <div className="editor_problem">
+          <div className="editor_problem_header">
+            <h3>{data?.name}</h3>
           </div>
-          <div className='editor_problem_body'>
-            <div className='editor_problem_body_content'>
+          <div className="editor_problem_body">
+            <div className="editor_problem_body_content">
               <h4>Đề bài</h4>
-              <p>
-                Viết chương trình cho phép nhập số nguyên a và b từ bàn phím. Tính và in kết quả a +
-                b
-              </p>
-            </div>
-            <div className='editor_problem_body_content'>
-              <h4>Dữ liệu vào</h4>
-              <ul>
-                <li>2 số nguyên aa và bb cách nhau 1 dấu cách</li>
-              </ul>
-            </div>
-            <div className='editor_problem_body_content'>
-              <h4>Dữ liệu ra</h4>
-              <ul>
-                <li>Tổng của a và b</li>
-              </ul>
+              <p>{data?.des}</p>
             </div>
           </div>
         </div>
       </div>
-      <div className='editor'>
-        <div className='editor_header'>
-          <div className='editor_header_language'>
+      <div className="editor">
+        <div className="editor_header">
+          <div className="editor_header_language">
             <span>Ngôn ngữ </span>
-            <div
-              className='editor_header_language_input'
-              onClick={() => setShowDropdown(!showDropdown)}
-            >
-              <span>{language}</span>
-              <i className='bx bx-chevron-down'></i>
+            <div className="editor_header_language_input" onClick={() => setShowDropdown(!showDropdown)}>
+              <span>{language.value}</span>
+              <i className="bx bx-chevron-down"></i>
               <div className={`editor_header_language_dropdown ${showDropdown ? 'active' : ''}`}>
-                {languageOptions.map((item) => (
+                {Object.keys(languageOptions).map((key, index) => (
                   <div
-                    className='editor_header_language_dropdown_item'
-                    key={item.id}
-                    onClick={() => setLanguage(item.value)}
+                    className="editor_header_language_dropdown_item"
+                    key={index}
+                    onClick={() => setLanguage(languageOptions[key])}
                   >
-                    {item.value}
+                    {languageOptions[key].value}
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
-        <div className='editor_body'>
+        <div className="editor_body">
           <Editor
-            className='code-area'
-            width='100%'
-            height='500px'
+            className="code-area"
+            width="100%"
+            height="500px"
             options={{
               minimap: {
                 enabled: false,
@@ -118,16 +122,21 @@ const ProblemSolve = (props) => {
               cursorStyle: 'line',
               wordWrap: 'on',
             }}
-            theme='vs-dark'
-            language={language}
+            theme="vs-dark"
+            language={language.value}
             onChange={(value, event) => setCode(value)}
           />
-          <div className='editor_submit'>
-            <Button onClick={handleSubmit}>Submit</Button>
+          <TestCase data={data} testCase={checkAllCase} />
+          <div className="editor_submit">
+            <Button onClick={handleRun} backgroundColor="green">
+              Chạy thử
+            </Button>
+            <Button onClick={handleSubmit}>Nộp bài</Button>
           </div>
         </div>
       </div>
       <footer></footer>
+      {showModal && <Modal onShowModal={setShowModal} />}
     </div>
   );
 };

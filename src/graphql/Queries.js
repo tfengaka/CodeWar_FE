@@ -11,12 +11,17 @@ export const GET_USER_INFO = gql`
   }
 `;
 
-export const getExercises = gql`
-  query getExercises {
+export const GET_ALL_EXERCISE = gql`
+  query GET_ALL_EXERCISE {
     exercises {
       id
       level
       name
+      topic
+      input
+      output
+      des
+      updatedAt
     }
   }
 `;

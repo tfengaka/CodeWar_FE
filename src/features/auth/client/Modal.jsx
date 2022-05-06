@@ -18,7 +18,7 @@ const Modal = ({ onShowModal }) => {
         <div className='modal__header'>
           <h3 className='modal__header__title'>{isRegister ? 'Đăng Ký' : 'Đăng Nhập'}</h3>
           <button className='modal__close' onClick={() => onShowModal(false)}>
-            X
+            <i className='bx bx-x'></i>
           </button>
         </div>
         <div className='divider'></div>
