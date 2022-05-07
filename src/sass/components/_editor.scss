@@ -1,21 +1,23 @@
 .editor {
   background-color: #fff;
   box-shadow: $box-shadow;
-  border-radius: 6px;
-  padding: 16px;
+  border-radius: 4px;
+  padding: 8px;
   margin-bottom: 32px;
 
   &_problem {
     padding: 8px;
-
     &_header {
       text-align: center;
     }
     &_body {
       margin-top: 16px;
-
       &_content {
-        margin: 24px 0;
+        padding: 0 8px;
+        pre {
+          font-family: 'Roboto', sans-serif;
+          line-height: 36px;
+        }
         & > h4 {
           text-decoration: underline;
         }
@@ -32,11 +34,11 @@
 
   &_header {
     @include flex(center, space-between);
-
+    font-family: 'Roboto', sans-serif;
     &_language {
       @include flex(center, center);
       padding: 8px;
-      border-radius: 6px;
+      border-radius: 4px;
       margin-right: 8px;
       margin-bottom: 8px;
       &_input {
@@ -93,7 +95,11 @@
     }
   }
   &_submit {
-    margin-top: 16px;
+    background-color: #282a36;
+    border-top: 1px solid #20222c;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 8px;
     @include flex(center, flex-end);
 
     & > button {
@@ -101,7 +107,10 @@
     }
   }
 }
-
+.code-area {
+  width: 100%;
+  min-height: 450px;
+}
 @keyframes slider {
   from {
     opacity: 0;
@@ -110,55 +119,5 @@
   to {
     opacity: 1;
     height: 160px;
-  }
-}
-
-.container_test-case {
-  margin-top: 10px;
-  background-color: #232432;
-  color: white;
-
-  .header_test-case{
-    display: grid;
-    grid-template-columns: 10% 10% 80%;
-    & > button{
-      height: 50px;
-      background-color: #232432;
-      color: #fff;
-      font-size: large;
-      cursor: pointer;
-    };
-
-
-  }
-}
-
-.test-case {
-  display: grid;
-  grid-template-columns: 10% 90%;
-
-  &_list {
-    background-color: #1e1f26;
-    height: 150px;
-    overflow: auto;
-
-    & > button {
-      width: 100%;
-      height: 40px;
-      text-align: center;
-      background-color: #1e1f26;
-      color: white;
-      cursor: pointer;
-      border-bottom: solid 2px #ebebeb;
-    }
-
-    & > button:hover {
-      background-color: #3b3c54;
-    }
-  }
-
-  &_content {
-    padding: 5px 0px 0px 10px;
-    background-color: #3b3c54;
   }
 }

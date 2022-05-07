@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import LogoUTC from '../../../assets/LogoUTC.png';
+import LogoUTC from 'assets/images/logo-utc.png';
 
 export default function ItemContest(props) {
   const options = props.itemProps;
@@ -36,31 +36,29 @@ export default function ItemContest(props) {
   }
 
   return (
-    <div className='panel__body'>
+    <div className="panel__body">
       <ol>
         {options.map((item) => (
-          <li key={item.id} className='body__item'>
-            <div className='row__flex'>
-              <img src={LogoUTC} alt='' className='logo' />
-              <div className='content__main'>
-                <p className='title'>
-                  <Link to={'/contest/' + conversionURL(item.title) + '.' + item.id + '.html'}>
-                    {item.title}
-                  </Link>
+          <li key={item.id} className="body__item">
+            <div className="row__flex">
+              <img src={LogoUTC} alt="" className="logo" />
+              <div className="content__main">
+                <p className="title">
+                  <Link to={'/contest/' + conversionURL(item.title) + '.' + item.id + '.html'}>{item.title}</Link>
                 </p>
-                <ul className='detail'>
+                <ul className="detail">
                   <li>
-                    <i className='bx bx-calendar'></i>
+                    <i className="bx bx-calendar"></i>
                     {item.timeFrom}
                   </li>
                   <li>
-                    <i className='bx bx-time'></i> {item.day}
+                    <i className="bx bx-time"></i> {item.day}
                   </li>
                 </ul>
               </div>
-              <div className='status'>
-                <div className='status__tag'>
-                  <i className='bx bxs-circle' style={item}></i> {item.text}
+              <div className="status">
+                <div className="status__tag">
+                  <i className="bx bxs-circle" style={item}></i> {item.text}
                 </div>
               </div>
             </div>
