@@ -1,6 +1,6 @@
 $main-color: #ec572e;
 $main-background: #ffffff;
-
+$bg-img: url('../assets/images/background.png');
 $text-main-color: #000;
 $text-second-color: #464646;
 $text-white: #fff;
@@ -29,4 +29,11 @@ $colors: (
   display: flex;
   align-items: $align-item;
   justify-content: $justify-content;
+}
+
+@font-face {
+  font-family: 'SF_Mono';
+  src: url('../assets/fonts/SFMonoRegular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }

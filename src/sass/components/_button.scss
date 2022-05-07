@@ -15,8 +15,12 @@
     width: 100%;
     padding: 1rem 2rem;
   }
-
   &:hover {
     opacity: 0.8;
+  }
+  &.disabled {
+    opacity: 0.8;
+    background-color: gray;
+    cursor: not-allowed;
   }
 }
