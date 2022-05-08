@@ -73,12 +73,7 @@ const ProblemSolve = (props) => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!isLogged) {
-      setShowModal(true);
-      return;
-    }
-  };
+  const handleSubmit = () => {};
 
   return (
     <div className="container">
@@ -95,10 +90,10 @@ const ProblemSolve = (props) => {
           </div>
         </div>
       </div>
-      <div className="editor">
+      <div className="editor code_area">
         <div className="editor_header">
           <div className="editor_header_language">
-            <span>Ngôn ngữ </span>
+            <span>Change Language </span>
             <div className="editor_header_language_input" onClick={() => setShowDropdown(!showDropdown)}>
               <span>{language.value}</span>
               <i className="bx bx-chevron-down"></i>
@@ -132,14 +127,15 @@ const ProblemSolve = (props) => {
           />
           <TestCase testCaseData={data} resultData={checkAllCase} />
           <div className="editor_submit">
-            <Button onClick={handleRun} backgroundColor="green">
+            <Button onClick={handleRun} backgroundColor="green" isDisabled={!isLogged}>
               Chạy thử
             </Button>
-            <Button onClick={handleSubmit}>Nộp bài</Button>
+            <Button onClick={handleSubmit} isDisabled={!isLogged}>
+              Nộp bài
+            </Button>
           </div>
         </div>
       </div>
-      <footer></footer>
       {showModal && <Modal onShowModal={setShowModal} />}
     </div>
   );
@@ -155,10 +151,10 @@ const TestCase = (props) => {
   return (
     <div className="testcase">
       <div className="testcase_header">
-        <div className={`testcase_header_item ${currentTab === 0 && 'active'}`} onClick={() => setCurrentTab(0)}>
+        <div className={`testcase_header_item ${currentTab === 0 ? 'active' : ''}`} onClick={() => setCurrentTab(0)}>
           Test Case
         </div>
-        <div className={`testcase_header_item ${currentTab === 1 && 'active'}`} onClick={() => setCurrentTab(1)}>
+        <div className={`testcase_header_item ${currentTab === 1 ? 'active' : ''}`} onClick={() => setCurrentTab(1)}>
           Console
         </div>
       </div>
@@ -166,7 +162,7 @@ const TestCase = (props) => {
         <div className="testcase_body_list">
           {renderTestCase.map((item, index) => (
             <div
-              className={`testcase_body_list_item ${currentCase === index && 'active'}`}
+              className={`testcase_body_list_item ${currentCase === index ? 'active' : ''}`}
               key={index}
               onClick={() => setCurrentCase(index)}
             >
@@ -185,7 +181,9 @@ const TestCase = (props) => {
             <div className="testcase_body_result_wrapper">
               <div className="testcase_body_result_item">
                 <span>Dữ liệu vào:</span>
-                <div className="testcase_body_result_item_value">{testCaseData.input[currentCase]?.content}</div>
+                <div className="testcase_body_result_item_value">
+                  {testCaseData.input[currentCase] ? testCaseData.input[currentCase]?.content : '[]'}
+                </div>
               </div>
 
               <div className="testcase_body_result_item">

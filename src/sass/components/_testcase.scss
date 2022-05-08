@@ -1,10 +1,10 @@
 .testcase {
   font-family: 'Roboto', sans-serif;
   background-color: #20222c;
-  color: #fff;
   user-select: none;
   &_header {
     @include flex(center, none);
+    color: #fff;
     border-bottom: 1px solid #a774d6;
     &_item {
       @include flex(center, center);
@@ -25,7 +25,7 @@
     display: flex;
     &_list {
       flex: 0 0 auto;
-      min-height: 200px;
+      height: 191px;
       overflow-y: auto;
       overflow-x: hidden;
       &::-webkit-scrollbar {
@@ -42,8 +42,7 @@
       &_item {
         @include flex(center, space-between);
         width: 120px;
-        padding: 1rem 2rem;
-        text-align: center;
+        padding: 1.2rem 2rem;
         transition: all 0.25s ease;
         cursor: pointer;
         i {
@@ -53,6 +52,7 @@
           background-color: rgba(241, 225, 255, 0.1);
         }
         &.active {
+          color: #fff;
           background-color: rgba(241, 225, 255, 0.3);
         }
       }
@@ -63,8 +63,8 @@
       background-color: #282a36;
       &_wrapper {
         display: grid;
-        grid-template-columns: auto auto;
-        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
       }
       &_item {
         @include flex(center, auto);
