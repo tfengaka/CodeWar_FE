@@ -1,6 +1,6 @@
 $main-color: #ec572e;
 $main-background: #ffffff;
-
+$bg-img: url('../assets/images/background.png');
 $text-main-color: #000;
 $text-second-color: #464646;
 $text-white: #fff;
@@ -15,8 +15,8 @@ $input-color: #ccc;
 $item-color: rgba(149, 157, 165, 0.2);
 
 $colors: (
-  'blue': #4267b2,
-  'green': #5db85c,
+  'blue': #2d8cf0,
+  'green': #19be6b,
   'orange': #fbb96b,
   'pink': #fe7e73,
   'white': #fff,
@@ -29,4 +29,11 @@ $colors: (
   display: flex;
   align-items: $align-item;
   justify-content: $justify-content;
+}
+
+@font-face {
+  font-family: 'SF_Mono';
+  src: url('../assets/fonts/SFMonoRegular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }

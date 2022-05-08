@@ -23,7 +23,7 @@ function LoginPage() {
     <div className='login'>
       <div className='container'>
         <div className='login__title'>
-          <span>ĐĂNG NHẬP</span>
+          <span>Đăng Nhập</span>
         </div>
         <div className='divider'></div>
         <div className='login__body'>
