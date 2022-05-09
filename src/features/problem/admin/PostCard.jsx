@@ -4,46 +4,40 @@ import Button from 'components/Button';
 
 const PostCard = () => {
   return (
-    <div className='card '>
-      <h4>Tạo bài toán</h4>
-      <form className='card__info'>
-        <div className='card__info-item'>
+    <div className="card ">
+      <form className="card__info">
+        <h4>Tạo bài toán</h4>
+        <div className="card__info-item">
           <label>Tiêu đề: </label>
-          <input className='card__info__text'></input>
+          <input className="card__info__text"></input>
         </div>
-        <div className='card__info-item'>
+        <div className="card__info-item">
           <label>Nội dung: </label>
-          <input className='card__info__text'></input>
+          <textarea rows="10" className="card__info__text" />
         </div>
-        <div className='card__info-item'>
+        <div className="card__info-item">
           <label>Mức: </label>
-          <input className='card__info__text'></input>
+          <input className="card__info__text"></input>
         </div>
-        <div className='card__info-item'>
-          <label>Đầu ra: </label>
-          <input className='card__info__text'></input>
-        </div>
-        <div className='card__info-item'>
-          <label>Đầu vào: </label>
-          <input className='card__info__text'></input>
-        </div>
-        <div className='card__info-item'>
+
+        <div className="card__info-item">
           <label>Từ khóa: </label>
-          <input className='card__info__text'></input>
+          <input className="card__info__text"></input>
         </div>
-        <div className='card__info-item'>
-          <label>Trạng thái: </label>
-          <input className='card__info__text'></input>
+        <div className="card__info-item">
+          <label>Đầu ra: </label>
         </div>
-        <div className='card__info-item'>
-          <label>Ngày tạo: </label>
-          <input className='card__info__text'></input>
+        <div className="card__info-item">
+          <Button>Add case</Button>
         </div>
-        <div className='card__info-item'>
+
+        <div className="card__info-item">
           <label>Được tạo bởi: </label>
           admin
         </div>
-        <Button>Lưu bài toán</Button>
+        <div className="card__info-item">
+          <Button>Lưu bài toán</Button>
+        </div>
       </form>
     </div>
   );
