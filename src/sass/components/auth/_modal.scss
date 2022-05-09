@@ -23,7 +23,7 @@
     position: relative;
     font-size: 1.8rem;
     width: 100%;
-    padding: 14px 16px;
+    padding-top: 16px;
     text-align: center;
     user-select: none;
   }
@@ -31,7 +31,7 @@
   &__close {
     position: absolute;
     right: 8px;
-    top: 16px;
+    top: 18px;
     background-color: transparent;
     color: #999;
     overflow: hidden;
@@ -39,6 +39,9 @@
 
     &:hover {
       color: #333;
+    }
+    i {
+      font-size: 25px;
     }
   }
 
@@ -55,7 +58,6 @@
     &-control {
       margin-bottom: 16px;
       width: 100%;
-
 
       input {
         font-size: 1.6rem;
@@ -76,7 +78,6 @@
           background-color: #fff;
           border-color: lightcoral;
           box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
-          ;
         }
       }
     }

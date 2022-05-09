@@ -1,9 +1,11 @@
 @import './variables';
 @import './base';
+@import './common';
 
 @import './components/header';
 @import './components/button';
 @import './components/editor';
+@import './components/testcase';
 
 @import './components/auth/loginpage';
 @import './components/auth/modal';
@@ -13,4 +15,4 @@
 @import './components/contest/contentContest';
 @import './components/contest/createContest';
 
-@import './components/problem/problem';
+@import './components/problem';

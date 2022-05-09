@@ -16,17 +16,12 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background-color: #eeeeee;
-}
-
-html,
-body {
-  height: 100%;
 }
 
 img,
@@ -63,91 +58,13 @@ a {
   color: unset;
 }
 
-a:hover {
-  color: $main-color;
-}
-
 button {
   border: none;
   outline: none;
   overflow: hidden;
 }
 
-@each $color, $val in $colors {
-  .color-#{$color} {
-    color: $val;
-  }
-
-  .bg-#{$color} {
-    background-color: $val;
-  }
-}
-
-.container {
-  width: 100%;
-  padding: 0 45px;
-}
-
-.main-content {
-  margin-top: $header-height + 20px;
-  margin-bottom: 2rem;
-}
-
-.message-error {
-  color: red;
-  font-size: 1.2rem;
-  padding: 6px;
-}
-
-.loading {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: relative;
-  margin: 0 auto;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    border: 2px solid transparent;
-    border-right-color: $text-white;
-    border-bottom-color: $text-white;
-    animation: circleLoading 1s forwards infinite linear;
-  }
-}
 footer {
-  height: 1px;
+  min-height: 1px;
   width: 100%;
-}
-@keyframes circleLoading {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-// scroll customize
-/* width */
-::-webkit-scrollbar {
-  width: 7px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #333;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #777;
 }

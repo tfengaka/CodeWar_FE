@@ -1,8 +1,9 @@
-import Editor from '@monaco-editor/react';
+import MonacoEditor, { useMonaco } from '@monaco-editor/react';
 import axios from 'axios';
-import TestCase from 'features/problem/pages/TestCase';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import Modal from '../features/auth/client/Modal';
 import Button from './Button';
 
 const languageOptions = {
@@ -31,14 +32,29 @@ const languageOptions = {
 const ProblemSolve = (props) => {
   const location = useLocation();
   const { data } = location.state;
+
+  const { isLogged } = useAuth();
+  const [showModal, setShowModal] = React.useState(false);
+  const [showDropdown, setShowDropdown] = React.useState(false);
+  const monaco = useMonaco();
+
   const [language, setLanguage] = React.useState(languageOptions.C);
   const [code, setCode] = React.useState('');
-  const [showDropdown, setShowDropdown] = React.useState(false);
   const [checkAllCase, setCheckAllCase] = React.useState(null);
 
-  const handleSubmit = async () => {
-    let program = null;
+  React.useEffect(() => {
+    if (monaco)
+      import('monaco-themes/themes/Dracula.json').then((data) => {
+        monaco.editor.defineTheme('dracula', data);
+        monaco.editor.setTheme('dracula');
+      });
+  }, [monaco]);
 
+  const handleRun = async () => {
+    if (!code) {
+      return;
+    }
+    let program;
     try {
       const result = await Promise.all(
         data.input.map(async (item, index) => {
@@ -48,12 +64,8 @@ const ProblemSolve = (props) => {
             language_id: language.id,
             expected_output: data.output[index].content,
           };
-
-          return axios.post(
-            `http://localhost:2358/submissions/?base64_encoded=false&wait=true`,
-            program
-          );
-        })
+          return axios.post(`http://localhost:2358/submissions/?base64_encoded=false&wait=true`, program);
+        }),
       );
       setCheckAllCase(result);
     } catch (error) {
@@ -61,35 +73,34 @@ const ProblemSolve = (props) => {
     }
   };
 
+  const handleSubmit = () => {};
+
   return (
-    <div className='container'>
-      <div className='editor'>
-        <div className='editor_problem'>
-          <div className='editor_problem_header'>
+    <div className="container">
+      <div className="editor">
+        <div className="editor_problem">
+          <div className="editor_problem_header">
             <h3>{data?.name}</h3>
           </div>
-          <div className='editor_problem_body'>
-            <div className='editor_problem_body_content'>
+          <div className="editor_problem_body">
+            <div className="editor_problem_body_content">
               <h4>Đề bài</h4>
               <pre>{data?.des}</pre>
             </div>
           </div>
         </div>
       </div>
-      <div className='editor'>
-        <div className='editor_header'>
-          <div className='editor_header_language'>
-            <span>Ngôn ngữ </span>
-            <div
-              className='editor_header_language_input'
-              onClick={() => setShowDropdown(!showDropdown)}
-            >
+      <div className="editor code_area">
+        <div className="editor_header">
+          <div className="editor_header_language">
+            <span>Change Language </span>
+            <div className="editor_header_language_input" onClick={() => setShowDropdown(!showDropdown)}>
               <span>{language.value}</span>
-              <i className='bx bx-chevron-down'></i>
+              <i className="bx bx-chevron-down"></i>
               <div className={`editor_header_language_dropdown ${showDropdown ? 'active' : ''}`}>
                 {Object.keys(languageOptions).map((key, index) => (
                   <div
-                    className='editor_header_language_dropdown_item'
+                    className="editor_header_language_dropdown_item"
                     key={index}
                     onClick={() => setLanguage(languageOptions[key])}
                   >
@@ -100,30 +111,136 @@ const ProblemSolve = (props) => {
             </div>
           </div>
         </div>
-        <div className='editor_body'>
-          <Editor
-            className='code-area'
-            width='100%'
-            height='500px'
+        <div className="editor_body">
+          <MonacoEditor
+            className="code-area"
             options={{
               minimap: {
                 enabled: false,
               },
-              fontSize: 16,
-              cursorStyle: 'line',
-              wordWrap: 'on',
+              fontFamily: 'SF_Mono',
+              fontSize: 14,
             }}
-            theme='vs-dark'
+            theme="dracula"
             language={language.value}
             onChange={(value, event) => setCode(value)}
           />
-          <TestCase data={data} testCase={checkAllCase} />
-          <div className='editor_submit'>
-            <Button onClick={handleSubmit}>Submit</Button>
+          <TestCase testCaseData={data} resultData={checkAllCase} />
+          <div className="editor_submit">
+            <Button onClick={handleRun} backgroundColor="green" isDisabled={!isLogged}>
+              Chạy thử
+            </Button>
+            <Button onClick={handleSubmit} isDisabled={!isLogged}>
+              Nộp bài
+            </Button>
           </div>
         </div>
       </div>
-      <footer></footer>
+      {showModal && <Modal onShowModal={setShowModal} />}
+    </div>
+  );
+};
+
+const TestCase = (props) => {
+  const { testCaseData, resultData } = props;
+
+  const [currentCase, setCurrentCase] = React.useState(0);
+  const [currentTab, setCurrentTab] = React.useState(0);
+  const renderTestCase = resultData || testCaseData.output;
+
+  return (
+    <div className="testcase">
+      <div className="testcase_header">
+        <div className={`testcase_header_item ${currentTab === 0 ? 'active' : ''}`} onClick={() => setCurrentTab(0)}>
+          Test Case
+        </div>
+        <div className={`testcase_header_item ${currentTab === 1 ? 'active' : ''}`} onClick={() => setCurrentTab(1)}>
+          Console
+        </div>
+      </div>
+      <div className="testcase_body">
+        <div className="testcase_body_list">
+          {renderTestCase.map((item, index) => (
+            <div
+              className={`testcase_body_list_item ${currentCase === index ? 'active' : ''}`}
+              key={index}
+              onClick={() => setCurrentCase(index)}
+            >
+              <span>Case {index + 1}</span>
+              {resultData &&
+                (item.data.status.description === 'Accepted' ? (
+                  <i className="bx bxs-check-circle color-green"></i>
+                ) : (
+                  <i className="bx bxs-x-circle color-red"></i>
+                ))}
+            </div>
+          ))}
+        </div>
+        <div className="testcase_body_result">
+          {currentTab === 0 && (
+            <div className="testcase_body_result_wrapper">
+              <div className="testcase_body_result_item">
+                <span>Dữ liệu vào:</span>
+                <div className="testcase_body_result_item_value">
+                  {testCaseData.input[currentCase] ? testCaseData.input[currentCase]?.content : '[]'}
+                </div>
+              </div>
+
+              <div className="testcase_body_result_item">
+                <span>Thời gian chạy:</span>
+                <div className="testcase_body_result_item_value">
+                  {resultData && resultData[currentCase].data.time
+                    ? resultData[currentCase].data.time * 1000 + ' ms'
+                    : '0 ms'}
+                </div>
+              </div>
+              <div className="testcase_body_result_item">
+                <span>Kết quả kỳ vọng:</span>
+                <div className="testcase_body_result_item_value">{testCaseData.output[currentCase]?.content}</div>
+              </div>
+              <div className="testcase_body_result_item">
+                <span>Bộ nhớ sử dụng:</span>
+                <div className="testcase_body_result_item_value">
+                  {resultData && resultData[currentCase].data.memory
+                    ? resultData[currentCase].data.memory + ' KB'
+                    : '0 KB'}
+                </div>
+              </div>
+              <div className="testcase_body_result_item">
+                <span>Kết quả chạy:</span>
+                <div className="testcase_body_result_item_value">
+                  {resultData && resultData[currentCase].data.stdout ? resultData[currentCase].data.stdout : '[]'}
+                </div>
+              </div>
+              <div className="testcase_body_result_item">
+                <span>Trạng thái:</span>
+                <div className="testcase_body_result_item_value">
+                  {resultData ? resultData[currentCase].data.status.description : 'None'}
+                </div>
+              </div>
+            </div>
+          )}
+          {currentTab === 1 && (
+            <div className="testcase_body_result_console">
+              {resultData && resultData[currentCase].data.stdout ? (
+                <div className="testcase_body_result_item">
+                  <p>{resultData[currentCase].data.stdout}</p>
+                </div>
+              ) : (
+                <div className="message-error">
+                  {resultData ? (
+                    resultData[currentCase].data.stderr || resultData[currentCase].data.compile_output
+                  ) : (
+                    <div className="testcase_body_result_console_empty">
+                      <span>EMPTY CONSOLE</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
