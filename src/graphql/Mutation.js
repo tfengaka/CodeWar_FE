@@ -27,3 +27,23 @@ export const SUBMIT_CODE = gql`
     }
   }
 `;
+
+export const INSERT_PROBLEM = gql`
+  mutation INSERT_PROBLEM(
+    $name: String!
+    $des: String!
+    $level: Integer!
+    $image: String!
+    $topic: String!
+    $status: String!
+  ) {
+    exercises(data: { name: $name, des: $des, level: $level, image: $image, topic: $topic, status: $status }) {
+      name
+      des
+      level
+      image
+      topic
+      status
+    }
+  }
+`;
