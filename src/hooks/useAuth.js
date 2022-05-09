@@ -87,6 +87,7 @@ function useAuthProvider() {
       },
       onError: (error) => {
         console.log(error.message);
+        setIsLogged(false);
         setLoading(false);
       },
     });
