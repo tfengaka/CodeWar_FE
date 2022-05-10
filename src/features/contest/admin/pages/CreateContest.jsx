@@ -8,6 +8,13 @@ const CreateContest = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [questionList, setQuestionList] = useState([{ question: '' }]);
 
+  const handleQuestionChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...questionList];
+    list[index][name] = value;
+    setQuestionList(list);
+  };
+
   const handleQuestionAdd = () => {
     setQuestionList([...questionList, { question: '' }]);
   };
@@ -17,6 +24,7 @@ const CreateContest = () => {
     list.splice(index, 1);
     setQuestionList(list);
   };
+
   return (
     <>
       <div className="create_container">
@@ -61,10 +69,18 @@ const CreateContest = () => {
               </div>
             </li>
             {questionList.map((item, index) => (
-              <li>
+              <li key={index}>
                 <h3>Câu hỏi</h3>
-                <div key={index} className="create_card--input">
-                  <textarea autoComplete="off" spellCheck="false" placeholder="Câu hỏi"></textarea>
+                <div className="create_card--input">
+                  <textarea
+                    name="question"
+                    autoComplete="off"
+                    spellCheck="false"
+                    placeholder="Câu hỏi"
+                    value={item.question}
+                    onChange={(e) => handleQuestionChange(e, index)}
+                    required
+                  ></textarea>
                 </div>
                 <div className="create_card--button">
                   {questionList.length - 1 === index && questionList.length < 4 && (
