@@ -4,9 +4,9 @@
   box-shadow: $box-shadow;
   overflow: auto;
   white-space: nowrap;
-  padding: 15px;
+  padding: 15px 0;
   margin: 15px;
-  width: 50%;
+  width: 44%;
   .create_description {
     display: flex;
     .create_card {
@@ -18,7 +18,7 @@
         border-radius: 4px;
         user-select: none;
         margin: 10px;
-        width: 300%;
+        width: 250%;
         textarea {
           padding: 5px;
           width: 100%;
@@ -28,6 +28,37 @@
         input[type='text'] {
           padding: 5px;
           width: 100%;
+        }
+      }
+      &--button {
+        text-align: right;
+        width: 255%;
+        .btnAdd {
+          background-color: green;
+          color: $text-white;
+          font-size: 1.5rem;
+          margin: 0 10px;
+          cursor: pointer;
+          border-radius: 4px;
+          padding: 4px 15px;
+          opacity: 0.9;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+        .btnRemove {
+          background-color: red;
+          color: $text-white;
+          font-size: 1.5rem;
+          margin: 0 10px;
+          cursor: pointer;
+          border-radius: 4px;
+          padding: 4px 15px;
+
+          &:hover {
+            opacity: 0.8;
+          }
         }
       }
     }
