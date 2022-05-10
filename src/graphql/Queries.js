@@ -25,3 +25,17 @@ export const GET_ALL_EXERCISE = gql`
     }
   }
 `;
+
+export const getContests = gql`
+  query getContests {
+    contests {
+      id
+      name
+      des
+      startDate
+      endDate
+      createdBy
+      status
+    }
+  }
+`;
