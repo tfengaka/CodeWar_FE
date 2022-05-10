@@ -28,9 +28,9 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <Switch>
-          <Route path='/*' element={<ClientLayout />} />
+          <Route path="/*" element={<ClientLayout />} />
           <Route element={<PrivateRoute />}>
-            <Route path='/admin/*' element={<AdminLayout />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
           </Route>
         </Switch>
       </AuthProvider>

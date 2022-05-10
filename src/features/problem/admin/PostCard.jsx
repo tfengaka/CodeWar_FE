@@ -1,8 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import Button from 'components/Button';
 
 const PostCard = () => {
+  const [open, setOpen] = useState(0);
+  console.log(open);
+
   return (
     <div className="card ">
       <form className="card__info">
@@ -28,8 +30,36 @@ const PostCard = () => {
           <label>Đầu ra: </label>
         </div>
         <div className="card__info-item">
-          <Button>Add case</Button>
+          <button onClick={() => setOpen((p) => p++)}>Thêm case: {open}</button>
         </div>
+
+        {open && (
+          <div className="info__item__case-modal">
+            {/* <button className="btn_close" onClick={() => setOpen(open)}>
+              Đóng
+            </button> */}
+
+            <form>
+              <div className="modal__body-control">
+                <input type="text" id="output" placeholder="Đầu ra" />
+              </div>
+              <div className="modal__body-control">
+                <input type="text" id="input" placeholder="Đầu vào" />
+              </div>
+              <div className="modal__body-control">
+                <input type="text" id="point" placeholder="Điểm" />
+              </div>
+              <div className="modal__body-control">
+                <input type="text" id="time" placeholder="Thời gian" />
+              </div>
+              <div className="modal__body-submit">
+                <button className="" type="submit">
+                  Lưu
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
         <div className="card__info-item">
           <label>Được tạo bởi: </label>
