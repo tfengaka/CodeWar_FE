@@ -4,29 +4,25 @@
     font-size: 2rem;
   }
 
-  &__info {
+  form {
     margin: 10px 320px;
     padding: 60px;
     background-color: $main-background;
     border-radius: 10px;
 
-    label {
-      text-decoration: none;
-    }
-
-    &-item {
+    &__item {
       padding: 8px;
+
+      &-text {
+        border: 1px solid black;
+        background-color: rgb(255, 255, 255);
+        width: 100%;
+        height: 40px;
+        font-size: 1.8rem;
+      }
     }
 
-    &__text {
-      border: 1px solid black;
-      background-color: rgb(255, 255, 255);
-      width: 100%;
-      height: 40px;
-      font-size: 1.8rem;
-    }
-
-    .info__item__case-modal {
+    &__modal {
       position: fixed;
       top: 0;
       left: 0;

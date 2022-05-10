@@ -7,37 +7,37 @@ const PostCard = () => {
 
   return (
     <div className="card ">
-      <form className="card__info">
+      <form>
         <h4>Tạo bài toán</h4>
-        <div className="card__info-item">
+        <div className="card__item">
           <label>Tiêu đề: </label>
-          <input className="card__info__text"></input>
+          <input className="card__item-text"></input>
         </div>
-        <div className="card__info-item">
+        <div className="form__item">
           <label>Nội dung: </label>
-          <textarea rows="10" className="card__info__text" />
+          <textarea rows="10" className="card__item-text" />
         </div>
-        <div className="card__info-item">
+        <div className="form__item">
           <label>Mức: </label>
-          <input className="card__info__text"></input>
+          <input className="card__item-text"></input>
         </div>
 
-        <div className="card__info-item">
+        <div className="form__item">
           <label>Từ khóa: </label>
-          <input className="card__info__text"></input>
+          <input className="card__item-text"></input>
         </div>
-        <div className="card__info-item">
+        <div className="form__item">
           <label>Đầu ra: </label>
         </div>
-        <div className="card__info-item">
+        <div className="form__item">
           <button onClick={() => setOpen((p) => p++)}>Thêm case: {open}</button>
         </div>
 
         {open && (
-          <div className="info__item__case-modal">
-            {/* <button className="btn_close" onClick={() => setOpen(open)}>
+          <div className="form__modal">
+            <button className="btn_close" onClick={() => setOpen(open)}>
               Đóng
-            </button> */}
+            </button>
 
             <form>
               <div className="modal__body-control">
@@ -61,11 +61,11 @@ const PostCard = () => {
           </div>
         )}
 
-        <div className="card__info-item">
+        <div className="form__item">
           <label>Được tạo bởi: </label>
           admin
         </div>
-        <div className="card__info-item">
+        <div className="form__item">
           <Button>Lưu bài toán</Button>
         </div>
       </form>
