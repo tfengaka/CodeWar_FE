@@ -1,9 +1,8 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
-import axios from 'axios';
+import { useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import Modal from '../features/auth/client/Modal';
 import Button from './Button';
 
 const languageOptions = {
@@ -29,52 +28,27 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = (props) => {
+const ProblemSolve = () => {
   const location = useLocation();
   const { data } = location.state;
+  const auth = useAuth();
+  const { loading, language, resultData, setLanguage, setSourceCode, runCode, runAllCaseAndSubmit } = useCompiler(
+    data.metadata,
+  );
 
-  const { isLogged } = useAuth();
-  const [showModal, setShowModal] = React.useState(false);
   const [showDropdown, setShowDropdown] = React.useState(false);
+  const [currentTab, setCurrentTab] = React.useState(0);
+  const [currentCase, setCurrentCase] = React.useState(0);
+
   const monaco = useMonaco();
-
-  const [language, setLanguage] = React.useState(languageOptions.C);
-  const [code, setCode] = React.useState('');
-  const [checkAllCase, setCheckAllCase] = React.useState(null);
-
   React.useEffect(() => {
-    if (monaco)
+    if (monaco) {
       import('monaco-themes/themes/Dracula.json').then((data) => {
         monaco.editor.defineTheme('dracula', data);
         monaco.editor.setTheme('dracula');
       });
+    }
   }, [monaco]);
-
-  const handleRun = async () => {
-    if (!code) {
-      return;
-    }
-    let program;
-    try {
-      const result = await Promise.all(
-        data.input.map(async (item, index) => {
-          program = {
-            stdin: item.content,
-            source_code: code,
-            language_id: language.id,
-            expected_output: data.output[index].content,
-          };
-          return axios.post(`http://localhost:2358/submissions/?base64_encoded=false&wait=true`, program);
-        }),
-      );
-      setCheckAllCase(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSubmit = () => {};
-
   return (
     <div className="container">
       <div className="editor">
@@ -123,122 +97,124 @@ const ProblemSolve = (props) => {
             }}
             theme="dracula"
             language={language.value}
-            onChange={(value, event) => setCode(value)}
+            onChange={(value) => setSourceCode(value)}
           />
-          <TestCase testCaseData={data} resultData={checkAllCase} />
+          <div className="testcase">
+            <div className="testcase_header">
+              <div
+                className={`testcase_header_item ${currentTab === 0 ? 'active' : ''}`}
+                onClick={() => setCurrentTab(0)}
+              >
+                Test Case
+              </div>
+              <div
+                className={`testcase_header_item ${currentTab === 1 ? 'active' : ''}`}
+                onClick={() => setCurrentTab(1)}
+              >
+                Console
+              </div>
+            </div>
+            <div className="testcase_body">
+              <div className="testcase_body_list">
+                {data.metadata.map((testcase, index) => (
+                  <div
+                    key={index}
+                    className={`testcase_body_list_item ${currentCase === index ? 'active' : ''}`}
+                    onClick={() => setCurrentCase(index)}
+                  >
+                    <span>Case {index + 1}</span>
+                    <div className="testcase_body_list_item_icon">
+                      {loading && <div className="loading sm"></div>}
+                      {resultData && !loading && (
+                        <div className="status">
+                          {resultData[index].data.status.id === 3 ? (
+                            <i className="bx bxs-check-circle color-green" />
+                          ) : (
+                            <i className="bx bxs-x-circle color-red" />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="testcase_body_result">
+                {currentTab === 0 && (
+                  <div className="testcase_body_result_wrapper">
+                    <div className="testcase_body_result_item">
+                      <span>Input</span>
+                      <div className="testcase_body_result_item_value">
+                        {data.metadata[currentCase].input ? data.metadata[currentCase].input : '[]'}
+                      </div>
+                    </div>
+                    <div className="testcase_body_result_item">
+                      <span>Memory Usage</span>
+                      <div className="testcase_body_result_item_value">
+                        {resultData && resultData[currentCase].data.memory
+                          ? `${Number(resultData[currentCase].data.memory / 1000).toFixed(2)} MB`
+                          : 'None'}
+                      </div>
+                    </div>
+                    <div className="testcase_body_result_item">
+                      <span>Output</span>
+                      <div className="testcase_body_result_item_value">
+                        {resultData && resultData[currentCase].data.stdout ? resultData[currentCase].data.stdout : '[]'}
+                      </div>
+                    </div>
+                    <div className="testcase_body_result_item">
+                      <span>Runtime</span>
+                      <div className="testcase_body_result_item_value">
+                        {resultData && resultData[currentCase].data.time
+                          ? `${Number(resultData[currentCase].data.time * 1000)} ms`
+                          : 'None'}
+                      </div>
+                    </div>
+                    <div className="testcase_body_result_item">
+                      <span>Expected</span>
+                      <div className="testcase_body_result_item_value">
+                        {data.metadata[currentCase].output ? data.metadata[currentCase].output : '[]'}
+                      </div>
+                    </div>
+                    <div className="testcase_body_result_item">
+                      <span>Runtime Limit</span>
+                      <div className="testcase_body_result_item_value">
+                        {data.metadata[currentCase].time
+                          ? `${Number(data.metadata[currentCase].time / 1000)} ms`
+                          : 'None'}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {currentTab === 1 && (
+                  <div className="testcase_body_result_console">
+                    {resultData ? (
+                      <React.Fragment>
+                        {resultData[currentCase].data?.stdout ? (
+                          <div className="testcase_body_result_item">{resultData[currentCase].data.stdout}</div>
+                        ) : (
+                          <div className="message-error">
+                            {resultData[currentCase].data.compile_output || resultData[currentCase].data.stderr}
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ) : (
+                      <div className="testcase_body_result_console_empty">
+                        <span>EMPTY CONSOLE</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="editor_submit">
-            <Button onClick={handleRun} backgroundColor="green" isDisabled={!isLogged}>
-              Chạy thử
+            <Button onClick={() => runCode()} backgroundColor="green" isDisabled={!auth.isLogged}>
+              Run Code
             </Button>
-            <Button onClick={handleSubmit} isDisabled={!isLogged}>
-              Nộp bài
+            <Button onClick={() => runAllCaseAndSubmit()} isDisabled={!auth.isLogged}>
+              Submit
             </Button>
           </div>
-        </div>
-      </div>
-      {showModal && <Modal onShowModal={setShowModal} />}
-    </div>
-  );
-};
-
-const TestCase = (props) => {
-  const { testCaseData, resultData } = props;
-
-  const [currentCase, setCurrentCase] = React.useState(0);
-  const [currentTab, setCurrentTab] = React.useState(0);
-  const renderTestCase = resultData || testCaseData.output;
-
-  return (
-    <div className="testcase">
-      <div className="testcase_header">
-        <div className={`testcase_header_item ${currentTab === 0 ? 'active' : ''}`} onClick={() => setCurrentTab(0)}>
-          Test Case
-        </div>
-        <div className={`testcase_header_item ${currentTab === 1 ? 'active' : ''}`} onClick={() => setCurrentTab(1)}>
-          Console
-        </div>
-      </div>
-      <div className="testcase_body">
-        <div className="testcase_body_list">
-          {renderTestCase.map((item, index) => (
-            <div
-              className={`testcase_body_list_item ${currentCase === index ? 'active' : ''}`}
-              key={index}
-              onClick={() => setCurrentCase(index)}
-            >
-              <span>Case {index + 1}</span>
-              {resultData &&
-                (item.data.status.description === 'Accepted' ? (
-                  <i className="bx bxs-check-circle color-green"></i>
-                ) : (
-                  <i className="bx bxs-x-circle color-red"></i>
-                ))}
-            </div>
-          ))}
-        </div>
-        <div className="testcase_body_result">
-          {currentTab === 0 && (
-            <div className="testcase_body_result_wrapper">
-              <div className="testcase_body_result_item">
-                <span>Dữ liệu vào:</span>
-                <div className="testcase_body_result_item_value">
-                  {testCaseData.input[currentCase] ? testCaseData.input[currentCase]?.content : '[]'}
-                </div>
-              </div>
-
-              <div className="testcase_body_result_item">
-                <span>Thời gian chạy:</span>
-                <div className="testcase_body_result_item_value">
-                  {resultData && resultData[currentCase].data.time
-                    ? resultData[currentCase].data.time * 1000 + ' ms'
-                    : '0 ms'}
-                </div>
-              </div>
-              <div className="testcase_body_result_item">
-                <span>Kết quả kỳ vọng:</span>
-                <div className="testcase_body_result_item_value">{testCaseData.output[currentCase]?.content}</div>
-              </div>
-              <div className="testcase_body_result_item">
-                <span>Bộ nhớ sử dụng:</span>
-                <div className="testcase_body_result_item_value">
-                  {resultData && resultData[currentCase].data.memory
-                    ? resultData[currentCase].data.memory + ' KB'
-                    : '0 KB'}
-                </div>
-              </div>
-              <div className="testcase_body_result_item">
-                <span>Kết quả chạy:</span>
-                <div className="testcase_body_result_item_value">
-                  {resultData && resultData[currentCase].data.stdout ? resultData[currentCase].data.stdout : '[]'}
-                </div>
-              </div>
-              <div className="testcase_body_result_item">
-                <span>Trạng thái:</span>
-                <div className="testcase_body_result_item_value">
-                  {resultData ? resultData[currentCase].data.status.description : 'None'}
-                </div>
-              </div>
-            </div>
-          )}
-          {currentTab === 1 && (
-            <div className="testcase_body_result_console">
-              {resultData && resultData[currentCase].data.stdout ? (
-                <div className="testcase_body_result_item">
-                  <p>{resultData[currentCase].data.stdout}</p>
-                </div>
-              ) : (
-                <div className="message-error">
-                  {resultData ? (
-                    resultData[currentCase].data.stderr || resultData[currentCase].data.compile_output
-                  ) : (
-                    <div className="testcase_body_result_console_empty">
-                      <span>EMPTY CONSOLE</span>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>
