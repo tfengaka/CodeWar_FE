@@ -15,12 +15,11 @@ export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
     exercises {
       id
-      level
+      des
       name
       topic
-      input
-      output
-      des
+      level
+      metadata
       updatedAt
     }
   }
