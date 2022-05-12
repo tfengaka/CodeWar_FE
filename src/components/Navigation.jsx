@@ -56,7 +56,7 @@ export default function Navigation() {
               </>
             ) : (
               <Button backgroundColor="main" onClick={() => setShowModal(true)}>
-                {auth.loading ? <div className="loading"></div> : 'Đăng Nhập'}
+                {auth.loading ? <div className="circleLoading"></div> : 'Đăng Nhập'}
               </Button>
             )}
           </div>

@@ -30,10 +30,10 @@ const Problem = () => {
                 <colgroup>
                   <col width="40" />
                   <col width="120" />
+                  <col width="400" />
+                  <col width="150" />
                   <col width="450" />
                   <col width="150" />
-                  <col width="350" />
-                  <col width="450" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -76,10 +76,10 @@ const Problem = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
+                  <col width="400" />
+                  <col width="150" />
                   <col width="450" />
                   <col width="150" />
-                  <col width="350" />
-                  <col width="450" />
                 </colgroup>
                 <tbody className="table_body">
                   {data?.exercises.map((item, index) => (

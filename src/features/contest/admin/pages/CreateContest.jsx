@@ -8,8 +8,6 @@ const CreateContest = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [questionList, setQuestionList] = useState([{ question: '' }]);
 
-  const btnAdd = 'red';
-  const btnRemove = 'green';
   const handleQuestionChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...questionList];

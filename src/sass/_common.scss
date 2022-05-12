@@ -24,7 +24,7 @@
   padding: 6px;
 }
 
-.loading {
+.circleLoading {
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -97,8 +97,8 @@
   display: inline-block;
   height: 25px;
   line-height: 27px;
-  margin-left: 8px;
   padding: 0 8px;
+  margin-right: 6px;
   border-radius: 4px;
   font-size: 12px;
   vertical-align: middle;

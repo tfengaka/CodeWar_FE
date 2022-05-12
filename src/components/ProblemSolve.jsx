@@ -125,7 +125,7 @@ const ProblemSolve = () => {
                   >
                     <span>Case {index + 1}</span>
                     <div className="testcase_body_list_item_icon">
-                      {loading && <div className="loading sm"></div>}
+                      {loading && <div className="circleLoading sm"></div>}
                       {resultData && !loading && (
                         <div className="status">
                           {resultData[index].data.status.id === 3 ? (
