@@ -81,7 +81,7 @@
     }
   }
   &_cell {
-    padding: 0 16px;
+    padding: 0 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
@@ -105,4 +105,12 @@
   opacity: 1;
   overflow: hidden;
   color: #ffffff;
+
+  &.topic {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #4d4d4d;
+    background-color: rgba(45, 139, 240, 0.1);
+    border: 1.5px solid rgba(45, 140, 240, 0.5);
+  }
 }
