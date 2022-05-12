@@ -42,6 +42,9 @@ function useAuthProvider() {
           setLoading(false);
         }
       },
+      onError: (error) => {
+        alert(error.message);
+      },
     });
   };
 
@@ -65,6 +68,12 @@ function useAuthProvider() {
         const { access_token } = res.login;
         localStorage.setItem('token', access_token);
         handleReLogin.current(access_token);
+        alert('Đăng nhập thành công!');
+      },
+      onError: (err) => {
+        console.log(err);
+        alert('Tài khoản hoặc mật khẩu không đúng!');
+        setLoading(false);
       },
     });
   };
@@ -72,6 +81,7 @@ function useAuthProvider() {
     localStorage.removeItem('token');
     setUser(null);
     setIsLogged(false);
+    window.location.reload(true);
   };
   const signUp = ({ email, password, displayName }) => {
     setLoading(true);
@@ -80,13 +90,13 @@ function useAuthProvider() {
       onCompleted: (data) => {
         const { id, email, full_name, access_token } = data.createAccount;
         localStorage.setItem('token', access_token);
-        const user = { id, email, displayName: full_name };
+        const user = { id, email, full_name };
         setUser(user);
         setLoading(false);
         setIsLogged(true);
       },
       onError: (error) => {
-        console.log(error.message);
+        alert('Tài khoản đã tồn tại!');
         setIsLogged(false);
         setLoading(false);
       },
