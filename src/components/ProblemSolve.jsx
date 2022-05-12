@@ -49,6 +49,7 @@ const ProblemSolve = () => {
       });
     }
   }, [monaco]);
+  console.log('resultData: ', resultData);
   return (
     <div className="container">
       <div className="editor">
