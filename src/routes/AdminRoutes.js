@@ -8,7 +8,7 @@ export function AdminRoutes() {
   return (
     <Switch>
       <Route index element={<Navigate to="/admin/problems" />} />
-      <Route path="exercise">
+      <Route path="problems">
         <Route index element={<div>Admin Problem</div>} />
         <Route path="create" element={<PostCard />} />
       </Route>
