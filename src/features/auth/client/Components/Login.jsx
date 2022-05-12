@@ -21,29 +21,27 @@ const Login = ({ onChangeRegister, onChangeModal }) => {
   });
   return (
     <>
-      <div className='modal__body'>
-        <form onSubmit={handleSubmit(auth.signIn)} autoComplete='off'>
-          <div className='modal__body-control'>
-            <input {...register('email')} type='text' id='email' placeholder='Email' />
-            {errors?.email && <div className='message-error'>{errors.email?.message}</div>}
+      <div className="modal__body">
+        <form onSubmit={handleSubmit(auth.signIn)} autoComplete="off">
+          <div className="modal__body-control">
+            <input {...register('email')} type="text" id="email" placeholder="Email" />
+            {errors?.email && <div className="message-error">{errors.email?.message}</div>}
           </div>
-          <div className='modal__body-control'>
-            <input {...register('password')} type='password' id='password' placeholder='Mật khẩu' />
-            {errors?.password && <div className='message-error'>{errors.password?.message}</div>}
+          <div className="modal__body-control">
+            <input {...register('password')} type="password" id="password" placeholder="Mật khẩu" />
+            {errors?.password && <div className="message-error">{errors.password?.message}</div>}
           </div>
-          <div className='modal__body-submit'>
-            <Button size='lg'>
-              {auth.loading ? <div className='loading'></div> : 'Đăng nhập'}
-            </Button>
+          <div className="modal__body-submit">
+            <Button size="lg">{auth.loading ? <div className="loading"></div> : 'Đăng nhập'}</Button>
           </div>
         </form>
       </div>
-      <div className='modal__footer'>
-        <div className='modal__footer-login'>
-          <div className='modal__footer-link' onClick={() => onChangeRegister(true)}>
+      <div className="modal__footer">
+        <div className="modal__footer-login">
+          <div className="modal__footer-link" onClick={() => onChangeRegister(true)}>
             <span>Chưa có tài khoản, Đăng ký!</span>
           </div>
-          <div className='modal__footer-link'>
+          <div className="modal__footer-link">
             <span>Quên mật khẩu?</span>
           </div>
         </div>
