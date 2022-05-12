@@ -178,9 +178,7 @@ const ProblemSolve = () => {
                     <div className="testcase_body_result_item">
                       <span>Runtime Limit</span>
                       <div className="testcase_body_result_item_value">
-                        {data.metadata[currentCase].time
-                          ? `${Number(data.metadata[currentCase].time / 1000)} ms`
-                          : 'None'}
+                        {data.metadata[currentCase].time ? `${Number(data.metadata[currentCase].time)} ms` : 'None'}
                       </div>
                     </div>
                   </div>

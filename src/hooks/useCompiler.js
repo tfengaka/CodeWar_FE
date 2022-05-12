@@ -14,7 +14,7 @@ export function useCompiler(metadata) {
   const runCode = async () => {
     setLoading(true);
     if (!sourceCode) {
-      alert('Thực thi thất bại! Vui long kiểm tra lại bài làm');
+      alert('Thực thi thất bại! Vui lòng kiểm tra lại bài làm');
       setLoading(false);
       return;
     }
@@ -29,7 +29,10 @@ export function useCompiler(metadata) {
             cpu_time_limit: Number(testcase.time / 1000),
             expected_output: testcase.output,
           };
-          return axios.post(`http://localhost:2358/submissions/?base64_encoded=false&wait=true`, program);
+          return axios.post(
+            `${process.env.REACT_APP_JUDGE_API_URL}/submissions/?base64_encoded=false&wait=true`,
+            program,
+          );
         }),
       );
       if (result[0].data.error) {
