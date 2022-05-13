@@ -68,6 +68,7 @@ function useAuthProvider() {
         const { access_token } = res.login;
         localStorage.setItem('token', access_token);
         handleReLogin.current(access_token);
+        alert('Đăng nhập thành công!');
       },
       onError: (err) => {
         console.log(err);
@@ -89,7 +90,7 @@ function useAuthProvider() {
       onCompleted: (data) => {
         const { id, email, full_name, access_token } = data.createAccount;
         localStorage.setItem('token', access_token);
-        const user = { id, email, full_name };
+        const user = { id, email, fullName: full_name };
         setUser(user);
         setLoading(false);
         setIsLogged(true);

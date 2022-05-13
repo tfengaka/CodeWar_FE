@@ -8,6 +8,8 @@ const CreateContest = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [questionList, setQuestionList] = useState([{ question: '' }]);
 
+  const btnAdd = 'red';
+  const btnRemove = 'green';
   const handleQuestionChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...questionList];
@@ -30,6 +32,7 @@ const CreateContest = () => {
       <div className="create_container">
         <div className="create_description">
           <ul className="create_card">
+            <h1>Tạo cuộc thi</h1>
             <li>
               <h3>Tiêu đề</h3>
               <div className="create_card--input">
@@ -84,14 +87,14 @@ const CreateContest = () => {
                 </div>
                 <div className="create_card--button">
                   {questionList.length - 1 === index && questionList.length < 4 && (
-                    <button type="button" className="btnAdd" onClick={handleQuestionAdd}>
+                    <Button backgroundColor="green" className="btn" onClick={handleQuestionAdd}>
                       Thêm câu hỏi
-                    </button>
+                    </Button>
                   )}
                   {questionList.length > 1 && (
-                    <button type="button" className="btnRemove" onClick={() => handleQuestionRemove(index)}>
+                    <Button backgroundColor="red" className="btn" onClick={() => handleQuestionRemove(index)}>
                       Xóa
-                    </button>
+                    </Button>
                   )}
                 </div>
               </li>
