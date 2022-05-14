@@ -1,4 +1,5 @@
 import NotFound from 'components/NotFound';
+import PostCard from 'features/problem/admin/CreateProblem';
 import Problem from 'features/problem/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
