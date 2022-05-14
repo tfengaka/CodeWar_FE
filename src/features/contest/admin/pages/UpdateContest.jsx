@@ -10,8 +10,8 @@ const UpdateContest = (props) => {
   return (
     <div>
       {/* <button className="close" onClick={onClose}>
-            <i className="fa-solid fa-circle-xmark"></i>
-          </button> */}
+        <i className="fa-solid fa-circle-xmark"></i>
+      </button> */}
       <div>{console.log('áddsadsad')}</div>
     </div>
   );

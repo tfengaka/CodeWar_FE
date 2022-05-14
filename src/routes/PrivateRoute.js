@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom';
 
 export function PrivateRoute() {
   const { user, isLogged } = useAuth();
-  const isAdmin = user && user.role === 'admin';
-
+  const isAdmin = user && (user.role === 'admin' || user.role === 'moderator');
   return isLogged && isAdmin ? <Outlet /> : <LoginPage />;
 }
