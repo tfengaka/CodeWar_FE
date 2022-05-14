@@ -19,11 +19,35 @@ export const SIGN_UP = gql`
 `;
 
 export const SUBMIT_CODE = gql`
-  mutation SUBMIT_CODE($exerciseId: String!, $excuteTime: Float!, $memory: Integer!, $point: Float) {
+  mutation SUBMIT_CODE(
+    $exerciseId: String!
+    $excuteTime: float8!
+    $memory: Int!
+    $point: float8!
+    $caseFailed: jsonb!
+  ) {
     insert_pratice_results(
-      objects: { exerciseId: $exerciseId, excuteTime: $excuteTime, memory: $memory, point: $point }
+      objects: {
+        exerciseId: $exerciseId
+        excuteTime: $excuteTime
+        memory: $memory
+        point: $point
+        caseFailed: $caseFailed
+      }
     ) {
       affected_rows
+    }
+  }
+`;
+
+export const INSERT_PROBLEM = gql`
+  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: String!, $metadata: jsonb!) {
+    insert_exercises(objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata }) {
+      returning {
+        des
+        level
+        name
+      }
     }
   }
 `;

@@ -1,0 +1,142 @@
+.container-card {
+  border-radius: 10px;
+
+  .card {
+    h3 {
+      font-size: 2.4rem;
+      text-align: center;
+    }
+    margin: 10px 320px;
+    padding: 60px;
+    background-color: $main-background;
+    border-radius: 10px;
+
+    &__item {
+      padding: 8px;
+      textarea {
+        padding: 5px;
+        width: 100%;
+        height: 180px;
+        resize: none;
+      }
+      select {
+        text-align: center;
+      }
+      label {
+        font-weight: bold;
+      }
+
+      &-text {
+        border: 1px solid black;
+        background-color: rgb(255, 255, 255);
+        width: 100%;
+        height: 40px;
+        font-size: 1.8rem;
+      }
+      &-input {
+        font-size: 1.6rem;
+        background-color: #eee;
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 5px;
+        outline: none;
+
+        border: 2px solid transparent;
+        transition: all 0.25s ease-in-out;
+
+        &:hover {
+          background-color: #fff;
+          border-color: rgba(240, 128, 128, 0.8);
+        }
+
+        &:focus {
+          background-color: #fff;
+          border-color: lightcoral;
+          box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
+        }
+      }
+    }
+
+    &__list-case {
+      display: flex;
+      gap: 50px;
+      &__item {
+        padding: 10px;
+      }
+    }
+
+    &__btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #dddddda3;
+      z-index: 9;
+      overflow: auto;
+      padding: 50px;
+
+      &__body {
+        @include flex(center, center);
+        width: 100%;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        gap: 30px;
+        width: 100%;
+        background: white;
+        padding: 34px;
+        border-radius: 15px;
+        margin: 210px auto;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1), -1px -1px 3px rgba(0, 0, 0, 0.1);
+
+        &-control {
+          margin-bottom: 16px;
+          width: 100%;
+          margin: 0 10px;
+
+          input {
+            font-size: 1.6rem;
+            background-color: #eee;
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 5px;
+            outline: none;
+
+            border: 2px solid transparent;
+            transition: all 0.25s ease-in-out;
+
+            &:hover {
+              background-color: #fff;
+              border-color: rgba(240, 128, 128, 0.8);
+            }
+
+            &:focus {
+              background-color: #fff;
+              border-color: lightcoral;
+              box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
+            }
+          }
+        }
+
+        &-submit {
+          // margin: 8px 0;
+          width: 100%;
+        }
+        &__close {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+        }
+      }
+    }
+  }
+}

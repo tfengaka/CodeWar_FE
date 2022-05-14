@@ -3,9 +3,11 @@
 @import './common';
 
 @import './components/header';
+@import './components/sidebar';
 @import './components/button';
 @import './components/editor';
 @import './components/testcase';
+@import './components/admin';
 
 @import './components/auth/loginpage';
 @import './components/auth/modal';
@@ -13,5 +15,8 @@
 @import './components/contest/contest';
 @import './components/contest/itemContest';
 @import './components/contest/contentContest';
+@import './components/contest/createContest';
+@import './components/contest/listContest';
 
 @import './components/problem';
+@import './components/problem/admin';

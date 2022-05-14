@@ -4,6 +4,7 @@
   color: $text-second-color;
   overflow: auto;
   white-space: nowrap;
+  margin: 0 100px;
   .content__description {
     padding: 4rem;
     .content__card {
@@ -55,9 +56,10 @@
     .content__table {
       display: grid;
       grid-template-areas:
-        'header header header header'
-        'item item item item';
+        'header header header'
+        'item item item';
       justify-content: space-between;
+
       &--item {
         font-weight: bold;
       }

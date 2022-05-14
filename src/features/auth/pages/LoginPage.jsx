@@ -20,32 +20,32 @@ function LoginPage() {
     mode: 'onSubmit',
   });
   return (
-    <div className='login'>
-      <div className='container'>
-        <div className='login__title'>
+    <div className="login">
+      <div className="container">
+        <div className="login__title">
           <span>Đăng Nhập</span>
         </div>
-        <div className='divider'></div>
-        <div className='login__body'>
-          <form className='login__form' onSubmit={handleSubmit(auth.signIn)} autoComplete='off'>
-            <div className='login__form-control'>
-              <input type='text' placeholder='Email' {...register('email')} />
+        <div className="divider"></div>
+        <div className="login__body">
+          <form className="login__form" onSubmit={handleSubmit(auth.signIn)} autoComplete="off">
+            <div className="login__form-control">
+              <input type="text" placeholder="Email" {...register('email')} />
               {errors?.email ? (
-                <div className='message-error'>{errors.email?.message}</div>
+                <div className="message-error">{errors.email?.message}</div>
               ) : (
                 <div style={{ height: '16px' }}></div>
               )}
             </div>
-            <div className='login__form-control'>
-              <input type='password' placeholder='Password' {...register('password')} />
+            <div className="login__form-control">
+              <input type="password" placeholder="Password" {...register('password')} />
               {errors?.password ? (
-                <div className='message-error'>{errors.password?.message}</div>
+                <div className="message-error">{errors.password?.message}</div>
               ) : (
                 <div style={{ height: '16px' }}></div>
               )}
             </div>
-            <div className='login__form-submit'>
-              <Button size='lg' type='submit'>
+            <div className="login__form-submit">
+              <Button size="lg" type="submit">
                 Đăng Nhập
               </Button>
             </div>

@@ -32,9 +32,7 @@ const ProblemSolve = () => {
   const location = useLocation();
   const { data } = location.state;
   const auth = useAuth();
-  const { loading, language, resultData, setLanguage, setSourceCode, runCode, runAllCaseAndSubmit } = useCompiler(
-    data.metadata,
-  );
+  const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
 
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
@@ -49,6 +47,7 @@ const ProblemSolve = () => {
       });
     }
   }, [monaco]);
+  console.log('resultData: ', resultData);
   return (
     <div className="container">
       <div className="editor">
@@ -116,7 +115,7 @@ const ProblemSolve = () => {
             </div>
             <div className="testcase_body">
               <div className="testcase_body_list">
-                {data.metadata.map((testcase, index) => (
+                {data.metadata.map((_, index) => (
                   <div
                     key={index}
                     className={`testcase_body_list_item ${currentCase === index ? 'active' : ''}`}
@@ -178,9 +177,7 @@ const ProblemSolve = () => {
                     <div className="testcase_body_result_item">
                       <span>Runtime Limit</span>
                       <div className="testcase_body_result_item_value">
-                        {data.metadata[currentCase].time
-                          ? `${Number(data.metadata[currentCase].time / 1000)} ms`
-                          : 'None'}
+                        {data.metadata[currentCase].time ? `${Number(data.metadata[currentCase].time)} ms` : 'None'}
                       </div>
                     </div>
                   </div>
@@ -208,10 +205,10 @@ const ProblemSolve = () => {
             </div>
           </div>
           <div className="editor_submit">
-            <Button onClick={() => runCode()} backgroundColor="green" isDisabled={!auth.isLogged}>
+            <Button onClick={() => runCode(data.id)} backgroundColor="green" isDisabled={!auth.isLogged}>
               Run Code
             </Button>
-            <Button onClick={() => runAllCaseAndSubmit()} isDisabled={!auth.isLogged}>
+            <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
               Submit
             </Button>
           </div>
