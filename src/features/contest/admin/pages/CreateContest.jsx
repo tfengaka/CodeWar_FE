@@ -30,7 +30,7 @@ const CreateContest = () => {
     setQuestionList(list);
   };
 
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('');
 
   return (
     <>

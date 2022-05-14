@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
-
+import MDEditor from '@uiw/react-md-editor';
 import { INSERT_PROBLEM } from 'graphql/Mutation';
 import * as Yup from 'yup';
 const CreateProblem = () => {
@@ -11,7 +11,7 @@ const CreateProblem = () => {
   const [inputCase, setInputCase] = useState({});
   // const [tag, setTag] = useState([]);
   const [openInput, setOpenInput] = useState(false);
-
+  const [value, setValue] = React.useState('');
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
   // const problemValidation = Yup.object({
@@ -74,20 +74,14 @@ const CreateProblem = () => {
           <label>Tiêu đề: </label>
           <input name="title" onChange={handleChangeInput} className="card__item-text card__item-input"></input>
         </div>
-        <div className="card__item">
-          <label>Nội dung: </label>
-          <textarea name="des" onChange={handleChangeInput} rows="10" className="card__item-text card__item-input" />
-        </div>
-        <div className="card__item ">
+        <div className="card__item wrap">
           <label>Mức: </label>
           <select name="level" onChange={handleChangeInput}>
             <option value={1}>Dễ</option>
             <option value={2}>Trung bình</option>
             <option value={3}>Khó</option>
           </select>
-        </div>
 
-        <div className="card__item">
           <label>Từ khóa: </label>
           <input name="tag" onChange={handleChangeInput} className="card__item-text card__item-input"></input>
           {/* {data.map((item, index) => (
@@ -95,6 +89,10 @@ const CreateProblem = () => {
               <div className="card__list-tag__item">{item.tag}</div>
             </div>
           ))} */}
+        </div>
+        <div className="card__item">
+          <label>Nội dung: </label>
+          <MDEditor name="des" value={value} onChange={handleChangeInput} />
         </div>
 
         <div className="card__item ">

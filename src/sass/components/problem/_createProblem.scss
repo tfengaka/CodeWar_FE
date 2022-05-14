@@ -14,17 +14,14 @@
 
     &__item {
       padding: 8px;
-      textarea {
-        padding: 5px;
-        width: 100%;
-        height: 180px;
-        resize: none;
-      }
+      align-items: center;
+      gap: 30px;
       select {
         text-align: center;
       }
       label {
         font-weight: bold;
+        width: 8%;
       }
 
       &-text {
@@ -140,4 +137,7 @@
       }
     }
   }
+}
+.wrap {
+  display: flex;
 }
