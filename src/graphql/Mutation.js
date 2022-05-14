@@ -57,3 +57,15 @@ export const UPDATE_CONTEST = gql`
     }
   }
 `;
+
+export const INSERT_PROBLEM = gql`
+  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: jsonb!, $metadata: jsonb!) {
+    insert_exercises(objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata }) {
+      returning {
+        des
+        level
+        name
+      }
+    }
+  }
+`;
