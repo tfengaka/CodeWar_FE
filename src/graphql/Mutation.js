@@ -39,3 +39,21 @@ export const SUBMIT_CODE = gql`
     }
   }
 `;
+
+export const UPDATE_CONTEST = gql`
+  mutation UPDATE_CONTEST(
+    $contestId: String!
+    $name: String
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+    $status: String
+  ) {
+    update_contests_by_pk(
+      pk_columns: { id: $contestId }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
+    ) {
+      id
+    }
+  }
+`;

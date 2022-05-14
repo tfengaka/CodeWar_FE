@@ -55,17 +55,8 @@
           border-bottom: 1px solid #ddd;
           border-top: 1px solid #ddd;
           transition: all 0.3s ease;
-          &_cell {
-            padding: 0 16px;
-            text-align: left;
-            .btn {
-              padding: 3px;
-              font-size: 1.3rem;
-              &:hover {
-                opacity: 0.6;
-              }
-            }
-          }
+          text-align: center;
+
         }
       }
     }
