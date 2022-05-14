@@ -1,37 +1,28 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
-import { INSERT_PROBLEM } from 'graphql/Mutation';
 
+import { INSERT_PROBLEM } from 'graphql/Mutation';
+import * as Yup from 'yup';
 const CreateProblem = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({});
   const [caseData, setCaseData] = useState([]);
   const [inputCase, setInputCase] = useState({});
-  const [tag, setTag] = useState([]);
-
-  const [board, setBoard] = useState({});
-  const [columns, setColumns] = useState([]);
-  const [openNewColumnFrom, setOpenNewColumnFrom] = useState(false);
-  const tonggleOpenNewColumnFrom = () => setOpenNewColumnFrom(!openNewColumnFrom);
-  const [newColumnTitle, setNewColumnTitle] = useState('');
+  // const [tag, setTag] = useState([]);
+  const [openInput, setOpenInput] = useState(false);
 
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
-  const data = [
-    {
-      id: 1,
-      tag: 'c++',
-    },
-    {
-      id: 1,
-      tag: 'c#',
-    },
-    {
-      id: 1,
-      tag: 'javascript',
-    },
-  ];
+  // const problemValidation = Yup.object({
+  //   displayName: Yup.string().required('Tên không được để trống'),
+  //   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
+  // });
+
+  let tag = 'c, c++, javascript';
+
+  const substr = tag.split(', ');
+  console.log(substr[0]);
 
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);
@@ -56,12 +47,14 @@ const CreateProblem = () => {
   };
 
   const handleSaveExercise = () => {
+    const allTags = input.tag.split(', ').join(' ');
+
     saveExercise({
       variables: {
         name: input.title,
         level: input.level ? input.level : 1,
         des: input.des,
-        topic: input.tag,
+        topic: [allTags],
         metadata: caseData,
       },
       onCompleted: () => {
@@ -96,42 +89,12 @@ const CreateProblem = () => {
 
         <div className="card__item">
           <label>Từ khóa: </label>
-          {/* <input name="tag" onChange={handleChangeInput} className="card__item-text card__item-input"></input> */}
+          <input name="tag" onChange={handleChangeInput} className="card__item-text card__item-input"></input>
           {/* {data.map((item, index) => (
             <div className="card__list-tag" key={index}>
               <div className="card__list-tag__item">{item.tag}</div>
             </div>
           ))} */}
-          {!openNewColumnFrom && (
-            <Row>
-              <Col className="add-new-column" onClick={tonggleOpenNewColumnFrom}>
-                <i className="fa fa-plus icon" />
-                Add another column
-              </Col>
-            </Row>
-          )}
-
-          {openNewColumnFrom && (
-            <div className="enter-new-column">
-              <div
-                size="sm"
-                type="text"
-                placeholder="Enter column title ..."
-                className="input-enter-new-column"
-                value={newColumnTitle}
-                onChange={onNewColumnTitleChange}
-                // event Enter change click addNewColumn
-                onKeyDown={(event) => event.key === 'Enter' && addNewColumn()}
-              ></div>
-
-              <Button variant="success" size="sm" onClick={addNewColumn}>
-                Add table
-              </Button>
-              <span className="cancel-icon" onClick={tonggleOpenNewColumnFrom}>
-                <i className="fa fa-times icon" />
-              </span>
-            </div>
-          )}
         </div>
 
         <div className="card__item ">
