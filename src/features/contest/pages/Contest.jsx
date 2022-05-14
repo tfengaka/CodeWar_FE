@@ -1,37 +1,46 @@
-import { useState } from 'react';
+import { React, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { getContests } from 'graphql/Queries';
 
 import ItemContest from '../components/ItemContest';
-import Data from '../data/Data.json';
 
-export default function Contest() {
+const Contest = () => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Trạng thái');
-  const itemContest = Data;
+  const [search, setSearch] = useState('');
   const options = [
     { id: 0, value: 'all', text: 'Tất cả' },
     { id: 1, value: 'happen', text: 'Đang diễn ra' },
     { id: 2, value: 'finish', text: 'Đã kết thúc' },
   ];
 
-  const data = itemContest
-    .filter((b) => b.text === selected)
-    .map(({ id, title, content, timeFrom, timeEnd, day, text, color }) => ({
-      id,
-      title,
-      content,
-      timeFrom,
-      timeEnd,
-      day,
-      text,
-      color,
-    }));
-  let comp;
+  const { loading, error, data } = useQuery(getContests);
+  if (loading) return <div className='loading'></div>;
+  if (error) return <div>Load data failed</div>;
 
-  if (selected === 'Trạng thái') {
-    comp = itemContest;
-  } else {
-    comp = data;
-  }
+  const items = data?.contests
+    .filter((val) => {
+      if (search === '') {
+        return val;
+      } else if (val.name.toLowerCase().includes(search.toLowerCase())) {
+        return val;
+      }
+    })
+    .filter((val) => {
+      if (selected === 'Trạng thái') {
+        return val;
+      } else if (val.status.toLowerCase().includes(selected.toLowerCase())) {
+        return val;
+      }
+    })
+    .map(({ id, name, des, startDate, endDate, status }) => ({
+      id,
+      name,
+      des,
+      startDate,
+      endDate,
+      status,
+    }));
 
   return (
     <div className='content'>
@@ -77,6 +86,7 @@ export default function Contest() {
                 autoComplete='off'
                 spellCheck='false'
                 type='text'
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder='Từ khóa'
               ></input>
               <i className='bx bx-search-alt-2'></i>
@@ -84,7 +94,9 @@ export default function Contest() {
           </li>
         </ul>
       </div>
-      <ItemContest itemProps={comp} />
+      <ItemContest itemProps={items} />
     </div>
   );
-}
+};
+
+export default Contest;

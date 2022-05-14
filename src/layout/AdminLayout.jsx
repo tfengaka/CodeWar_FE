@@ -18,9 +18,7 @@ export function AdminLayout() {
       </div>
       <SideBar />
       <div className="admin_content">
-        <div className="wrapper">
-          <AdminRoutes />
-        </div>
+        <AdminRoutes />
       </div>
     </div>
   );
