@@ -2,6 +2,7 @@ import NotFound from 'components/NotFound';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/pages/CreateContest';
+import ListContest from '../features/contest/admin/pages/ListContest';
 
 export function AdminRoutes() {
   return (
@@ -12,7 +13,7 @@ export function AdminRoutes() {
         <Route path="create" element={<div>Create Problem</div>} />
       </Route>
       <Route path="contest">
-        <Route index element={<div>admin contest</div>} />
+        <Route index element={<ListContest />} />
         <Route path="create" element={<CreateContest />} />
       </Route>
       <Route path="*" element={<NotFound />} />
