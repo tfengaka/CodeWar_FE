@@ -81,7 +81,7 @@ function useAuthProvider() {
     localStorage.removeItem('token');
     setUser(null);
     setIsLogged(false);
-    window.location.reload(true);
+    window.location.reload();
   };
   const signUp = ({ email, password, displayName }) => {
     setLoading(true);
