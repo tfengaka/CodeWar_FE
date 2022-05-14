@@ -29,7 +29,7 @@ const ListContest = () => {
                   <col width="200" />
                   <col width="200" />
                   <col width="120" />
-                  <col width="120" />
+                  <col width="125" />
                   <col width="100" />
                   <col width="100" />
                 </colgroup>
@@ -93,7 +93,7 @@ const ListContest = () => {
                   <col width="200" />
                   <col width="200" />
                   <col width="120" />
-                  <col width="120" />
+                  <col width="125" />
                   <col width="100" />
                   <col width="100" />
                 </colgroup>
