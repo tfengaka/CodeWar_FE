@@ -2,14 +2,17 @@ import Button from 'components/Button';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import MDEditor from '@uiw/react-md-editor';
 
 const CreateContest = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [questionList, setQuestionList] = useState([{ question: '' }]);
 
-  const btnAdd = 'red';
-  const btnRemove = 'green';
+  function handleEditorChange({ html, text }) {
+    console.log('handleEditorChange', html, text);
+  }
+
   const handleQuestionChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...questionList];
@@ -27,12 +30,14 @@ const CreateContest = () => {
     setQuestionList(list);
   };
 
+  const [value, setValue] = React.useState("");
+
   return (
     <>
       <div className="create_container">
         <div className="create_description">
-          <ul className="create_card">
-            <h1>Tạo cuộc thi</h1>
+          <h1>Tạo cuộc thi</h1>
+          <ul>
             <li>
               <h3>Tiêu đề</h3>
               <div className="create_card--input">
@@ -41,40 +46,48 @@ const CreateContest = () => {
             </li>
             <li>
               <h3>Nội dung</h3>
-              <div className="create_card--input">
-                <textarea autoComplete="off" spellCheck="false" placeholder="Nội dung"></textarea>
-              </div>
-            </li>
-            <li>
-              <h3>Ngày giờ bắt đầu</h3>
-              <div className="create_card--input">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                  timeInputLabel="Time:"
-                  dateFormat="dd/MM/yyyy h:mm aa"
-                  showTimeInput
-                  minDate={new Date()}
+              <div className="create_card--input" data-color-mode="light">
+                <MDEditor
+                  value={value}
+                  onChange={(val) => {
+                    setValue(val);
+                  }}
                 />
+                {/* <textarea autoComplete="off" spellCheck="false" placeholder="Nội dung"></textarea> */}
               </div>
             </li>
-            <li>
-              <h3>Ngày giờ kết thúc</h3>
-              <div className="create_card--input">
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date)}
-                  timeInputLabel="Time:"
-                  dateFormat="dd/MM/yyyy h:mm aa"
-                  showTimeInput
-                  minDate={startDate}
-                />
-              </div>
-            </li>
+            <div className="create_card">
+              <li>
+                <h3>Ngày giờ bắt đầu</h3>
+                <div className="create_card--input">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    timeInputLabel="Time:"
+                    dateFormat="dd/MM/yyyy h:mm aa"
+                    showTimeInput
+                    minDate={new Date()}
+                  />
+                </div>
+              </li>
+              <li>
+                <h3>Ngày giờ kết thúc</h3>
+                <div className="create_card--input">
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    timeInputLabel="Time:"
+                    dateFormat="dd/MM/yyyy h:mm aa"
+                    showTimeInput
+                    minDate={startDate}
+                  />
+                </div>
+              </li>
+            </div>
             {questionList.map((item, index) => (
               <li key={index}>
                 <h3>Câu hỏi</h3>
-                <div className="create_card--input">
+                <div className="create_card--question">
                   <textarea
                     name="question"
                     autoComplete="off"
@@ -99,8 +112,8 @@ const CreateContest = () => {
                 </div>
               </li>
             ))}
-            <Button>Lưu</Button>
           </ul>
+          <Button>Lưu</Button>
         </div>
       </div>
     </>
