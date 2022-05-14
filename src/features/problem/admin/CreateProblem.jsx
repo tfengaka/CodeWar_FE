@@ -10,6 +10,12 @@ const CreateProblem = () => {
   const [inputCase, setInputCase] = useState({});
   const [tag, setTag] = useState([]);
 
+  const [board, setBoard] = useState({});
+  const [columns, setColumns] = useState([]);
+  const [openNewColumnFrom, setOpenNewColumnFrom] = useState(false);
+  const tonggleOpenNewColumnFrom = () => setOpenNewColumnFrom(!openNewColumnFrom);
+  const [newColumnTitle, setNewColumnTitle] = useState('');
+
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
   const data = [
@@ -91,11 +97,41 @@ const CreateProblem = () => {
         <div className="card__item">
           <label>Từ khóa: </label>
           {/* <input name="tag" onChange={handleChangeInput} className="card__item-text card__item-input"></input> */}
-          {/* {data.map((item, key) => (
+          {/* {data.map((item, index) => (
             <div className="card__list-tag" key={index}>
               <div className="card__list-tag__item">{item.tag}</div>
             </div>
           ))} */}
+          {!openNewColumnFrom && (
+            <Row>
+              <Col className="add-new-column" onClick={tonggleOpenNewColumnFrom}>
+                <i className="fa fa-plus icon" />
+                Add another column
+              </Col>
+            </Row>
+          )}
+
+          {openNewColumnFrom && (
+            <div className="enter-new-column">
+              <div
+                size="sm"
+                type="text"
+                placeholder="Enter column title ..."
+                className="input-enter-new-column"
+                value={newColumnTitle}
+                onChange={onNewColumnTitleChange}
+                // event Enter change click addNewColumn
+                onKeyDown={(event) => event.key === 'Enter' && addNewColumn()}
+              ></div>
+
+              <Button variant="success" size="sm" onClick={addNewColumn}>
+                Add table
+              </Button>
+              <span className="cancel-icon" onClick={tonggleOpenNewColumnFrom}>
+                <i className="fa fa-times icon" />
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="card__item ">
@@ -116,7 +152,9 @@ const CreateProblem = () => {
 
         <div className="card__btn">
           <Button onClick={() => setOpen(!open)}>Thêm case</Button>
-          <Button onClick={handleSaveExercise}>Lưu bài toán</Button>
+          <Button backgroundColor="green" onClick={handleSaveExercise}>
+            Lưu bài toán
+          </Button>
         </div>
 
         {open && (

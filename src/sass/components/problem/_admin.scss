@@ -1,15 +1,16 @@
 .container-card {
   border-radius: 10px;
+  width: 100%;
 
   .card {
     h3 {
       font-size: 2.4rem;
       text-align: center;
     }
-    margin: 10px 320px;
-    padding: 60px;
+
+    padding: 16px;
     background-color: $main-background;
-    border-radius: 10px;
+    border-radius: 4px;
 
     &__item {
       padding: 8px;
@@ -41,8 +42,8 @@
         border-radius: 5px;
         outline: none;
 
-        border: 2px solid transparent;
-        transition: all 0.25s ease-in-out;
+        border: 1.5px solid transparent;
+        transition: all 0.2s ease;
 
         &:hover {
           background-color: #fff;
@@ -52,7 +53,7 @@
         &:focus {
           background-color: #fff;
           border-color: lightcoral;
-          box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
+          box-shadow: rgba(240, 128, 128, 0.3) 0px 0px 8px;
         }
       }
     }
@@ -80,7 +81,7 @@
       background: #dddddda3;
       z-index: 9;
       overflow: auto;
-      padding: 50px;
+      padding: 200px 200px 100px 420px;
 
       &__body {
         @include flex(center, center);
@@ -88,7 +89,7 @@
         padding: 16px;
         display: flex;
         align-items: center;
-        justify-content: center;
+
         max-width: 100%;
         gap: 30px;
         width: 100%;

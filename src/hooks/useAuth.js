@@ -90,7 +90,7 @@ function useAuthProvider() {
       onCompleted: (data) => {
         const { id, email, full_name, access_token } = data.createAccount;
         localStorage.setItem('token', access_token);
-        const user = { id, email, full_name };
+        const user = { id, email, fullName: full_name };
         setUser(user);
         setLoading(false);
         setIsLogged(true);
