@@ -3,26 +3,20 @@ import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
 import MDEditor from '@uiw/react-md-editor';
 import { INSERT_PROBLEM } from 'graphql/Mutation';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 const CreateProblem = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({});
   const [caseData, setCaseData] = useState([]);
   const [inputCase, setInputCase] = useState({});
-  // const [tag, setTag] = useState([]);
-  const [openInput, setOpenInput] = useState(false);
-  const [value, setValue] = React.useState('');
+  // const [openInput, setOpenInput] = useState(false);
+  const [value, setValue] = useState('');
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
   // const problemValidation = Yup.object({
   //   displayName: Yup.string().required('Tên không được để trống'),
   //   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
   // });
-
-  let tag = 'c, c++, javascript';
-
-  const substr = tag.split(', ');
-  console.log(substr[0]);
 
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);
@@ -53,7 +47,7 @@ const CreateProblem = () => {
       variables: {
         name: input.title,
         level: input.level ? input.level : 1,
-        des: input.des,
+        des: value,
         topic: [allTags],
         metadata: caseData,
       },
@@ -92,7 +86,13 @@ const CreateProblem = () => {
         </div>
         <div className="card__item">
           <label>Nội dung: </label>
-          <MDEditor name="des" value={value} onChange={handleChangeInput} />
+          <MDEditor
+            name="des"
+            value={value}
+            onChange={(val) => {
+              setValue(val);
+            }}
+          />
         </div>
 
         <div className="card__item ">
