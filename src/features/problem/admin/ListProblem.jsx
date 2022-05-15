@@ -35,8 +35,8 @@ const ListProblem = () => {
                   <col width="120" />
                   <col width="300" />
                   <col width="150" />
-                  <col width="350" />
-                  <col width="150" />
+                  <col width="300" />
+                  <col width="200" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -70,6 +70,11 @@ const ListProblem = () => {
                         <span>Cập nhật lúc</span>
                       </div>
                     </th>
+                    <th className="table_header">
+                      <div className="table_cell">
+                        <span> </span>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -81,8 +86,8 @@ const ListProblem = () => {
                   <col width="120" />
                   <col width="300" />
                   <col width="150" />
-                  <col width="350" />
-                  <col width="150" />
+                  <col width="300" />
+                  <col width="200" />
                 </colgroup>
                 <tbody className="table_body">
                   {data?.exercises.map((item, index) => (
