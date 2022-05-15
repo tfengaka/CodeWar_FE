@@ -1,21 +1,22 @@
-@import "./variables";
-@import "./base";
-@import "./common";
+@import './variables';
+@import './base';
+@import './common';
 
-@import "./components/header";
-@import "./components/sidebar";
-@import "./components/button";
-@import "./components/admin";
+@import './components/header';
+@import './components/sidebar';
+@import './components/button';
+@import './components/admin';
 
-@import "./components/auth/loginpage";
-@import "./components/auth/modal";
+@import './components/auth/loginpage';
+@import './components/auth/modal';
 
-@import "./components/contest/contest";
-@import "./components/contest/itemContest";
-@import "./components/contest/contentContest";
-@import "./components/contest/createContest";
-@import "./components/contest/listContest";
+@import './components/contest/contest';
+@import './components/contest/itemContest';
+@import './components/contest/contentContest';
+@import './components/contest/createContest';
+@import './components/contest/listContest';
 
-@import "./components/problem/problem";
-@import "./components/problem/editor";
-@import "./components/problem/testcase";
+@import './components/problem/problem';
+@import './components/problem/editor';
+@import './components/problem/testcase';
+@import './components/problem/createProblem';
