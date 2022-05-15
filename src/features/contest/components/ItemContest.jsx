@@ -11,7 +11,13 @@ const ItemContest = (props) => {
   const colorEnd = '#ed4014';
 
   const itemStart = options
-    .filter((b) => b.status === 'Đang diễn ra')
+    .filter((b) => {
+      if (b.status === 'Đang diễn ra') {
+        return b;
+      } else if (b.status === '') {
+        return b;
+      }
+    })
     .map(({ id, name, des, startDate, endDate, status }) => ({
       id,
       name,
@@ -23,7 +29,13 @@ const ItemContest = (props) => {
     }));
 
   const itemEnd = options
-    .filter((b) => b.status === 'Đã kết thúc')
+    .filter((b) => {
+      if (b.status === 'Đã kết thúc') {
+        return b;
+      } else if (b.status === '') {
+        return b;
+      }
+    })
     .map(({ id, name, des, startDate, endDate, status }) => ({
       id,
       name,

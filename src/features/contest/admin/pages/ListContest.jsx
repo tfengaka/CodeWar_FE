@@ -26,11 +26,12 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="400" />
                   <col width="300" />
-                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
-                  <col width="125" />
+                  <col width="150" />
+                  <col width="185" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -83,10 +84,11 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="400" />
                   <col width="300" />
-                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
+                  <col width="150" />
                   <col width="125" />
                 </colgroup>
                 <tbody className="table_body">
