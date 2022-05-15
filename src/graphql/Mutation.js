@@ -21,22 +21,20 @@ export const SIGN_UP = gql`
 export const SUBMIT_CODE = gql`
   mutation SUBMIT_CODE(
     $exerciseId: String!
+    $caseFailed: jsonb!
     $excuteTime: float8!
     $memory: Int!
     $point: float8!
-    $caseFailed: jsonb!
   ) {
-    insert_pratice_results(
-      objects: {
-        exerciseId: $exerciseId
+    resultExercise(
+      data: {
+        caseFailed: $caseFailed
         excuteTime: $excuteTime
+        exerciseId: $exerciseId
         memory: $memory
         point: $point
-        caseFailed: $caseFailed
       }
-    ) {
-      affected_rows
-    }
+    )
   }
 `;
 
