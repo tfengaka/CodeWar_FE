@@ -27,13 +27,6 @@
   &_content {
     height: 100%;
     margin-left: $sidebar-width;
-    padding: 20px 10px 0;
-    .wrapper {
-      background-color: #fff;
-      border-radius: 4px;
-      padding: 8px;
-      min-height: 400px;
-      box-shadow: $box-shadow;
-    }
+    padding: 8px 10px 0;
   }
 }
