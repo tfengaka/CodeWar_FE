@@ -21,21 +21,49 @@ export const SIGN_UP = gql`
 export const SUBMIT_CODE = gql`
   mutation SUBMIT_CODE(
     $exerciseId: String!
+    $caseFailed: jsonb!
     $excuteTime: float8!
     $memory: Int!
     $point: float8!
-    $caseFailed: jsonb!
   ) {
-    insert_pratice_results(
-      objects: {
-        exerciseId: $exerciseId
+    resultExercise(
+      data: {
+        caseFailed: $caseFailed
         excuteTime: $excuteTime
+        exerciseId: $exerciseId
         memory: $memory
         point: $point
-        caseFailed: $caseFailed
       }
+    )
+  }
+`;
+
+export const UPDATE_CONTEST = gql`
+  mutation UPDATE_CONTEST(
+    $contestId: String!
+    $name: String
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+    $status: String
+  ) {
+    update_contests_by_pk(
+      pk_columns: { id: $contestId }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
     ) {
-      affected_rows
+      id
+    }
+  }
+`;
+
+export const INSERT_PROBLEM = gql`
+  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: jsonb!, $metadata: jsonb!) {
+    insert_exercises(objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata }) {
+      returning {
+        des
+        level
+        name
+      }
     }
   }
 `;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { getContests } from 'graphql/Queries';
 import moment from 'moment';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
+import { UPDATE_CONTEST } from 'graphql/Mutation';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(getContests);
@@ -25,13 +26,11 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="200" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="400" />
+                  <col width="300" />
+                  <col width="300" />
                   <col width="120" />
-                  <col width="120" />
-                  <col width="100" />
-                  <col width="100" />
+                  <col width="125" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -75,11 +74,6 @@ const ListContest = () => {
                         <span> </span>
                       </div>
                     </th>
-                    <th className="table_header">
-                      <div className="table_cell">
-                        <span> </span>
-                      </div>
-                    </th>
                   </tr>
                 </thead>
               </table>
@@ -89,13 +83,11 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="200" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="400" />
+                  <col width="300" />
+                  <col width="300" />
                   <col width="120" />
-                  <col width="120" />
-                  <col width="100" />
-                  <col width="100" />
+                  <col width="125" />
                 </colgroup>
                 <tbody className="table_body">
                   {data?.contests.map((item, index) => (
@@ -116,6 +108,22 @@ const TableRow = ({ data }) => {
   const displayID = id.substr(0, 8).toUpperCase();
   const [show, setShow] = useState(false);
   const [contestItem, setItem] = useState();
+
+  const [removeContest] = useMutation(UPDATE_CONTEST);
+
+  const handleListRemove = () => {
+    removeContest({
+      variables: { contestId: id, status: 'deleted', name, des, startDate, endDate },
+      onCompleted: () => {
+        alert('Xóa thành công');
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+      refetchQueries: [getContests],
+    });
+  };
+
   return (
     <tr className="table">
       <td>
@@ -144,28 +152,21 @@ const TableRow = ({ data }) => {
         <div className="table_cell">{status}</div>
       </td>
       <td>
-        <div className="table_cell">
+        <div className="table_cell tool">
           <Button
             backgroundColor="green"
-            className="btn"
             onClick={() => {
               setItem(id, name, des, startDate, endDate, createdBy, status);
             }}
           >
-            Cập nhật
+            <i className="bx bxs-edit"></i>
+          </Button>
+          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
+            <i className="bx bxs-trash-alt"></i>
           </Button>
         </div>
       </td>
-      <td>
-        <div className="table_cell">
-          <Button backgroundColor="red" className="btn">
-            Xóa
-          </Button>
-        </div>
-      </td>
-      <td>
-        <UpdateContest show={show} item={contestItem} onClose={() => setShow(false)} />
-      </td>
+      <UpdateContest show={show} item={contestItem} onClose={() => setShow(false)} />
     </tr>
   );
 };
