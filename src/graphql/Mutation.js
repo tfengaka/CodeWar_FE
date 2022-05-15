@@ -67,3 +67,21 @@ export const INSERT_PROBLEM = gql`
     }
   }
 `;
+
+export const UPDATE_PROBLEM = gql`
+  mutation UPDATE_CONTEST(
+    $problemId: String!
+    $name: String!
+    $des: String!
+    $level: Int!
+    $topic: jsonb!
+    $updatedAt: timestamptz!
+  ) {
+    update_contests_by_pk(
+      pk_columns: { id: $problemId }
+      _set: { name: $name, des: $des, level: $level, topic: $topic, updatedAt: $updatedAt }
+    ) {
+      id
+    }
+  }
+`;
