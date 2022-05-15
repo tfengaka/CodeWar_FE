@@ -8,7 +8,7 @@ const routing = [
   { path: '/problem', display: 'Luyện Tập', icon: 'bx bxs-grid' },
   { path: '/contest', display: 'Thi Đấu', icon: 'bx bxs-trophy' },
   { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
-  { path: '/upload', display: 'Bài nộp', icon: 'bx bxs-cloud-upload' },
+  { path: '/blog', display: 'Thảo luận', icon: 'bx bxs-chat' },
 ];
 export default function Navigation() {
   const { pathname } = useLocation();

@@ -4,7 +4,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from './Button';
-
 const languageOptions = {
   C: {
     id: 75,
@@ -47,23 +46,25 @@ const ProblemSolve = () => {
       });
     }
   }, [monaco]);
-  console.log('resultData: ', resultData);
   return (
-    <div className="container">
-      <div className="editor">
-        <div className="editor_problem">
-          <div className="editor_problem_header">
-            <h3>{data?.name}</h3>
-          </div>
-          <div className="editor_problem_body">
-            <div className="editor_problem_body_content">
-              <h4>Đề bài</h4>
-              <pre>{data?.des}</pre>
+    <div className="wrapper">
+      <div className="panel left" style={{ minWidth: '47%' }}>
+        <div className="problem">
+          <div className="problem_wrapper">
+            <div className="problem_header">
+              <h3>{data?.name}</h3>
+            </div>
+            <div className="problem_body">
+              <div className="problem_body_content">
+                <h4>Đề bài</h4>
+                <pre>{data?.des}</pre>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="editor code_area">
+
+      <div className="panel right">
         <div className="editor_header">
           <div className="editor_header_language">
             <span>Change Language </span>
@@ -86,7 +87,7 @@ const ProblemSolve = () => {
         </div>
         <div className="editor_body">
           <MonacoEditor
-            className="code-area"
+            className="monaco"
             options={{
               minimap: {
                 enabled: false,
@@ -139,33 +140,18 @@ const ProblemSolve = () => {
               </div>
               <div className="testcase_body_result">
                 {currentTab === 0 && (
-                  <div className="testcase_body_result_wrapper">
+                  <>
                     <div className="testcase_body_result_item">
                       <span>Input</span>
                       <div className="testcase_body_result_item_value">
                         {data.metadata[currentCase].input ? data.metadata[currentCase].input : '[]'}
                       </div>
                     </div>
-                    <div className="testcase_body_result_item">
-                      <span>Memory Usage</span>
-                      <div className="testcase_body_result_item_value">
-                        {resultData && resultData[currentCase].data.memory
-                          ? `${Number(resultData[currentCase].data.memory / 1000).toFixed(2)} MB`
-                          : 'None'}
-                      </div>
-                    </div>
+
                     <div className="testcase_body_result_item">
                       <span>Output</span>
                       <div className="testcase_body_result_item_value">
                         {resultData && resultData[currentCase].data.stdout ? resultData[currentCase].data.stdout : '[]'}
-                      </div>
-                    </div>
-                    <div className="testcase_body_result_item">
-                      <span>Runtime</span>
-                      <div className="testcase_body_result_item_value">
-                        {resultData && resultData[currentCase].data.time
-                          ? `${Number(resultData[currentCase].data.time * 1000)} ms`
-                          : 'None'}
                       </div>
                     </div>
                     <div className="testcase_body_result_item">
@@ -174,13 +160,7 @@ const ProblemSolve = () => {
                         {data.metadata[currentCase].output ? data.metadata[currentCase].output : '[]'}
                       </div>
                     </div>
-                    <div className="testcase_body_result_item">
-                      <span>Runtime Limit</span>
-                      <div className="testcase_body_result_item_value">
-                        {data.metadata[currentCase].time ? `${Number(data.metadata[currentCase].time)} ms` : 'None'}
-                      </div>
-                    </div>
-                  </div>
+                  </>
                 )}
                 {currentTab === 1 && (
                   <div className="testcase_body_result_console">
