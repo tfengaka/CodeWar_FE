@@ -13,11 +13,6 @@ const CreateProblem = () => {
   const [value, setValue] = useState('');
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
-  // const problemValidation = Yup.object({
-  //   displayName: Yup.string().required('Tên không được để trống'),
-  //   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
-  // });
-
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);
     return setOpen(false);
