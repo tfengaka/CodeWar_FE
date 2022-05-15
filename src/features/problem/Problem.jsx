@@ -9,6 +9,7 @@ const Problem = () => {
 
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
+  console.log(data);
   return (
     <div className="problem">
       <div className="problem_container">
@@ -27,12 +28,12 @@ const Problem = () => {
             <div className="problem_content_table_header">
               <table className="table">
                 <colgroup>
-                  <col width="50" />
+                  <col width="40" />
                   <col width="120" />
+                  <col width="400" />
+                  <col width="150" />
                   <col width="450" />
                   <col width="150" />
-                  <col width="287" />
-                  <col width="350" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -73,12 +74,12 @@ const Problem = () => {
             <div className="problem_content_table_body">
               <table className="table">
                 <colgroup>
-                  <col width="50" />
+                  <col width="30" />
                   <col width="120" />
+                  <col width="400" />
+                  <col width="150" />
                   <col width="450" />
                   <col width="150" />
-                  <col width="287" />
-                  <col width="350" />
                 </colgroup>
                 <tbody className="table_body">
                   {data?.exercises.map((item, index) => (
@@ -145,7 +146,11 @@ const TableRow = ({ data }) => {
       </td>
       <td>
         <div className="table_cell">
-          <span>{topic}</span>
+          {topic.map((item, index) => (
+            <div key={index} className="tag topic">
+              <span>{item}</span>
+            </div>
+          ))}
         </div>
       </td>
       <td>

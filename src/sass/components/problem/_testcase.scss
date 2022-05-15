@@ -1,6 +1,9 @@
 .testcase {
+  width: 100%;
+  max-height: 500px;
   font-family: 'Roboto', sans-serif;
   background-color: #20222c;
+  border-bottom: 1px solid #20222c;
   user-select: none;
   &_header {
     @include flex(center, none);
@@ -26,7 +29,7 @@
     display: flex;
     &_list {
       flex: 0 0 auto;
-      height: 191px;
+      height: 200px;
       overflow-y: auto;
       overflow-x: hidden;
       &::-webkit-scrollbar {
@@ -43,7 +46,8 @@
       &_item {
         @include flex(center, space-between);
         width: 120px;
-        padding: 1.2rem 2rem;
+        height: 50px;
+        padding: 2rem;
         transition: all 0.25s ease;
         cursor: pointer;
         &_icon {
@@ -60,20 +64,16 @@
     }
     &_result {
       flex: 1 1 auto;
-      padding: 8px;
+      padding: 16px;
+      height: 200px;
       background-color: #282a36;
-      &_wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
       &_item {
         @include flex(center, auto);
         width: 100%;
         gap: 16px;
-        padding: 8px 0;
+        padding: 10px 0;
         span {
-          width: 108px;
+          width: 70px;
         }
         &_value {
           font-family: 'SF_Mono';

@@ -11,7 +11,7 @@ export function AdminLayout() {
       <div className="admin_header">
         <div className="admin_header_account">
           <span>{auth.user.fullName}</span>
-          <Button backgroundColor="blue" onClick={() => auth.signOut()}>
+          <Button backgroundColor="red" onClick={() => auth.signOut()}>
             Đăng xuất
           </Button>
         </div>
