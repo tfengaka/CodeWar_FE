@@ -1,4 +1,6 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
+import MDEditor from '@uiw/react-md-editor';
+import Discuss from 'features/problem/Discuss';
 import { useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -36,6 +38,12 @@ const ProblemSolve = () => {
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
+  const [width, setWidth] = React.useState({
+    left: '40%',
+    right: '60%',
+  });
+  const [showDiscuss, setShowDiscuss] = React.useState(false);
+  const [isMounth, setIsMounth] = React.useState(false);
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -48,23 +56,19 @@ const ProblemSolve = () => {
   }, [monaco]);
   return (
     <div className="wrapper">
-      <div className="panel left" style={{ minWidth: '47%' }}>
+      <div className="panel left" style={{ width: width.left }}>
         <div className="problem">
-          <div className="problem_wrapper">
-            <div className="problem_header">
-              <h3>{data?.name}</h3>
-            </div>
-            <div className="problem_body">
-              <div className="problem_body_content">
-                <h4>Đề bài</h4>
-                <pre>{data?.des}</pre>
-              </div>
-            </div>
+          <center>
+            <h3>{data?.name}</h3>
+          </center>
+          <div data-color-mode="light">
+            <div className="wmde-markdown-var"> </div>
+            <MDEditor.Markdown source={data?.des} />
           </div>
         </div>
       </div>
 
-      <div className="panel right">
+      <div className="panel right" style={{ width: width.right }}>
         <div className="editor_header">
           <div className="editor_header_language">
             <span>Change Language </span>
@@ -194,6 +198,14 @@ const ProblemSolve = () => {
           </div>
         </div>
       </div>
+
+      <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
+        <div className="btn_popup-content">
+          <i className="bx bxs-message-rounded bx-md"></i>
+          <span>Hỏi đáp</span>
+        </div>
+      </div>
+      {showDiscuss && <Discuss exerciseId={data.id} setShowDiscuss={setShowDiscuss} />}
     </div>
   );
 };

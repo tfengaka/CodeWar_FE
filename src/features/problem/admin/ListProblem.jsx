@@ -130,7 +130,7 @@ const TableRow = ({ data }) => {
   const [removeProblem] = useMutation(UPDATE_PROBLEM);
   const handleListRemove = () => {
     removeProblem({
-      variables: { problemId: id, name, des, level, topic, updatedAt },
+      variables: { contestId: id, des, name, topic, level, updatedAt },
       onCompleted: () => {
         alert('Xóa thành công');
       },

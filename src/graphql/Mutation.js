@@ -69,19 +69,33 @@ export const INSERT_PROBLEM = gql`
 `;
 
 export const UPDATE_PROBLEM = gql`
-  mutation UPDATE_CONTEST(
-    $problemId: String!
+  mutation UPDATE_PROBLEM(
+    $contestId: String!
     $name: String!
     $des: String!
     $level: Int!
     $topic: jsonb!
-    $updatedAt: timestamptz!
+    $updatedAt: timestamptz
   ) {
-    update_contests_by_pk(
-      pk_columns: { id: $problemId }
+    update_exercises_by_pk(
+      pk_columns: { id: $contestId }
       _set: { name: $name, des: $des, level: $level, topic: $topic, updatedAt: $updatedAt }
     ) {
       id
+    }
+  }
+`;
+
+export const UPDATE_DISCUSS_REACT = gql`
+  mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
+    discussReactUpdate(data: { id: $id, discussId: $discussId })
+  }
+`;
+
+export const ADD_DISCUSS = gql`
+  mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
+    insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
+      accountId
     }
   }
 `;
