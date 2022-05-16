@@ -46,10 +46,11 @@ export const UPDATE_CONTEST = gql`
     $startDate: timestamptz
     $endDate: timestamptz
     $status: String
+    $createdBy: String
   ) {
     update_contests_by_pk(
       pk_columns: { id: $contestId }
-      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, createdBy: $createdBy }
     ) {
       id
     }

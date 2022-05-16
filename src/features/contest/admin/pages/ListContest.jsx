@@ -5,6 +5,8 @@ import { format, parse } from 'date-fns';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
+import { Link } from 'react-router-dom';
+import ListQuestionContest from './ListQuestionContest';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(getContests);
@@ -31,7 +33,7 @@ const ListContest = () => {
                   <col width="250" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="175" />
+                  <col width="270" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -89,7 +91,7 @@ const ListContest = () => {
                   <col width="250" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="125" />
+                  <col width="200" />
                 </colgroup>
                 <tbody className="table_body">
                   {data?.contests.map((item, index) => (
@@ -109,7 +111,6 @@ const TableRow = ({ data }) => {
   const { id, name, des, startDate, endDate, createdBy, status } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   const [show, setShow] = useState(false);
-  const [contestItem, setItem] = useState();
 
   const [removeContest] = useMutation(UPDATE_CONTEST);
 
@@ -159,8 +160,7 @@ const TableRow = ({ data }) => {
             <Button
               backgroundColor="green"
               onClick={() => {
-                setShow(!show);
-                setItem(id, name, des, startDate, endDate, createdBy, status);
+                setShow(true);
               }}
             >
               <i className="bx bxs-edit"></i>
@@ -168,10 +168,24 @@ const TableRow = ({ data }) => {
             <Button backgroundColor="red" onClick={() => handleListRemove()}>
               <i className="bx bxs-trash-alt"></i>
             </Button>
+            <Link to={'contest/' + id}>
+              <Button backgroundColor="blue">
+                <i className="bx bx-question-mark"></i>
+              </Button>
+            </Link>
           </div>
         </td>
       </tr>
-      <UpdateContest show={show} item={contestItem} onClose={() => setShow(false)} />
+      <UpdateContest
+        show={show}
+        id={id}
+        name={name}
+        des={des}
+        startDatetime={startDate}
+        endDatetime={endDate}
+        onClose={() => setShow(false)}
+      />
+      {/* <ListQuestionContest /> */}
     </>
   );
 };

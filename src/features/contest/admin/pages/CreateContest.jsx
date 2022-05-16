@@ -29,16 +29,21 @@ const CreateContest = () => {
       },
       onCompleted: () => {
         alert('Thêm thành công');
-        setInputName('');
-        setInputDes('');
-        setStartDate(new Date());
-        setEndDate(new Date());
+        handleListReset();
       },
       onError: (error) => {
-        alert(error.message);
+        alert('Tiêu đề đã tồn tại');
+        console.log(error.message);
       },
       refetchQueries: [getContests],
     });
+  };
+
+  const handleListReset = () => {
+    setInputName('');
+    setInputDes('');
+    setStartDate(new Date());
+    setEndDate(new Date());
   };
 
   // const [questionList, setQuestionList] = useState([{ question: '' }]);
