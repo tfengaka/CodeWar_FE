@@ -86,13 +86,17 @@ const CreateProblem = () => {
         </div>
         <div className="card__item">
           <label>Nội dung: </label>
-          <MDEditor
-            name="des"
-            value={value}
-            onChange={(val) => {
-              setValue(val);
-            }}
-          />
+          <div data-color-mode="light">
+            <div className="wmde-markdown-var"> </div>
+            <MDEditor
+              name="des"
+              value={value}
+              height={600}
+              onChange={(val) => {
+                setValue(val);
+              }}
+            />
+          </div>
         </div>
 
         <div className="card__item ">

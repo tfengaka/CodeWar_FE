@@ -9,7 +9,6 @@ const Problem = () => {
 
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
-  console.log(data);
   return (
     <div className="problem">
       <div className="problem_container">

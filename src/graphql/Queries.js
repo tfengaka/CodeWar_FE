@@ -38,3 +38,28 @@ export const getContests = gql`
     }
   }
 `;
+
+export const GET_ALL_DISCUSSES = gql`
+  query getAllDiscusses($exerciseId: String!) {
+    discusses(where: { exerciseId: { _eq: $exerciseId } }) {
+      account {
+        fullName
+      }
+      discuss_reacts_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+      discuss_reacts {
+        id
+        accountId
+      }
+      id
+      exerciseId
+      floor
+      title
+      content
+      createdAt
+    }
+  }
+`;
