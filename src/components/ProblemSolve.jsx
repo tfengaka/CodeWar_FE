@@ -42,6 +42,8 @@ const ProblemSolve = () => {
     left: '40%',
     right: '60%',
   });
+  const [showDiscuss, setShowDiscuss] = React.useState(false);
+  const [isMounth, setIsMounth] = React.useState(false);
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -197,13 +199,13 @@ const ProblemSolve = () => {
         </div>
       </div>
 
-      <div className="btn_popup">
+      <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
         <div className="btn_popup-content">
           <i className="bx bxs-message-rounded bx-md"></i>
           <span>Hỏi đáp</span>
         </div>
       </div>
-      <Discuss exerciseId={data.id} />
+      {showDiscuss && <Discuss exerciseId={data.id} setShowDiscuss={setShowDiscuss} />}
     </div>
   );
 };
