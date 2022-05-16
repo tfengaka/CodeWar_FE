@@ -63,3 +63,16 @@ export const GET_ALL_DISCUSSES = gql`
     }
   }
 `;
+
+export const GET_ALL_COURSE = gql`
+  query GET_ALL_COURSE {
+    courses {
+      id
+      name
+      image
+      des
+      createdBy
+      createdAt
+    }
+  }
+`;
