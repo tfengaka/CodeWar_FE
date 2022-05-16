@@ -1,29 +1,64 @@
+import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
+import { INSERT_CONTEST } from 'graphql/Mutation';
+import { getContests } from 'graphql/Queries';
+import { useAuth } from 'hooks/useAuth';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 const CreateContest = () => {
+  const auth = useAuth();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [questionList, setQuestionList] = useState([{ question: '' }]);
+  const [inputName, setInputName] = useState('');
+  const [inputDes, setInputDes] = useState('');
 
-  const handleQuestionChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...questionList];
-    list[index][name] = value;
-    setQuestionList(list);
+  const [saveContests] = useMutation(INSERT_CONTEST);
+
+  const handleListAdd = () => {
+    saveContests({
+      variables: {
+        name: inputName,
+        des: inputDes,
+        startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+        endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+        status: 'Đang diễn ra',
+        createdBy: auth.user.fullName,
+      },
+      onCompleted: () => {
+        alert('Thêm thành công');
+        setInputName('');
+        setInputDes('');
+        setStartDate(new Date());
+        setEndDate(new Date());
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+      refetchQueries: [getContests],
+    });
   };
 
-  const handleQuestionAdd = () => {
-    setQuestionList([...questionList, { question: '' }]);
-  };
+  // const [questionList, setQuestionList] = useState([{ question: '' }]);
 
-  const handleQuestionRemove = (index) => {
-    const list = [...questionList];
-    list.splice(index, 1);
-    setQuestionList(list);
-  };
+  // const handleQuestionChange = (e, index) => {
+  //   const { name, value } = e.target;
+  //   const list = [...questionList];
+  //   list[index][name] = value;
+  //   setQuestionList(list);
+  // };
+
+  // const handleQuestionAdd = () => {
+  //   setQuestionList([...questionList, { question: '' }]);
+  // };
+
+  // const handleQuestionRemove = (index) => {
+  //   const list = [...questionList];
+  //   list.splice(index, 1);
+  //   setQuestionList(list);
+  // };
 
   return (
     <>
@@ -35,13 +70,24 @@ const CreateContest = () => {
               <li>
                 <h3>Tiêu đề</h3>
                 <div className="create_card--input">
-                  <input autoComplete="off" spellCheck="false" type="text" placeholder="Tiêu đề"></input>
+                  <input
+                    autoComplete="off"
+                    spellCheck="false"
+                    type="text"
+                    placeholder="Tiêu đề"
+                    onChange={(e) => setInputName(e.target.value)}
+                  ></input>
                 </div>
               </li>
               <li>
                 <h3>Nội dung</h3>
-                <div className="create_card--input" data-color-mode="light">
-                  <textarea autoComplete="off" spellCheck="false" placeholder="Nội dung"></textarea>
+                <div className="create_card--input">
+                  <textarea
+                    autoComplete="off"
+                    spellCheck="false"
+                    placeholder="Nội dung"
+                    onChange={(e) => setInputDes(e.target.value)}
+                  ></textarea>
                 </div>
               </li>
               <div className="datetime">
@@ -72,7 +118,12 @@ const CreateContest = () => {
                   </div>
                 </li>
               </div>
-              {questionList.map((item, index) => (
+              <li>
+                <div className="create_card--button">
+                  <Button onClick={() => handleListAdd()}>Lưu</Button>
+                </div>
+              </li>
+              {/* {questionList.map((item, index) => (
                 <li key={index}>
                   <h3>Câu hỏi</h3>
                   <div className="create_card--input">
@@ -87,6 +138,7 @@ const CreateContest = () => {
                     ></textarea>
                   </div>
                   <div className="create_card--button">
+                    <Button>Chọn câu hỏi</Button>
                     {questionList.length - 1 === index && questionList.length < 4 && (
                       <Button backgroundColor="green" className="btn" onClick={handleQuestionAdd}>
                         Thêm câu hỏi
@@ -100,7 +152,7 @@ const CreateContest = () => {
                     <Button>Lưu</Button>
                   </div>
                 </li>
-              ))}
+              ))} */}
             </div>
           </ul>
         </div>

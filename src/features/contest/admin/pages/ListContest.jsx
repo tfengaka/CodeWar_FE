@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { getContests } from 'graphql/Queries';
-import moment from 'moment';
+import { format, parse } from 'date-fns';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
@@ -26,11 +26,12 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="400" />
                   <col width="300" />
-                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
-                  <col width="125" />
+                  <col width="150" />
+                  <col width="175" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -83,10 +84,11 @@ const ListContest = () => {
                 <colgroup>
                   <col width="120" />
                   <col width="150" />
-                  <col width="400" />
                   <col width="300" />
-                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
+                  <col width="150" />
                   <col width="125" />
                 </colgroup>
                 <tbody className="table_body">
@@ -125,49 +127,52 @@ const TableRow = ({ data }) => {
   };
 
   return (
-    <tr className="table">
-      <td>
-        <div className="table_cell">{displayID}</div>
-      </td>
-      <td>
-        <div className="table_cell">{name}</div>
-      </td>
-      <td>
-        <div className="table_cell">{des}</div>
-      </td>
-      <td>
-        <div className="table_cell">
-          <span>{moment(startDate).format('DD/MM/YYYY - HH:MM:ss')}</span>
-        </div>
-      </td>
-      <td>
-        <div className="table_cell">
-          <span>{moment(endDate).format('DD/MM/YYYY - HH:MM:ss')}</span>
-        </div>
-      </td>
-      <td>
-        <div className="table_cell">{createdBy}</div>
-      </td>
-      <td>
-        <div className="table_cell">{status}</div>
-      </td>
-      <td>
-        <div className="table_cell tool">
-          <Button
-            backgroundColor="green"
-            onClick={() => {
-              setItem(id, name, des, startDate, endDate, createdBy, status);
-            }}
-          >
-            <i className="bx bxs-edit"></i>
-          </Button>
-          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
-            <i className="bx bxs-trash-alt"></i>
-          </Button>
-        </div>
-      </td>
+    <>
+      <tr className="table">
+        <td>
+          <div className="table_cell">{displayID}</div>
+        </td>
+        <td>
+          <div className="table_cell">{name}</div>
+        </td>
+        <td>
+          <div className="table_cell">{des}</div>
+        </td>
+        <td>
+          <div className="table_cell">
+            <span>{format(parse(startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
+          </div>
+        </td>
+        <td>
+          <div className="table_cell">
+            <span>{format(parse(endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
+          </div>
+        </td>
+        <td>
+          <div className="table_cell">{createdBy}</div>
+        </td>
+        <td>
+          <div className="table_cell">{status}</div>
+        </td>
+        <td>
+          <div className="table_cell tool">
+            <Button
+              backgroundColor="green"
+              onClick={() => {
+                setShow(!show);
+                setItem(id, name, des, startDate, endDate, createdBy, status);
+              }}
+            >
+              <i className="bx bxs-edit"></i>
+            </Button>
+            <Button backgroundColor="red" onClick={() => handleListRemove()}>
+              <i className="bx bxs-trash-alt"></i>
+            </Button>
+          </div>
+        </td>
+      </tr>
       <UpdateContest show={show} item={contestItem} onClose={() => setShow(false)} />
-    </tr>
+    </>
   );
 };
 
