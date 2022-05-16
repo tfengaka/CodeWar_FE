@@ -1,5 +1,6 @@
 import NotFound from 'components/NotFound';
 import Blog from 'features/blog/Blog';
+import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
@@ -18,6 +19,7 @@ export function ClientRoutes() {
       <Route path="/rank" element={<div>Rank page</div>} />
       <Route path="/blog" element={<Blog />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/course" element={<CoursesList />} />
     </Switch>
   );
 }

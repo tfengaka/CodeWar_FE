@@ -1,0 +1,50 @@
+.course {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+
+  &_body {
+    display: grid;
+    grid-template-columns: 21% 21% 21% 21%;
+    gap: 5%;
+
+    .course_item {
+      width: 350px;
+      margin-top: 50px;
+      border: solid 1px #e6e6e6;
+      border-radius: 2rem;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+      & > img {
+        border-top-right-radius: 2rem;
+        border-top-left-radius: 2rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      &-content {
+        padding: 10px;
+        height: 140px;
+
+        & > p {
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      &-footer {
+        width: 90%;
+        display: flex;
+        justify-content: flex-end;
+        border-top: 1px solid #9a9a9a;
+        margin: 0 auto;
+
+        & > button {
+          margin: 10px 0 10px 0;
+        }
+      }
+    }
+  }
+}

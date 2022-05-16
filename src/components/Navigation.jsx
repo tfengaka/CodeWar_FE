@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import banner from 'assets/images/banner.png';
 const routing = [
+  { path: '/course', display: 'Học Tập', icon: 'bx bx-book-open' },
   { path: '/problem', display: 'Luyện Tập', icon: 'bx bxs-grid' },
   { path: '/contest', display: 'Thi Đấu', icon: 'bx bxs-trophy' },
   { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
