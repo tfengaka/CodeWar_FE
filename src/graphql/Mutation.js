@@ -73,3 +73,11 @@ export const UPDATE_DISCUSS_REACT = gql`
     discussReactUpdate(data: { id: $id, discussId: $discussId })
   }
 `;
+
+export const ADD_DISCUSS = gql`
+  mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
+    insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
+      accountId
+    }
+  }
+`;
