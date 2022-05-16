@@ -67,3 +67,9 @@ export const INSERT_PROBLEM = gql`
     }
   }
 `;
+
+export const UPDATE_DISCUSS_REACT = gql`
+  mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
+    discussReactUpdate(data: { id: $id, discussId: $discussId })
+  }
+`;
