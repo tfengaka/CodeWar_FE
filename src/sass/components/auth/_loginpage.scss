@@ -2,7 +2,7 @@
   position: relative;
   height: 100vh;
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     background-image: $bg-img;
     background-size: cover;
@@ -24,7 +24,7 @@
   }
 
   &__title {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     text-align: center;
     margin-top: 2.5rem;
@@ -63,19 +63,4 @@
       width: 100%;
     }
   }
-}
-
-.divider {
-  position: relative;
-  margin-top: 1.6rem;
-}
-
-.divider::after {
-  content: '';
-  background-color: #b6b6b6;
-  width: 100%;
-  position: absolute;
-  height: 2px;
-  top: 50%;
-  left: 0;
 }

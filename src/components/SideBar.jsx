@@ -29,6 +29,15 @@ const sideBarOptions = [
       },
     ],
   },
+  {
+    title: 'Blog',
+    children: [
+      {
+        name: 'Danh sách bài viết',
+        path: '/admin/blog',
+      },
+    ],
+  },
 ];
 
 const SideBar = () => {
