@@ -109,3 +109,13 @@ export const ADD_DISCUSS = gql`
     }
   }
 `;
+
+export const APPROVED_NEW_BLOG = gql`
+  mutation APPROVED_NEW_BLOG($blogID: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true }) {
+      id
+      title
+      isApproved
+    }
+  }
+`;
