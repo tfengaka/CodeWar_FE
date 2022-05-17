@@ -1,0 +1,27 @@
+.course-detail {
+  width: 100%;
+
+  &_banner {
+    width: inherit;
+    background-color: #1e2a55;
+    height: 300px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 20px;
+    color: white;
+
+    .banner_header {
+      display: flex;
+      width: inherit;
+      height: inherit;
+      margin-top: 20px;
+
+      & > img {
+        width: 80px;
+        height: 80px;
+        border: 2px solid black;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+      }
+    }
+  }
+}

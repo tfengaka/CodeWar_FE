@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
   return (
@@ -10,7 +11,9 @@ const CourseCard = ({ course }) => {
         <p>{course.des}</p>
       </div>
       <div className="course_item-footer">
-        <Button>Học ngay</Button>
+        <Link to={`/course/${course.id}`} state={{ courseData: course }}>
+          <Button>Học ngay</Button>
+        </Link>
       </div>
     </div>
   );

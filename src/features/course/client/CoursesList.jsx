@@ -7,8 +7,9 @@ const CoursesList = () => {
   const { loading, error, data } = useQuery(GET_ALL_COURSE);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Load Data Failed</p>;
+  if (error) return <p>{error.message}</p>;
 
+  console.log(data);
   return (
     <div className="course">
       <h2>Danh Sách Khoá Học</h2>

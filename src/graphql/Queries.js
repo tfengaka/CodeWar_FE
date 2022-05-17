@@ -73,6 +73,9 @@ export const GET_ALL_COURSE = gql`
       des
       createdBy
       createdAt
+      account {
+        fullName
+      }
     }
   }
 `;

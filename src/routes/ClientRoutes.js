@@ -1,5 +1,6 @@
 import NotFound from 'components/NotFound';
 import Blog from 'features/blog/Blog';
+import CourseDetail from 'features/course/client/CourseDetail';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
 import React from 'react';
@@ -20,6 +21,7 @@ export function ClientRoutes() {
       <Route path="/blog" element={<Blog />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/course" element={<CoursesList />} />
+      <Route path="/course/:id" element={<CourseDetail />} />
     </Switch>
   );
 }
