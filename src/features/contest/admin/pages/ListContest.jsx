@@ -168,7 +168,7 @@ const TableRow = ({ data }) => {
             <Button backgroundColor="red" onClick={() => handleListRemove()}>
               <i className="bx bxs-trash-alt"></i>
             </Button>
-            <Link to={'contest/' + id}>
+            <Link to={`${id}`}>
               <Button backgroundColor="blue">
                 <i className="bx bx-question-mark"></i>
               </Button>

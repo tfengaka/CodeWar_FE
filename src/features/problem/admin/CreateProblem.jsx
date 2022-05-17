@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import MDEditor from '@uiw/react-md-editor';
 import { INSERT_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE } from 'graphql/Queries';
 import { useLocation } from 'react-router-dom';
 // import * as Yup from 'yup';
 const CreateProblem = () => {
   const location = useLocation();
-  const { data } = location.state;
+  const pathName = location.pathname;
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({});
   const [caseData, setCaseData] = useState([]);
@@ -16,12 +17,27 @@ const CreateProblem = () => {
   const [value, setValue] = useState('');
   const [saveExercise] = useMutation(INSERT_PROBLEM);
 
+  let { loading, error, data } = useQuery(GET_ALL_EXERCISE);
+
+  if (loading) return <div className="loading"></div>;
+  if (error) return <div>Load data failed</div>;
+
   // const problemValidation = Yup.object({
   //   displayName: Yup.string().required('Tên không được để trống'),
   //   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
   // });
+  const item = data?.exercises
+    ?.filter((b) => '/admin/contest/' + b.contestId + '/problems' === pathName)
+    .map(({ id, name, level, topic, updatedAt, contestId }) => ({
+      id,
+      name,
+      level,
+      topic,
+      updatedAt,
+      contestId,
+    }));
 
-  console.log(data);
+  console.log(item);
 
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);

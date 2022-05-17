@@ -14,7 +14,7 @@ const ListQuestionContest = () => {
   if (error) return <div>Load data failed</div>;
 
   const item = data?.exercises
-    ?.filter((b) => '/admin/contest/contest/' + b.contestId === pathName)
+    ?.filter((b) => '/admin/contest/' + b.contestId === pathName)
     .map(({ id, name, level, topic, updatedAt, contestId }) => ({
       id,
       name,
@@ -99,7 +99,7 @@ const ListQuestionContest = () => {
               </table>
             </div>
             <div className="question_content_table_button">
-              <Link to={`contest/${item.map((item) => item.contestId)}/problems`} state={item}>
+              <Link to={`problems`}>
                 <Button backgroundColor="blue">
                   <i className="bx bx-plus"></i>
                 </Button>
