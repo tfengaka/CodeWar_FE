@@ -68,6 +68,34 @@ export const INSERT_PROBLEM = gql`
   }
 `;
 
+export const UPDATE_PROBLEM = gql`
+  mutation UPDATE_PROBLEM(
+    $exerciseId: String!
+    $name: String
+    $des: String
+    $level: Int
+    $topic: jsonb
+    $updatedAt: timestamptz
+    $status: String
+    $metadata: jsonb
+  ) {
+    update_exercises_by_pk(
+      pk_columns: { id: $exerciseId }
+      _set: {
+        name: $name
+        des: $des
+        level: $level
+        topic: $topic
+        updatedAt: $updatedAt
+        status: $status
+        metadata: $metadata
+      }
+    ) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_DISCUSS_REACT = gql`
   mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
     discussReactUpdate(data: { id: $id, discussId: $discussId })
