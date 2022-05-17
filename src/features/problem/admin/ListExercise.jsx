@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
+import Button from 'components/Button';
+import { UPDATE_PROBLEM } from 'graphql/Mutation';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
 import moment from 'moment';
-import Button from 'components/Button';
-import UpdateProblem from './UpdateProblem';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UPDATE_PROBLEM } from 'graphql/Mutation';
 
-const ListProblem = () => {
+const ListExercise = () => {
   let { loading, error, data } = useQuery(GET_ALL_EXERCISE);
 
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
-  console.log(data);
   return (
     <div className="problem">
       <div className="problem_container">
@@ -33,9 +31,9 @@ const ListProblem = () => {
                 <colgroup>
                   <col width="40" />
                   <col width="120" />
-                  <col width="300" />
+                  <col width="450" />
                   <col width="150" />
-                  <col width="300" />
+                  <col width="510" />
                   <col width="200" />
                 </colgroup>
                 <thead>
@@ -84,9 +82,9 @@ const ListProblem = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
-                  <col width="300" />
+                  <col width="450" />
                   <col width="150" />
-                  <col width="300" />
+                  <col width="510" />
                   <col width="200" />
                 </colgroup>
                 <tbody className="table_body">
@@ -106,8 +104,8 @@ const ListProblem = () => {
 const TableRow = ({ data }) => {
   const { id, name, des, level, topic, updatedAt } = data;
   const displayID = id.substr(0, 8).toUpperCase();
-  const [show, setShow] = useState(false);
-  const [problemItem, setItem] = useState();
+  const [open, setOpen] = useState(false);
+  // const [exerciseItem, setItem] = useState();
   let levelName = '';
   let levelColor = '';
   switch (level) {
@@ -130,7 +128,7 @@ const TableRow = ({ data }) => {
   const [removeProblem] = useMutation(UPDATE_PROBLEM);
   const handleListRemove = () => {
     removeProblem({
-      variables: { contestId: id, des, name, topic, level, updatedAt },
+      variables: { exerciseId: id, des, name, topic, level, updatedAt, status: 'deleted' },
       onCompleted: () => {
         alert('Xóa thành công');
       },
@@ -172,14 +170,12 @@ const TableRow = ({ data }) => {
       </td>
       <td>
         <div className="table_cell tool">
-          <Button
-            backgroundColor="green"
-            onClick={() => {
-              setItem(id, name, des, level, topic, updatedAt);
-            }}
-          >
-            <i className="bx bxs-edit"></i>
-          </Button>
+          <Link to="/admin/problems/update" state={{ exerciseData: data }}>
+            <Button backgroundColor="green">
+              <i className="bx bxs-edit"></i>
+            </Button>
+          </Link>
+
           <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
             <i className="bx bxs-trash-alt"></i>
           </Button>
@@ -189,4 +185,4 @@ const TableRow = ({ data }) => {
   );
 };
 
-export default ListProblem;
+export default ListExercise;

@@ -1,6 +1,7 @@
 import NotFound from 'components/NotFound';
-import CreateProblem from 'features/problem/admin/CreateProblem';
-import ListProblem from 'features/problem/admin/ListProblem';
+import CreateExercise from 'features/problem/admin/CreateExercise';
+import ListExercise from 'features/problem/admin/ListExercise';
+import UpdateExercise from 'features/problem/admin/UpdateExercise';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/pages/CreateContest';
@@ -11,8 +12,9 @@ export function AdminRoutes() {
     <Switch>
       <Route index element={<Navigate to="/admin/problems" />} />
       <Route path="problems">
-        <Route index element={<ListProblem />} />
-        <Route path="create" element={<CreateProblem />} />
+        <Route index element={<ListExercise />} />
+        <Route path="create" element={<CreateExercise />} />
+        <Route path="update" element={<CreateExercise />} />
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />

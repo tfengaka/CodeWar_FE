@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UpdateProblem = (props) => {
+const UpdateExercise = (props) => {
   const show = props.show;
   const item = props.item;
   const onClose = props.onClose;
@@ -17,4 +17,4 @@ const UpdateProblem = (props) => {
   );
 };
 
-export default UpdateProblem;
+export default UpdateExercise;

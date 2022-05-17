@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
-import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
 import MDEditor from '@uiw/react-md-editor';
-import { INSERT_PROBLEM } from 'graphql/Mutation';
-// import * as Yup from 'yup';
-const CreateProblem = () => {
+import Button from 'components/Button';
+import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import moment from 'moment';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const CreateExercise = () => {
+  const location = useLocation();
+  const exerciseData = location.state?.exerciseData;
+  const navigate = useNavigate();
+
+  const haveExerciseData = exerciseData ? true : false;
+
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({});
-  const [caseData, setCaseData] = useState([]);
-  const [inputCase, setInputCase] = useState({});
-  // const [openInput, setOpenInput] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(haveExerciseData ? exerciseData.des : '');
+  const [caseData, setCaseData] = useState(haveExerciseData ? exerciseData.metadata : []);
+
   const [saveExercise] = useMutation(INSERT_PROBLEM);
+  const [updateExercise] = useMutation(UPDATE_PROBLEM);
+
+  const [inputCase, setInputCase] = useState(
+    haveExerciseData
+      ? {
+          name: exerciseData.name,
+          level: exerciseData.level,
+          topic: exerciseData.topic.join(', '),
+          metadata: exerciseData.metadata,
+        }
+      : {},
+  );
 
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);
@@ -36,23 +56,42 @@ const CreateProblem = () => {
   };
 
   const handleSaveExercise = () => {
-    const allTags = input.tag.split(', ').join(' ');
+    const allTags = input.tag.split(', ').join(', ');
+    if (haveExerciseData) {
+      updateExercise({
+        variables: {
+          exerciseId: exerciseData.id,
+          name: input.title,
+          level: input.level ? input.level : 1,
+          des: value,
+          topic: [allTags],
+          metadata: caseData,
+          status: 'active',
+          updatedAt: moment(),
+        },
+        refetchQueries: [GET_ALL_EXERCISE],
 
-    saveExercise({
-      variables: {
-        name: input.title,
-        level: input.level ? input.level : 1,
-        des: value,
-        topic: [allTags],
-        metadata: caseData,
-      },
-      onCompleted: () => {
-        alert('Success');
-      },
-      onError: (err) => {
-        alert(err.message);
-      },
-    });
+        onError: (err) => {
+          alert(err.message);
+        },
+      });
+    } else {
+      saveExercise({
+        variables: {
+          name: input.title,
+          level: input.level ? input.level : 1,
+          des: value,
+          topic: [allTags],
+          metadata: caseData,
+        },
+        refetchQueries: [GET_ALL_EXERCISE],
+
+        onError: (err) => {
+          alert(err.message);
+        },
+      });
+    }
+    navigate('/admin/problems');
   };
 
   return (
@@ -61,23 +100,29 @@ const CreateProblem = () => {
         <h3>Tạo bài toán</h3>
         <div className="card__item">
           <label>Tiêu đề: </label>
-          <input name="title" onChange={handleChangeInput} className="card__item-text card__item-input"></input>
+          <input
+            name="title"
+            onChange={handleChangeInput}
+            className="card__item-text card__item-input"
+            defaultValue={inputCase.name}
+          ></input>
         </div>
         <div className="card__item wrap">
           <label>Mức: </label>
-          <select name="level" onChange={handleChangeInput}>
+
+          <select name="level" onChange={handleChangeInput} defaultValue={inputCase.level}>
             <option value={1}>Dễ</option>
             <option value={2}>Trung bình</option>
             <option value={3}>Khó</option>
           </select>
 
           <label>Từ khóa: </label>
-          <input name="tag" onChange={handleChangeInput} className="card__item-text card__item-input"></input>
-          {/* {data.map((item, index) => (
-            <div className="card__list-tag" key={index}>
-              <div className="card__list-tag__item">{item.tag}</div>
-            </div>
-          ))} */}
+          <input
+            name="tag"
+            onChange={handleChangeInput}
+            className="card__item-text card__item-input"
+            defaultValue={inputCase.topic}
+          ></input>
         </div>
         <div className="card__item">
           <label>Nội dung: </label>
@@ -94,7 +139,7 @@ const CreateProblem = () => {
           </div>
         </div>
 
-        <div className="card__item ">
+        <div name="topic" className="card__item " defaultValue={inputCase.topic}>
           {caseData.length > 0 && (
             <div className="problem">
               <div className="problem_container">
@@ -229,4 +274,4 @@ const TableRow = ({ data, no }) => {
   );
 };
 
-export default CreateProblem;
+export default CreateExercise;

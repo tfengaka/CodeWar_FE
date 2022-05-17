@@ -70,16 +70,26 @@ export const INSERT_PROBLEM = gql`
 
 export const UPDATE_PROBLEM = gql`
   mutation UPDATE_PROBLEM(
-    $contestId: String!
-    $name: String!
-    $des: String!
-    $level: Int!
-    $topic: jsonb!
+    $exerciseId: String!
+    $name: String
+    $des: String
+    $level: Int
+    $topic: jsonb
     $updatedAt: timestamptz
+    $status: String
+    $metadata: jsonb
   ) {
     update_exercises_by_pk(
-      pk_columns: { id: $contestId }
-      _set: { name: $name, des: $des, level: $level, topic: $topic, updatedAt: $updatedAt }
+      pk_columns: { id: $exerciseId }
+      _set: {
+        name: $name
+        des: $des
+        level: $level
+        topic: $topic
+        updatedAt: $updatedAt
+        status: $status
+        metadata: $metadata
+      }
     ) {
       id
     }
