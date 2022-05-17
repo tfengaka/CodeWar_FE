@@ -17,6 +17,7 @@ export function AdminRoutes() {
       <Route path="contest">
         <Route index element={<ListContest />} />
         <Route path="contest/:id" element={<ListQuestionContest />} />
+        <Route path="contest/:id/problems" element={<CreateProblem />} />
         <Route path="create" element={<CreateContest />} />
       </Route>
       <Route path="*" element={<NotFound />} />

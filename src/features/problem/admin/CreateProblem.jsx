@@ -3,8 +3,11 @@ import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
 import MDEditor from '@uiw/react-md-editor';
 import { INSERT_PROBLEM } from 'graphql/Mutation';
+import { useLocation } from 'react-router-dom';
 // import * as Yup from 'yup';
 const CreateProblem = () => {
+  const location = useLocation();
+  const { data } = location.state;
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState({});
   const [caseData, setCaseData] = useState([]);
@@ -17,6 +20,8 @@ const CreateProblem = () => {
   //   displayName: Yup.string().required('Tên không được để trống'),
   //   email: Yup.string().email('Email không đúng định dạng').required('Email không được để trống'),
   // });
+
+  console.log(data);
 
   const handleAddCase = () => {
     setCaseData([...caseData, inputCase]);

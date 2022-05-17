@@ -1,8 +1,9 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import moment from 'moment';
+import Button from 'components/Button';
 
 const ListQuestionContest = () => {
   const location = useLocation();
@@ -14,30 +15,27 @@ const ListQuestionContest = () => {
 
   const item = data?.exercises
     ?.filter((b) => '/admin/contest/contest/' + b.contestId === pathName)
-    .map(({ id, name, level, topic, updatedAt }) => ({
+    .map(({ id, name, level, topic, updatedAt, contestId }) => ({
       id,
       name,
       level,
       topic,
       updatedAt,
+      contestId,
     }));
 
   return (
-    <div className="problem">
-      <div className="problem_container">
-        <div className="problem_head">
-          <div className="problem_head_title">
+    <div className="question">
+      <div className="question_container">
+        <div className="question_head">
+          <div className="question_head_title">
             <span>Danh Sách Câu Hỏi</span>
           </div>
         </div>
 
-        <div className="problem_option">
-          <div className="problem_option_panel"></div>
-        </div>
-
-        <div className="problem_content">
-          <div className="problem_content_table">
-            <div className="problem_content_table_header">
+        <div className="question_content">
+          <div className="question_content_table">
+            <div className="question_content_table_header">
               <table className="table">
                 <colgroup>
                   <col width="40" />
@@ -83,7 +81,7 @@ const ListQuestionContest = () => {
                 </thead>
               </table>
             </div>
-            <div className="problem_content_table_body">
+            <div className="question_content_table_body">
               <table className="table">
                 <colgroup>
                   <col width="30" />
@@ -99,6 +97,13 @@ const ListQuestionContest = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+            <div className="question_content_table_button">
+              <Link to={`contest/${item.map((item) => item.contestId)}/problems`} state={item}>
+                <Button backgroundColor="blue">
+                  <i className="bx bx-plus"></i>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
