@@ -25,54 +25,50 @@ const ListQuestionContest = () => {
     }));
 
   return (
-    <div className="question">
-      <div className="question_container">
-        <div className="question_head">
-          <div className="question_head_title">
-            <span>Danh Sách Câu Hỏi</span>
+    <div style={{ padding: '16px' }}>
+      <div className="table">
+        <div className="container">
+          <div className="table_head">
+            <div className="table_head_title">
+              <span>Danh sách câu hỏi</span>
+            </div>
           </div>
-        </div>
 
-        <div className="question_content">
-          <div className="question_content_table">
-            <div className="question_content_table_header">
-              <table className="table">
+          <div className="table_body">
+            <div className="table_body_heading">
+              <table>
                 <colgroup>
-                  <col width="40" />
+                  <col width="30" />
                   <col width="120" />
                   <col width="400" />
                   <col width="150" />
-                  <col width="450" />
-                  <col width="150" />
+                  <col width="400" />
+                  <col width="200" />
                 </colgroup>
                 <thead>
                   <tr>
-                    <th className="table_header">
-                      <div className="table_cell">
-                        <span> </span>
-                      </div>
-                    </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item"></th>
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>ID</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Tiêu đề</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Độ khó</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Chủ đề</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Cập nhật lúc</span>
                       </div>
@@ -81,27 +77,27 @@ const ListQuestionContest = () => {
                 </thead>
               </table>
             </div>
-            <div className="question_content_table_body">
-              <table className="table">
+            <div className="table_body_content">
+              <table>
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
                   <col width="400" />
                   <col width="150" />
-                  <col width="450" />
-                  <col width="150" />
+                  <col width="400" />
+                  <col width="200" />
                 </colgroup>
-                <tbody className="table_body">
+                <tbody>
                   {item.map((item, index) => (
                     <TableRow key={index} data={item} />
                   ))}
                 </tbody>
               </table>
             </div>
-            <div className="question_content_table_button">
-              <Link to={`problems`}>
+            <div className="table_body_button">
+              <Link to={`problems/create`}>
                 <Button backgroundColor="blue">
-                  <i className="bx bx-plus"></i>
+                  <i className="bx bx-plus"></i>Thêm câu hỏi
                 </Button>
               </Link>
             </div>
@@ -136,25 +132,21 @@ const TableRow = ({ data }) => {
 
   return (
     <tr className="table_row">
-      <td>
-        <div className="table_cell">
-          <i className="bx bx-check color-green"></i>
-        </div>
-      </td>
-      <td>
+      <td className="table_body_content_item"></td>
+      <td className="table_body_content_item">
         <div className="table_cell">{displayID}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">{name}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <div className={`tag bg-${levelColor}`}>
             <span>{levelName}</span>
           </div>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           {topic.map((item, index) => (
             <div key={index} className="tag topic">
@@ -163,7 +155,7 @@ const TableRow = ({ data }) => {
           ))}
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
         </div>

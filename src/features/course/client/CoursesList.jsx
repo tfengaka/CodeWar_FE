@@ -1,4 +1,6 @@
 import { useQuery } from '@apollo/client';
+import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
 import { GET_ALL_COURSE } from 'graphql/Queries';
 import React from 'react';
 import CourseCard from './CourseCard';
@@ -6,8 +8,8 @@ import CourseCard from './CourseCard';
 const CoursesList = () => {
   const { loading, error, data } = useQuery(GET_ALL_COURSE);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Load Data Failed</p>;
+  if (loading) return <PageLoading />;
+  if (error) return <ServerError />;
 
   return (
     <div className="course">

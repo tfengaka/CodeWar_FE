@@ -94,6 +94,34 @@ export const INSERT_PROBLEM = gql`
   }
 `;
 
+export const UPDATE_PROBLEM = gql`
+  mutation UPDATE_PROBLEM(
+    $exerciseId: String!
+    $name: String
+    $des: String
+    $level: Int
+    $topic: jsonb
+    $updatedAt: timestamptz
+    $status: String
+    $metadata: jsonb
+  ) {
+    update_exercises_by_pk(
+      pk_columns: { id: $exerciseId }
+      _set: {
+        name: $name
+        des: $des
+        level: $level
+        topic: $topic
+        updatedAt: $updatedAt
+        status: $status
+        metadata: $metadata
+      }
+    ) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_DISCUSS_REACT = gql`
   mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
     discussReactUpdate(data: { id: $id, discussId: $discussId })
@@ -104,6 +132,22 @@ export const ADD_DISCUSS = gql`
   mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
     insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
       accountId
+    }
+  }
+`;
+
+export const APPROVED_NEW_BLOG = gql`
+  mutation APPROVED_NEW_BLOG($blogID: String!, $reviewer: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true, updatedBy: $reviewer }) {
+      id
+      isApproved
+    }
+  }
+`;
+export const REMOVE_BLOG_BY_ID = gql`
+  mutation REMOVE_BLOG_BY_ID($blogID: String!) {
+    delete_blogs_by_pk(id: $blogID) {
+      id
     }
   }
 `;

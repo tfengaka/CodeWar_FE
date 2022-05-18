@@ -10,13 +10,10 @@
     .content__card {
       display: grid;
       grid-template-areas:
-        'header header'
-        'item item'
-        'none button';
+        "header header"
+        "item item"
+        "none button";
       justify-content: space-between;
-      //   justify-content: space-between;
-      //   overflow: auto;
-      //   white-space: nowrap;
       &--head {
         display: flex;
         font-size: 2rem;
@@ -56,8 +53,8 @@
     .content__table {
       display: grid;
       grid-template-areas:
-        'header header header'
-        'item item item';
+        "header header header"
+        "item item item";
       justify-content: space-between;
 
       &--item {

@@ -32,7 +32,9 @@ const Login = ({ onChangeRegister, onChangeModal }) => {
             {errors?.password && <div className="message-error">{errors.password?.message}</div>}
           </div>
           <div className="modal__body-submit">
-            <Button size="lg">{auth.loading ? <div className="loading"></div> : 'Đăng nhập'}</Button>
+            <Button type="submit" size="full-lg" isDisabled={auth.loading}>
+              {auth.loading ? <div className="circleLoading"></div> : 'Đăng nhập'}
+            </Button>
           </div>
         </form>
       </div>

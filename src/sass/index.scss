@@ -5,6 +5,8 @@
 @import './components/header';
 @import './components/sidebar';
 @import './components/button';
+@import './components/notfound';
+@import './components/table';
 @import './components/admin';
 
 @import './components/auth/loginpage';
@@ -14,14 +16,13 @@
 @import './components/contest/itemContest';
 @import './components/contest/contentContest';
 @import './components/contest/createContest';
-@import './components/contest/list-contest';
 @import './components/contest/updateContest';
-@import './components/contest/list-question';
 
-@import './components/problem/problem';
-@import './components/problem/discuss';
+@import './components/course/course-card';
 @import './components/problem/editor';
 @import './components/problem/testcase';
 @import './components/problem/createProblem';
+@import './components/problem/discuss';
 
-@import './components/course/course-card';
+@import './components/blog/blog';
+@import './components/blog/newBlog';
