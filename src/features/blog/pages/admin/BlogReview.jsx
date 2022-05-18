@@ -1,7 +1,8 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Button from 'components/Button';
 import PageLoading from 'components/PageLoading';
 import BlogContent from 'features/blog/components/BlogContent';
+import { APPROVED_NEW_BLOG } from 'graphql/Mutation';
 import { GET_BLOG_BY_ID } from 'graphql/Queries';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,7 +10,16 @@ import { Link, useLocation } from 'react-router-dom';
 const BlogReview = () => {
   const { state } = useLocation();
   const { loading, error, data } = useQuery(GET_BLOG_BY_ID, { variables: { blogID: state.id } });
-
+  const [confirmBlog] = useMutation(APPROVED_NEW_BLOG, {
+    variables: { blogID: state.id },
+    onCompleted: () => {
+      alert('Bài viết đã được duyệt');
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+    refetchQueries: [GET_BLOG_BY_ID],
+  });
   if (loading) return <PageLoading />;
   if (error) {
     alert(error.message);
@@ -34,7 +44,7 @@ const BlogReview = () => {
 
           {!currentBlog.isApproved && (
             <div className="toolBar_right">
-              <Button backgroundColor="green">
+              <Button backgroundColor="green" onClick={confirmBlog}>
                 <i className="bx bx-check-circle"></i>
                 <span>Duyệt bài</span>
               </Button>

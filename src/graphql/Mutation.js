@@ -111,11 +111,17 @@ export const ADD_DISCUSS = gql`
 `;
 
 export const APPROVED_NEW_BLOG = gql`
-  mutation APPROVED_NEW_BLOG($blogID: String!) {
-    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true }) {
+  mutation APPROVED_NEW_BLOG($blogID: String!, $reviewer: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true, updatedBy: $reviewer }) {
       id
-      title
       isApproved
+    }
+  }
+`;
+export const REMOVE_BLOG_BY_ID = gql`
+  mutation REMOVE_BLOG_BY_ID($blogID: String!) {
+    delete_blogs_by_pk(id: $blogID) {
+      id
     }
   }
 `;

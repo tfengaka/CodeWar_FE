@@ -1,6 +1,6 @@
 import Logo from 'assets/images/IT_Derpart_Logo.png';
 import React from 'react';
-import DropdownCollapse from './DropdownCollapse';
+import CollapsePanel from './CollapsePanel';
 
 const sideBarOptions = [
   {
@@ -50,7 +50,7 @@ const SideBar = () => {
       </div>
       <div className="option">
         {sideBarOptions.map((option, index) => (
-          <DropdownCollapse key={index} {...option} />
+          <CollapsePanel key={index} {...option} />
         ))}
       </div>
     </div>

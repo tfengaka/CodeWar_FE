@@ -58,8 +58,8 @@ export default function Navigation() {
                 </div>
               </>
             ) : (
-              <Button backgroundColor="main" onClick={() => setShowModal(true)}>
-                {auth.loading ? <div className="circleLoading"></div> : 'Đăng Nhập'}
+              <Button backgroundColor="main" onClick={() => setShowModal(true)} isDisabled={auth.loading}>
+                {auth.loading ? <div className="circleLoading"></div> : 'Đăng nhập'}
               </Button>
             )}
           </div>

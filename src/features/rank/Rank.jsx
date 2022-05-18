@@ -1,11 +1,7 @@
 import React from 'react';
 
 const Rank = () => {
-  React.useEffect(() => {
-    alert('Tính năng đang trong quá trình phát triển');
-  }, []);
-
-  return <div></div>;
+  return <div>Rank Page</div>;
 };
 
 export default Rank;

@@ -78,10 +78,9 @@
   &_cell {
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: left;
-    white-space: normal;
-    word-break: break-all;
+    text-align: start;
     user-select: none;
+    padding: 0 8px;
     &.actions {
       @include flex(center, auto);
       gap: 10px;

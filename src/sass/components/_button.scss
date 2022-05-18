@@ -11,18 +11,19 @@
   padding: 6px 12px;
   transition: all 0.2s ease-out;
   text-align: center;
-
-  &-lg {
+  &-full-lg {
     width: 100%;
+  }
+  &-lg,
+  &-full-lg {
     padding: 1rem 2rem;
   }
   &:hover {
     opacity: 0.8;
   }
   &.disabled {
-    opacity: 0.8;
-    background-color: gray;
-    cursor: not-allowed;
+    opacity: 0.6;
+    cursor: unset;
   }
   i {
     font-size: 18px;

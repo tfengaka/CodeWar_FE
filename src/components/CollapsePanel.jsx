@@ -2,7 +2,7 @@ import React from 'react';
 import useCollapse from 'react-collapsed';
 import { Link, useLocation } from 'react-router-dom';
 
-const DropdownCollapse = ({ title, children }) => {
+const CollapsePanel = ({ title, children }) => {
   const { pathname } = useLocation();
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({ duration: 350 });
   return (
@@ -24,4 +24,4 @@ const DropdownCollapse = ({ title, children }) => {
   );
 };
 
-export default DropdownCollapse;
+export default CollapsePanel;

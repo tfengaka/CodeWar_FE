@@ -3,14 +3,13 @@ import PageLoading from 'components/PageLoading';
 import { GET_ALL_BLOG } from 'graphql/Queries';
 import React from 'react';
 import BlogClientItem from 'features/blog/components/BlogClientItem';
+import ServerError from 'components/ServerError';
 
 const BlogClient = () => {
   const { loading, error, data } = useQuery(GET_ALL_BLOG);
   if (loading) return <PageLoading />;
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  if (error) return <ServerError />;
+
   const acceptedBlogs = data.blogs.filter((blog) => blog.isApproved);
   return (
     <div className="blog">

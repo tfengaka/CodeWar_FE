@@ -27,7 +27,7 @@ const ListExercise = () => {
                 <col width="40" />
                 <col width="120" />
                 <col width="400" />
-                <col width="100" />
+                <col width="120" />
                 <col width="450" />
                 <col width="300" />
                 <col width="200" />
@@ -79,7 +79,7 @@ const ListExercise = () => {
                 <col width="40" />
                 <col width="120" />
                 <col width="400" />
-                <col width="100" />
+                <col width="120" />
                 <col width="450" />
                 <col width="300" />
                 <col width="200" />
