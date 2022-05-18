@@ -40,9 +40,8 @@
   &.topic {
     font-family: "Roboto", sans-serif;
     font-weight: 500;
-    color: #4d4d4d;
-    background-color: rgba(45, 139, 240, 0.1);
-    border: 1.5px solid rgba(45, 140, 240, 0.5);
+    color: rgb(24, 144, 255);
+    background-color: rgba(24, 144, 255, 0.08);
   }
 }
 .divider {
@@ -92,12 +91,12 @@
 }
 
 .dots-loading > div {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 999px;
   background-color: $main-color;
   margin: 0 1rem;
-  animation: dotLoading 0.5s forwards infinite linear;
+  animation: dotLoading 1s forwards infinite linear;
 }
 
 .dots-loading > div:nth-child(2) {

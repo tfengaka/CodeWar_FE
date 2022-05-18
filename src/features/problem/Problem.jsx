@@ -1,4 +1,6 @@
 import { useQuery } from '@apollo/client';
+import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
 import moment from 'moment';
 import React from 'react';
@@ -7,8 +9,8 @@ import { Link } from 'react-router-dom';
 const Problem = () => {
   const { loading, error, data } = useQuery(GET_ALL_EXERCISE);
 
-  if (loading) return <div className="loading"></div>;
-  if (error) return <div>Load data failed</div>;
+  if (loading) return <PageLoading />;
+  if (error) return <ServerError />;
   return (
     <div style={{ padding: '16px' }}>
       <div className="table">
@@ -27,20 +29,16 @@ const Problem = () => {
             <div className="table_body_heading">
               <table>
                 <colgroup>
-                  <col width="40" />
+                  <col width="30" />
                   <col width="120" />
                   <col width="400" />
                   <col width="150" />
-                  <col width="450" />
+                  <col width="400" />
                   <col width="150" />
                 </colgroup>
                 <thead>
                   <tr>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span> </span>
-                      </div>
-                    </th>
+                    <th className="table_body_heading_item"></th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>ID</span>
@@ -77,7 +75,7 @@ const Problem = () => {
                   <col width="120" />
                   <col width="400" />
                   <col width="150" />
-                  <col width="450" />
+                  <col width="400" />
                   <col width="150" />
                 </colgroup>
                 <tbody>
@@ -117,33 +115,29 @@ const TableRow = ({ data }) => {
   }
   return (
     <tr className="table_row">
-      <td>
-        <div className="table_cell">
-          <i className="bx bx-check color-green"></i>
-        </div>
-      </td>
-      <td>
+      <td className="table_body_content_item"></td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <Link to={`/problem/${displayID}`} state={{ data }}>
             {displayID}
           </Link>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <Link to={`/problem/${displayID}`} state={{ data }}>
             {name}
           </Link>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <div className={`tag bg-${levelColor}`}>
             <span>{levelName}</span>
           </div>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           {topic.map((item, index) => (
             <div key={index} className="tag topic">
@@ -152,7 +146,7 @@ const TableRow = ({ data }) => {
           ))}
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
           <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
         </div>

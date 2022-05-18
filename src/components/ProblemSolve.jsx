@@ -38,12 +38,7 @@ const ProblemSolve = () => {
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
-  // const [width, setWidth] = React.useState({
-  //   left: '40%',
-  //   right: '60%',
-  // });
   const [showDiscuss, setShowDiscuss] = React.useState(false);
-  const [isMounth, setIsMounth] = React.useState(false);
 
   const monaco = useMonaco();
   React.useEffect(() => {

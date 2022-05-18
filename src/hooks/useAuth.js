@@ -68,7 +68,6 @@ function useAuthProvider() {
         const { access_token } = res.login;
         localStorage.setItem('token', access_token);
         handleReLogin.current(access_token);
-        alert('Đăng nhập thành công!');
       },
       onError: (err) => {
         console.log(err);

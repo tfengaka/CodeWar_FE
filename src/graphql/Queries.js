@@ -85,6 +85,7 @@ export const GET_ALL_BLOG = gql`
       content
       isApproved
       createdAt
+      updatedBy
       account {
         fullName
       }
