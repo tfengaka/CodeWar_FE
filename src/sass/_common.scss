@@ -38,7 +38,7 @@
   color: #ffffff;
 
   &.topic {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: rgb(24, 144, 255);
     background-color: rgba(24, 144, 255, 0.08);
@@ -49,7 +49,7 @@
 }
 
 .divider::after {
-  content: "";
+  content: '';
   background-color: #cfcfcfc5;
   width: 100%;
   position: absolute;
@@ -69,7 +69,7 @@
     height: 16px;
   }
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;

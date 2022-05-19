@@ -35,7 +35,7 @@
     }
   }
   &_body {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 500;
     color: #515a6e;
@@ -55,13 +55,18 @@
       }
     }
     &_content {
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 500;
       font-size: 14px;
       color: #515a6e;
       width: 100%;
       padding: 0;
       word-break: break-word;
+    }
+    &_button {
+      display: flex;
+      gap: 10px;
+      margin: 10px 30px;
     }
   }
   &_row {
@@ -84,6 +89,11 @@
     &.actions {
       @include flex(center, auto);
       gap: 10px;
+    }
+    &.tool {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
     i {
       font-size: 16px;
