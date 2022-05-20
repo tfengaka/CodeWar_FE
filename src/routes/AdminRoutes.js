@@ -1,7 +1,13 @@
 import NotFound from 'components/NotFound';
+<<<<<<< HEAD
 import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
+=======
+import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
+import BlogReview from 'features/blog/pages/admin/BlogReview';
+import ListBlog from 'features/blog/pages/admin/ListBlog';
+>>>>>>> develop
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
 import React from 'react';
@@ -20,6 +26,8 @@ export function AdminRoutes() {
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />
+        <Route path=":id" element={<ListQuestionContest />} />
+        <Route path=":id/problems/:id" element={<CreateExercise />} />
         <Route path="create" element={<CreateContest />} />
       </Route>
       <Route path="blog">
