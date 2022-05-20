@@ -30,19 +30,43 @@ const Register = ({ onChangeRegister }) => {
       <div className="modal__body">
         <form onSubmit={handleSubmit(auth.signUp)} autoComplete="off">
           <div className="modal__body-control">
-            <input type="text" id="displayName" placeholder="Họ và tên" {...register('displayName')} />
+            <input
+              type="text"
+              id="displayName"
+              placeholder="Họ và tên"
+              {...register('displayName')}
+              className={`input_control ${errors?.displayName ? 'error' : ''}`}
+            />
             {errors?.displayName && <div className="message-error">{errors.displayName?.message}</div>}
           </div>
           <div className="modal__body-control">
-            <input type="text" id="email" placeholder="Email" {...register('email')} />
+            <input
+              type="text"
+              id="email"
+              placeholder="Email"
+              {...register('email')}
+              className={`input_control ${errors?.email ? 'error' : ''}`}
+            />
             {errors?.email && <div className="message-error">{errors.email?.message}</div>}
           </div>
           <div className="modal__body-control">
-            <input type="password" id="password" placeholder="Mật khẩu" {...register('password')} />
+            <input
+              type="password"
+              id="password"
+              placeholder="Mật khẩu"
+              {...register('password')}
+              className={`input_control ${errors?.password ? 'error' : ''}`}
+            />
             {errors?.password && <div className="message-error">{errors.password?.message}</div>}
           </div>
           <div className="modal__body-control">
-            <input type="password" id="repassword" placeholder="Nhập lại mật khẩu" {...register('repassword')} />
+            <input
+              type="password"
+              id="repassword"
+              placeholder="Nhập lại mật khẩu"
+              {...register('repassword')}
+              className={`input_control ${errors?.repassword ? 'error' : ''}`}
+            />
             {errors?.repassword && <div className="message-error">{errors.repassword?.message}</div>}
           </div>
           <div className="modal__body-submit">

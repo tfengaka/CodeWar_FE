@@ -1,13 +1,14 @@
 @import "./variables";
 @import "./base";
-@import "./common";
 
-@import "./components/header";
-@import "./components/sidebar";
-@import "./components/button";
-@import "./components/notfound";
-@import "./components/table";
-@import "./components/admin";
+@import "./components/common/header";
+@import "./components/common/sidebar";
+@import "./components/common/button";
+@import "./components/common/notfound";
+@import "./components/common/table";
+@import "./components/common/formcontrol";
+@import "./components/common/layout";
+@import "./components/common/mdeditor";
 
 @import "./components/auth/loginpage";
 @import "./components/auth/modal";
@@ -25,4 +26,3 @@
 @import "./components/problem/discuss";
 
 @import "./components/blog/blog";
-@import "./components/blog/newBlog";

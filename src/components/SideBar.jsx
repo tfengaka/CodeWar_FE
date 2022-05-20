@@ -36,6 +36,10 @@ const sideBarOptions = [
         name: 'Danh sách bài viết',
         path: '/admin/blog',
       },
+      {
+        name: 'Viết bài mới',
+        path: '/admin/blog/create',
+      },
     ],
   },
 ];

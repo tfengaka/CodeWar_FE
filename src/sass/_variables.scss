@@ -20,9 +20,18 @@ $colors: (
   "white": #fff,
   "black": #000,
   "main": $main-color,
-  "red": #e63d3d,
+  "red": #ff4e4e,
 );
 
+@each $color, $val in $colors {
+  .color-#{$color} {
+    color: $val;
+  }
+
+  .bg-#{$color} {
+    background-color: $val;
+  }
+}
 @mixin flex($align-item, $justify-content) {
   display: flex;
   align-items: $align-item;
