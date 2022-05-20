@@ -21,6 +21,7 @@ export const GET_ALL_EXERCISE = gql`
       level
       metadata
       updatedAt
+      contestId
     }
   }
 `;
