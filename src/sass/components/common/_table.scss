@@ -2,7 +2,6 @@
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 8px;
   .container {
     background: #ffffffb3;
     box-shadow: 0 1px 1px 0 rgb(0 0 0 / 10%);
@@ -31,11 +30,10 @@
       font-size: 20px;
       color: #515a6e;
       line-height: 30px;
-      padding: 5px 15px;
     }
   }
   &_body {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 500;
     color: #515a6e;
@@ -55,13 +53,18 @@
       }
     }
     &_content {
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 500;
       font-size: 14px;
       color: #515a6e;
       width: 100%;
       padding: 0;
       word-break: break-word;
+    }
+    &_button {
+      display: flex;
+      gap: 10px;
+      margin: 10px 30px;
     }
   }
   &_row {
@@ -84,6 +87,11 @@
     &.actions {
       @include flex(center, auto);
       gap: 10px;
+    }
+    &.tool {
+      display: flex;
+      gap: 10px;
+      align-items: center;
     }
     i {
       font-size: 16px;

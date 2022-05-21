@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
 
 function useAuthProvider() {
   const [user, setUser] = React.useState(null);
+  const [isAdmin, setIsAdmin] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
 
@@ -33,7 +34,9 @@ function useAuthProvider() {
       variables: { ID: id },
       onCompleted: (data) => {
         if (data) {
-          setUser(data.account_by_pk);
+          const userData = data.account_by_pk;
+          setUser(userData);
+          setIsAdmin(userData && (userData.role === 'admin' || userData.role === 'moderator'));
           setIsLogged(true);
           setLoading(false);
         } else {
@@ -43,7 +46,8 @@ function useAuthProvider() {
         }
       },
       onError: (error) => {
-        alert(error.message);
+        alert(`Có lỗi xảy ra, vui lòng thử lại sau!`);
+        localStorage.removeItem('token');
       },
     });
   };
@@ -104,6 +108,7 @@ function useAuthProvider() {
 
   return {
     user,
+    isAdmin,
     loading,
     isLogged,
     signIn,

@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import ServerError from 'components/ServerError';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
@@ -12,83 +13,88 @@ const Problem = () => {
   if (loading) return <PageLoading />;
   if (error) return <ServerError />;
   return (
-    <div style={{ padding: '16px' }}>
-      <div className="table">
-        <div className="container">
-          <div className="table_head">
-            <div className="table_head_title">
-              <span>Danh sách bài tập</span>
+    <Helmet title="Bài tập">
+      <div
+        style={{ animationDuration: '0.5s', padding: '16px 24px' }}
+        className="animate__animated animate__fadeInDown"
+      >
+        <div className="table">
+          <div className="container">
+            <div className="table_head">
+              <div className="table_head_title">
+                <span>Danh sách bài tập</span>
+              </div>
             </div>
-          </div>
 
-          <div className="problem_option">
-            <div className="problem_option_panel"></div>
-          </div>
-
-          <div className="table_body">
-            <div className="table_body_heading">
-              <table>
-                <colgroup>
-                  <col width="30" />
-                  <col width="120" />
-                  <col width="400" />
-                  <col width="150" />
-                  <col width="400" />
-                  <col width="150" />
-                </colgroup>
-                <thead>
-                  <tr>
-                    <th className="table_body_heading_item"></th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>ID</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Tiêu đề</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Độ khó</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Chủ đề</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Cập nhật lúc</span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
+            <div className="problem_option">
+              <div className="problem_option_panel"></div>
             </div>
-            <div className="table_body_content">
-              <table>
-                <colgroup>
-                  <col width="30" />
-                  <col width="120" />
-                  <col width="400" />
-                  <col width="150" />
-                  <col width="400" />
-                  <col width="150" />
-                </colgroup>
-                <tbody>
-                  {data?.exercises.map((item, index) => (
-                    <TableRow key={index} data={item} />
-                  ))}
-                </tbody>
-              </table>
+
+            <div className="table_body">
+              <div className="table_body_heading">
+                <table>
+                  <colgroup>
+                    <col width="30" />
+                    <col width="120" />
+                    <col width="400" />
+                    <col width="150" />
+                    <col width="400" />
+                    <col width="150" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th className="table_body_heading_item"></th>
+                      <th className="table_body_heading_item">
+                        <div className="table_cell">
+                          <span>ID</span>
+                        </div>
+                      </th>
+                      <th className="table_body_heading_item">
+                        <div className="table_cell">
+                          <span>Tiêu đề</span>
+                        </div>
+                      </th>
+                      <th className="table_body_heading_item">
+                        <div className="table_cell">
+                          <span>Độ khó</span>
+                        </div>
+                      </th>
+                      <th className="table_body_heading_item">
+                        <div className="table_cell">
+                          <span>Chủ đề</span>
+                        </div>
+                      </th>
+                      <th className="table_body_heading_item">
+                        <div className="table_cell">
+                          <span>Cập nhật lúc</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div className="table_body_content">
+                <table>
+                  <colgroup>
+                    <col width="30" />
+                    <col width="120" />
+                    <col width="400" />
+                    <col width="150" />
+                    <col width="400" />
+                    <col width="150" />
+                  </colgroup>
+                  <tbody>
+                    {data?.exercises.map((item, index) => (
+                      <TableRow key={index} data={item} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Helmet>
   );
 };
 

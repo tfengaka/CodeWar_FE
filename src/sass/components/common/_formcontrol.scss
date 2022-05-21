@@ -1,27 +1,33 @@
-@each $color, $val in $colors {
-  .color-#{$color} {
-    color: $val;
-  }
-
-  .bg-#{$color} {
-    background-color: $val;
-  }
-}
-
-.container {
+.input_control {
+  background-color: #eee;
   width: 100%;
-  height: 100%;
-}
+  padding: 8px 16px;
+  border-radius: 4px;
+  outline: none;
+  border: 2px solid transparent;
+  transition: all 0.25s ease-in-out;
 
-.main-content {
-  margin-top: $header-height;
-}
+  &:hover {
+    background-color: #fff;
+    border-color: rgba(240, 128, 128, 0.8);
+  }
 
+  &:focus {
+    background-color: #fff;
+    border-color: lightcoral !important;
+    box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
+  }
+  &.error {
+    border-color: #ff4e4e;
+  }
+}
 .message-error {
-  color: rgb(255, 78, 78);
+  font-family: "Roboto", sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
-  padding: 6px;
+  color: #ff4e4e;
+  margin-top: 4px;
+  margin-left: 4px;
 }
 
 .tag {
@@ -46,16 +52,15 @@
 }
 .divider {
   position: relative;
-}
-
-.divider::after {
-  content: "";
-  background-color: #cfcfcfc5;
-  width: 100%;
-  position: absolute;
-  height: 2px;
-  top: 50%;
-  left: 0;
+  &::after {
+    content: "";
+    background-color: #e6e6e6c5;
+    width: 100%;
+    position: absolute;
+    height: 2px;
+    top: 50%;
+    left: 0;
+  }
 }
 
 .circleLoading {
@@ -88,28 +93,27 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  & > div {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    background-color: $main-color;
+    margin: 0 1rem;
+    animation: dotLoading 1s forwards infinite linear;
+  }
+  & > div:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  & > div:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  & > div:nth-child(4) {
+    animation-delay: 0.3s;
+  }
 }
 
-.dots-loading > div {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 999px;
-  background-color: $main-color;
-  margin: 0 1rem;
-  animation: dotLoading 1s forwards infinite linear;
-}
-
-.dots-loading > div:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.dots-loading > div:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.dots-loading > div:nth-child(4) {
-  animation-delay: 0.3s;
-}
 @keyframes circleLoading {
   to {
     transform: rotate(360deg);

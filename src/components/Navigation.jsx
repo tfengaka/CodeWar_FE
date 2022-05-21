@@ -36,7 +36,6 @@ export default function Navigation() {
           </div>
 
           <div className="header__account">
-            {/* use auth is true to show account info or show button loggin  */}
             {auth.user ? (
               <>
                 <div

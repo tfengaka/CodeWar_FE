@@ -8,6 +8,7 @@ import CourseCard from './CourseCard';
 const CoursesList = () => {
   const { loading, error, data } = useQuery(GET_ALL_COURSE);
 
+  console.log(error);
   if (loading) return <PageLoading />;
   if (error) return <ServerError />;
 

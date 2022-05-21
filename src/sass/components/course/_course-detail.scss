@@ -28,4 +28,45 @@
       }
     }
   }
+
+  .course-concepts {
+    width: 90%;
+    padding-top: 50px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    &_card {
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+      margin: 30px;
+      padding: 10px;
+
+      &-title {
+        box-shadow: $box-shadow;
+      }
+
+      &-exercise {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        .exercise_number {
+          margin-top: 10px;
+          width: 4%;
+          height: 4%;
+          border: solid 1px black;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: all 0.3s ease-out;
+
+          &:hover {
+            background-color: #1e2a55;
+            color: white;
+          }
+        }
+      }
+    }
+  }
 }

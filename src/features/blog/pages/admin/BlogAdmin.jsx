@@ -8,7 +8,7 @@ import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { generateSubStr } from 'utils';
-const ListBlog = () => {
+const BlogAdmin = () => {
   const { loading, error, data } = useQuery(GET_ALL_BLOG);
 
   if (loading) return <PageLoading />;
@@ -100,7 +100,7 @@ const ListBlog = () => {
   );
 };
 
-export default ListBlog;
+export default BlogAdmin;
 
 const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
   const { user } = useAuth();
@@ -127,6 +127,11 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
   const handleRemoveBlog = () => {
     if (window.confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
       removeBlog();
+    }
+  };
+  const handleConfirmBlog = () => {
+    if (window.confirm('Bạn có chắc chắn muốn duyệt bài viết này?')) {
+      confirmBlog();
     }
   };
   return (
@@ -171,7 +176,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
       <td className="table_body_content_item">
         <div className="table_cell actions">
           {!isApproved && (
-            <Button backgroundColor="green" onClick={confirmBlog}>
+            <Button backgroundColor="green" onClick={() => handleConfirmBlog()}>
               <i className="bx bx-check-circle"></i>
               <span>Duyệt</span>
             </Button>

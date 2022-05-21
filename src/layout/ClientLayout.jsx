@@ -4,13 +4,11 @@ import Navigation from '../components/Navigation';
 
 export function ClientLayout() {
   return (
-    <>
+    <div className="client">
       <Navigation />
-      <div className="container">
-        <div className="main-content">
-          <ClientRoutes />
-        </div>
+      <div className="client_content">
+        <ClientRoutes />
       </div>
-    </>
+    </div>
   );
 }

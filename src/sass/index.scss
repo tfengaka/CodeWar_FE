@@ -1,13 +1,14 @@
 @import './variables';
 @import './base';
-@import './common';
 
-@import './components/header';
-@import './components/sidebar';
-@import './components/button';
-@import './components/notfound';
-@import './components/table';
-@import './components/admin';
+@import './components/common/header';
+@import './components/common/sidebar';
+@import './components/common/button';
+@import './components/common/notfound';
+@import './components/common/table';
+@import './components/common/formcontrol';
+@import './components/common/layout';
+@import './components/common/mdeditor';
 
 @import './components/auth/loginpage';
 @import './components/auth/modal';
@@ -16,7 +17,7 @@
 @import './components/contest/itemContest';
 @import './components/contest/contentContest';
 @import './components/contest/createContest';
-@import './components/contest/listContest';
+@import './components/contest/updateContest';
 
 @import './components/course/course-card';
 @import './components/problem/editor';
@@ -28,4 +29,3 @@
 @import './components/course/course-detail';
 
 @import './components/blog/blog';
-@import './components/blog/newBlog';

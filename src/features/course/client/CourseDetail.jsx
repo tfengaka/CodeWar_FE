@@ -1,11 +1,23 @@
+import { useQuery } from '@apollo/client';
+import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { GET_ALL_CONCEPT_IN_COURSE } from 'graphql/Queries';
 
 const CourseDetail = () => {
   const location = useLocation();
   const { courseData } = location.state;
 
-  // console.log(courseData);
+  const { loading, error, data } = useQuery(GET_ALL_CONCEPT_IN_COURSE, {
+    variables: {
+      courseId: courseData.id,
+    },
+  });
+
+  if (loading) return <PageLoading />;
+  if (error) return <ServerError />;
+
   return (
     <div className="course-detail">
       <div className="course-detail_banner">
@@ -22,7 +34,26 @@ const CourseDetail = () => {
           </div>
         </div>
       </div>
-      <div className="course-concepts"></div>
+      <div className="course-concepts">
+        {data?.concepts?.map((concept) => (
+          <div className="course-concepts_card">
+            <div className="course-concepts_card-title">
+              <h2>{concept.name}</h2>
+            </div>
+            <div className="course-concepts_card-exercise">
+              {concept.exercises.map((exercise, index) => (
+                <Link
+                  className="exercise_number"
+                  to={`/problem/${exercise?.id?.substr(0, 8).toUpperCase()}`}
+                  state={{ data: exercise }}
+                >
+                  <h3>{index + 1}</h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

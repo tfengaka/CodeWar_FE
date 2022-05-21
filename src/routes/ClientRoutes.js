@@ -1,7 +1,7 @@
 import NotFound from 'components/NotFound';
-import BlogClientDetail from 'features/blog/pages/client/BlogClientDetail';
+import BlogDetail from 'features/blog/pages/BlogDetail';
 import BlogClient from 'features/blog/pages/client/BlogClient';
-import CreateBlog from 'features/blog/pages/client/CreateBlog';
+import CreateBlog from 'features/blog/pages/CreateBlog';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
 // import Rank from 'features/rank/Rank';
@@ -32,7 +32,7 @@ export function ClientRoutes() {
 
       <Route path="/blog">
         <Route index element={<BlogClient />} />
-        <Route path=":id" element={<BlogClientDetail />} />
+        <Route path=":id" element={<BlogDetail />} />
         <Route path="create" element={<CreateBlog />} />
       </Route>
 

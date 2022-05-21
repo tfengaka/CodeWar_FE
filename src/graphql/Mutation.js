@@ -46,12 +46,38 @@ export const UPDATE_CONTEST = gql`
     $startDate: timestamptz
     $endDate: timestamptz
     $status: String
+    $createdBy: String
   ) {
     update_contests_by_pk(
       pk_columns: { id: $contestId }
-      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, createdBy: $createdBy }
     ) {
       id
+    }
+  }
+`;
+
+export const INSERT_CONTEST = gql`
+  mutation INSERT_CONTEST(
+    $name: String!
+    $des: String!
+    $startDate: timestamptz!
+    $endDate: timestamptz!
+    $status: String!
+    $createdBy: String!
+  ) {
+    insert_contests_one(
+      object: {
+        name: $name
+        des: $des
+        endDate: $endDate
+        startDate: $startDate
+        status: $status
+        createdBy: $createdBy
+      }
+    ) {
+      name
+      des
     }
   }
 `;
