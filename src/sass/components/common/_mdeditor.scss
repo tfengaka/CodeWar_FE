@@ -4,11 +4,12 @@
   width: 100%;
   min-height: 400px;
   border-radius: 4px;
+  color: #333;
   overflow: auto;
   box-shadow: 0 2px 10px 0 rgb(29 31 89 / 25%);
 }
 .section-container {
-  padding: 10px 8px 15px !important;
+  padding: 10px 16px 15px !important;
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 6px;
@@ -31,7 +32,8 @@
   }
 }
 
-.custom-html-style {
+.custom-html-style,
+.markdown {
   pre {
     line-height: unset !important;
     background-color: transparent;
@@ -48,13 +50,14 @@
     font-weight: 500 !important;
   }
   blockquote {
-    font-family: "Roboto", sans-serif;
     font-weight: 500;
-    border-left-color: $main-color;
-    padding-left: 16px;
     margin: 0;
     line-height: 1.5;
-    border-radius: 4px;
+    border-radius: 3px;
+    padding: 2px 16px;
+    color: #333;
+    border: none;
     background-color: #6680991a;
+    border-left: 10px solid $main-color;
   }
 }

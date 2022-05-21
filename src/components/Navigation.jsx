@@ -4,6 +4,7 @@ import { useAuth } from 'hooks/useAuth';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import banner from 'assets/images/banner.png';
+import Dropdown from './Dropdown';
 const routing = [
   { path: '/course', display: 'Học Tập', icon: 'bx bxs-book-reader' },
   { path: '/problem', display: 'Luyện Tập', icon: 'bx bxs-grid' },
@@ -11,6 +12,7 @@ const routing = [
   { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
   { path: '/blog', display: 'Blog', icon: 'bx bxl-blogger' },
 ];
+
 export default function Navigation() {
   const { pathname } = useLocation();
   const activeNav = routing.findIndex((e) => pathname.includes(e.path));
@@ -40,21 +42,24 @@ export default function Navigation() {
               <>
                 <div
                   className={`header__account__info ${showDropdown && 'active'}`}
-                  onClick={() => setShowDropdown(!showDropdown)}
+                  onClick={() => setShowDropdown(true)}
                 >
                   <span>{auth.user.fullName}</span>
                   <i className="bx bxs-down-arrow"></i>
                 </div>
-                <div className={`header__account__dropdown ${showDropdown && 'active'}`}>
-                  <div className="header__account__dropdown_item">
-                    <Link to="/blog/create" className="header__account__dropdown_item_link">
-                      Viết Blog
-                    </Link>
-                  </div>
-                  <div className="header__account__dropdown_item" onClick={() => auth.signOut()}>
-                    <span>Đăng xuất</span>
-                  </div>
-                </div>
+                {showDropdown && (
+                  <Dropdown setActive={setShowDropdown}>
+                    <div className="dropdown_item">
+                      <Link to="/profile/me">Hồ sơ cá nhân</Link>
+                    </div>
+                    <div className="dropdown_item">
+                      <Link to="/blog/create">Viết Blog</Link>
+                    </div>
+                    <div className="dropdown_item" onClick={() => auth.signOut()}>
+                      <span>Đăng xuất</span>
+                    </div>
+                  </Dropdown>
+                )}
               </>
             ) : (
               <Button backgroundColor="main" onClick={() => setShowModal(true)} isDisabled={auth.loading}>
