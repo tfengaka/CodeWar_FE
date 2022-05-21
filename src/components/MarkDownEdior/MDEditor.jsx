@@ -5,16 +5,6 @@ import MDView from './MDView';
 
 const MDEditor = ({ value, style, onChange, onImageUpload }) => {
   const mdEditor = React.useRef(null);
-
-  // const onImageUpload = (file) => {
-  //   return new Promise((resolve) => {
-  //     const reader = new FileReader();
-  //     reader.onload = (data) => {
-  //       resolve(data.target.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   });
-  // };
   return (
     <Editor
       ref={mdEditor}

@@ -164,3 +164,16 @@ export const REMOVE_BLOG_BY_ID = gql`
     }
   }
 `;
+
+export const ADD_NEW_BLOG = gql`
+  mutation ADD_NEW_BLOG($blogContent: String!, $authorID: String, $blogTitle: String!) {
+    insert_blogs(objects: { content: $blogContent, accountId: $authorID, title: $blogTitle }) {
+      returning {
+        id
+        title
+        content
+        isApproved
+      }
+    }
+  }
+`;

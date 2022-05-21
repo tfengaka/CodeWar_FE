@@ -1,11 +1,11 @@
 import ComingSoon from 'components/ComingSoon';
 import React from 'react';
-
+import Helmet from 'components/Helmet';
 const Rank = () => {
   return (
-    <React.Fragment>
+    <Helmet title="Xếp hạng">
       <ComingSoon />
-    </React.Fragment>
+    </Helmet>
   );
 };
 

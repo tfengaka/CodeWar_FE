@@ -16,7 +16,7 @@ const Modal = ({ onShowModal }) => {
     <div className="modal">
       <div className="modal__container animate__animated animate__fadeInDown" style={{ animationDuration: '0.5s' }}>
         <div className="modal__header">
-          <h3 className="modal__header__title">{isRegister ? 'Đăng Ký' : 'Đăng Nhập'}</h3>
+          <span className="modal__header__title">{isRegister ? 'Đăng Ký' : 'Đăng Nhập'}</span>
           <button className="modal__close" onClick={() => onShowModal(false)}>
             <i className="bx bx-x"></i>
           </button>

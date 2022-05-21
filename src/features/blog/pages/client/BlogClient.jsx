@@ -13,7 +13,7 @@ const BlogClient = () => {
 
   const acceptedBlogs = data.blogs.filter((blog) => blog.isApproved);
   return (
-    <Helmet title="Bài viết">
+    <Helmet title="Danh sách bài viết">
       <div className="blog">
         <div className="container animate__animated animate__fadeInDown">
           <div className="blog_header">
