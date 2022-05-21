@@ -16,7 +16,7 @@ const ListCourse = () => {
       <div className="container">
         <div className="table_head">
           <div className="table_head_title">
-            <span>Danh sách bài tập</span>
+            <span>Danh sách khóa học</span>
           </div>
         </div>
 
@@ -24,13 +24,12 @@ const ListCourse = () => {
           <div className="table_body_heading">
             <table>
               <colgroup>
-                <col width="40" />
+                <col width="50" />
                 <col width="120" />
-                <col width="400" />
-                <col width="120" />
-                <col width="450" />
                 <col width="300" />
-                <col width="200" />
+
+                <col width="400" />
+                <col width="100" />
               </colgroup>
               <thead>
                 <tr>
@@ -49,24 +48,10 @@ const ListCourse = () => {
                       <span>Tiêu đề</span>
                     </div>
                   </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Độ khó</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Chủ đề</span>
-                    </div>
-                  </th>
+
                   <th className="table_body_heading_item">
                     <div className="table_cell">
                       <span>Cập nhật lúc</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Thao tác</span>
                     </div>
                   </th>
                 </tr>
@@ -76,13 +61,12 @@ const ListCourse = () => {
           <div className="table_body_content">
             <table>
               <colgroup>
-                <col width="40" />
+                <col width="50" />
                 <col width="120" />
-                <col width="400" />
-                <col width="120" />
-                <col width="450" />
                 <col width="300" />
-                <col width="200" />
+
+                <col width="400" />
+                <col width="100" />
               </colgroup>
               <tbody>
                 {data?.exercises.map((item, index) => (
@@ -100,24 +84,6 @@ const ListCourse = () => {
 const TableRow = ({ data }) => {
   const { id, name, des, level, topic, updatedAt } = data;
   const displayID = id.substr(0, 8).toUpperCase();
-  let levelName = '';
-  let levelColor = '';
-  switch (level) {
-    case 1:
-      levelName = 'Dễ';
-      levelColor = 'green';
-      break;
-    case 2:
-      levelName = 'Trung bình';
-      levelColor = 'blue';
-      break;
-    case 3:
-      levelName = 'Khó';
-      levelColor = 'orange';
-      break;
-    default:
-      break;
-  }
 
   const [removeProblem] = useMutation(UPDATE_PROBLEM);
   const handleListRemove = () => {
@@ -141,22 +107,7 @@ const TableRow = ({ data }) => {
       <td className="table_body_content_item">
         <div className="table_cell">{name}</div>
       </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          <div className={`tag bg-${levelColor}`}>
-            <span>{levelName}</span>
-          </div>
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          {topic.map((item, index) => (
-            <div key={index} className="tag topic">
-              <span>{item}</span>
-            </div>
-          ))}
-        </div>
-      </td>
+
       <td className="table_body_content_item">
         <div className="table_cell">
           <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>

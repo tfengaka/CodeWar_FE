@@ -122,6 +122,19 @@ export const UPDATE_PROBLEM = gql`
   }
 `;
 
+export const INSERT_COURSE = gql`
+  mutation INSERT_COURSE($name: String!, $des: String!, $image: String!, $status: String!, $createdBy: String!) {
+    insert_courses(objects: { name: $name, des: $des, image: $image, status: $status }) {
+      returning {
+        des
+        image
+        name
+        status
+      }
+    }
+  }
+`;
+
 export const UPDATE_DISCUSS_REACT = gql`
   mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
     discussReactUpdate(data: { id: $id, discussId: $discussId })
@@ -148,31 +161,6 @@ export const REMOVE_BLOG_BY_ID = gql`
   mutation REMOVE_BLOG_BY_ID($blogID: String!) {
     delete_blogs_by_pk(id: $blogID) {
       id
-    }
-  }
-`;
-
-export const INSERT_BLOG = gql`
-  mutation INSERT_BLOG(
-    $title: String!
-    $des: String!
-    $content: timestamptz!
-    $isApproved: timestamptz!
-    $status: String!
-    $createdBy: String!
-  ) {
-    insert_contests_one(
-      object: {
-        name: $name
-        des: $des
-        endDate: $endDate
-        startDate: $startDate
-        status: $status
-        createdBy: $createdBy
-      }
-    ) {
-      name
-      des
     }
   }
 `;

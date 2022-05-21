@@ -7,7 +7,7 @@
   background-color: #edecec;
   &_content {
     margin-top: $header-height;
-    padding: 8px;
+    padding: 0;
   }
 }
 
@@ -37,7 +37,7 @@
     box-shadow: $box-shadow;
 
     &_account {
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       display: flex;
       align-items: center;
       gap: 16px;

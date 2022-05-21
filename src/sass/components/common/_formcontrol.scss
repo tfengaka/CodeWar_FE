@@ -22,7 +22,7 @@
   }
 }
 .message-error {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.4rem;
   font-weight: 500;
   color: #ff4e4e;
@@ -44,7 +44,7 @@
   color: #ffffff;
 
   &.topic {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: rgb(24, 144, 255);
     background-color: rgba(24, 144, 255, 0.08);
@@ -53,7 +53,7 @@
 .divider {
   position: relative;
   &::after {
-    content: "";
+    content: '';
     background-color: #e6e6e6c5;
     width: 100%;
     position: absolute;
@@ -74,7 +74,7 @@
     height: 16px;
   }
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -87,6 +87,52 @@
     animation: circleLoading 1s forwards infinite linear;
   }
 }
+
+.blog {
+  &__header {
+    text-align: center;
+    margin: 25px 0;
+  }
+  &__label {
+    margin: 10px 0;
+  }
+  &__content {
+    margin: 20px 0;
+
+    h3 {
+      margin: 10px 0;
+    }
+    &__input {
+      display: inline-block;
+      user-select: none;
+      width: 100%;
+
+      textarea {
+        background-color: #eee;
+        resize: none;
+        border-radius: 5px;
+        font-size: 1.8rem;
+        width: 100%;
+        padding: 8px 16px;
+        height: 615px;
+        border: 1.5px solid transparent;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #fff;
+          border-color: rgba(240, 128, 128, 0.8);
+        }
+
+        &:focus {
+          background-color: #fff;
+          border-color: lightcoral;
+          box-shadow: rgba(240, 128, 128, 0.3) 0px 0px 14px;
+        }
+      }
+    }
+  }
+}
+
 .dots-loading {
   @include flex(center, auto);
   position: absolute;
