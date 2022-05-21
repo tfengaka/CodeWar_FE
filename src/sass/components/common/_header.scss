@@ -29,7 +29,7 @@
 
     &__item {
       @include flex(center, center);
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-size: 1.4rem;
       padding: 0 20px;
       height: $header-height;
@@ -57,7 +57,7 @@
   }
 
   &__account {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
     position: absolute;
