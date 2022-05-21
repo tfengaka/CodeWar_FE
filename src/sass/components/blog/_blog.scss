@@ -110,23 +110,9 @@
         font-size: 16px;
         line-height: 30px;
       }
-      a {
-        font-weight: 500;
-        color: $main-color;
-        text-decoration: underline;
-      }
       img {
         margin: 0 auto;
         object-fit: cover;
-      }
-      blockquote {
-        font-weight: 500;
-        border-left-color: $main-color;
-        padding-left: 16px;
-        margin: 0;
-        line-height: 1.5;
-        border-radius: 4px;
-        background-color: rgba(102, 128, 153, 0.1);
       }
     }
   }

@@ -5,6 +5,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from './Button';
+import Dropdown from './Dropdown';
 import Helmet from './Helmet';
 import MDView from './MarkDownEdior/MDView';
 const languageOptions = {
@@ -69,20 +70,18 @@ const ProblemSolve = () => {
           <div className="editor_header">
             <div className="editor_header_language">
               <span>Change Language </span>
-              <div className="editor_header_language_input" onClick={() => setShowDropdown(!showDropdown)}>
+              <div className="editor_header_language_input" onClick={() => setShowDropdown(true)}>
                 <span>{language.value}</span>
                 <i className="bx bx-chevron-down"></i>
-                <div className={`editor_header_language_dropdown ${showDropdown ? 'active' : ''}`}>
-                  {Object.keys(languageOptions).map((key, index) => (
-                    <div
-                      className="editor_header_language_dropdown_item"
-                      key={index}
-                      onClick={() => setLanguage(languageOptions[key])}
-                    >
-                      {languageOptions[key].value}
-                    </div>
-                  ))}
-                </div>
+                {showDropdown && (
+                  <Dropdown setActive={setShowDropdown} darkMode={true}>
+                    {Object.keys(languageOptions).map((key, index) => (
+                      <div className="dropdown_item" key={index} onClick={() => setLanguage(languageOptions[key])}>
+                        {languageOptions[key].value}
+                      </div>
+                    ))}
+                  </Dropdown>
+                )}
               </div>
             </div>
           </div>
@@ -197,12 +196,9 @@ const ProblemSolve = () => {
             </div>
           </div>
         </div>
-
         <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
-          <div className="btn_popup-content">
-            <i className="bx bxs-message-rounded bx-md"></i>
-            <span>Hỏi đáp</span>
-          </div>
+          <i className="bx bxs-message-rounded bx-md" />
+          <span>Hỏi đáp</span>
         </div>
         {showDiscuss && <Discuss exerciseId={data.id} setShowDiscuss={setShowDiscuss} />}
       </div>

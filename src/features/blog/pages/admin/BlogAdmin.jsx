@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client';
 import Button from 'components/Button';
+import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
 import { APPROVED_NEW_BLOG, REMOVE_BLOG_BY_ID } from 'graphql/Mutation';
 import { GET_ALL_BLOG } from 'graphql/Queries';
 import { useAuth } from 'hooks/useAuth';
@@ -8,15 +10,12 @@ import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { generateSubStr } from 'utils';
-import Helmet from 'components/Helmet';
 const BlogAdmin = () => {
   const { loading, error, data } = useQuery(GET_ALL_BLOG);
 
   if (loading) return <PageLoading />;
-  if (error) {
-    alert(error.message);
-    return;
-  }
+  if (error) return <ServerError />;
+
   return (
     <Helmet title="Danh sách bài viết">
       <div className="table">
@@ -59,7 +58,7 @@ const BlogAdmin = () => {
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Tải lên lúc</span>
+                        <span>Cập nhật lúc</span>
                       </div>
                     </th>
                     <th className="table_body_heading_item">
@@ -105,12 +104,12 @@ const BlogAdmin = () => {
 
 export default BlogAdmin;
 
-const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
+const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }) => {
   const { user } = useAuth();
   const [removeBlog] = useMutation(REMOVE_BLOG_BY_ID, {
     variables: { blogID: id },
     onCompleted: () => {
-      alert('Xóa bài viết thành công');
+      alert('Gỡ bài viết thành công');
     },
     onError: (error) => {
       alert(error.message);
@@ -128,7 +127,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
     refetchQueries: [GET_ALL_BLOG],
   });
   const handleRemoveBlog = () => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
+    if (window.confirm('Bạn có chắc chắn muốn gỡ bài viết này?')) {
       removeBlog();
     }
   };
@@ -161,7 +160,11 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{moment(createdAt).format('DD/MM/YYYY - hh:mm:ss')}</span>
+          {updatedAt ? (
+            <span>{moment(updatedAt).format('DD/MM/YYYY HH:mm')}</span>
+          ) : (
+            <span>{moment(createdAt).format('DD/MM/YYYY HH:mm')}</span>
+          )}
         </div>
       </td>
       <td className="table_body_content_item">
@@ -184,7 +187,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
               <span>Duyệt</span>
             </Button>
           )}
-          <Link to="">
+          <Link to={`/admin/blog/${generateSubStr(id, 8)}/edit`} state={{ id }}>
             <Button backgroundColor="blue">
               <i className="bx bxs-edit"></i>
               <span>Sửa</span>
