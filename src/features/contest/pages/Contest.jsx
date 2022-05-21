@@ -1,7 +1,8 @@
-import { React, useState } from 'react';
 import { useQuery } from '@apollo/client';
+import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
 import { getContests } from 'graphql/Queries';
-
+import { React, useState } from 'react';
 import ItemContest from '../components/ItemContest';
 
 const options = [
@@ -16,8 +17,8 @@ const Contest = () => {
   const [search, setSearch] = useState('');
 
   const { loading, error, data } = useQuery(getContests);
-  if (loading) return <div className="loading"></div>;
-  if (error) return <div>Load data failed</div>;
+  if (loading) return <PageLoading />;
+  if (error) return <ServerError />;
 
   const items = data?.contests
     .filter((val) => {

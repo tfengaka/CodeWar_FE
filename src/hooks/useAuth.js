@@ -68,7 +68,6 @@ function useAuthProvider() {
         const { access_token } = res.login;
         localStorage.setItem('token', access_token);
         handleReLogin.current(access_token);
-        alert('Đăng nhập thành công!');
       },
       onError: (err) => {
         console.log(err);
@@ -81,7 +80,7 @@ function useAuthProvider() {
     localStorage.removeItem('token');
     setUser(null);
     setIsLogged(false);
-    window.location.reload();
+    window.location.reload(true);
   };
   const signUp = ({ email, password, displayName }) => {
     setLoading(true);

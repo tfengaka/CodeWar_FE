@@ -38,12 +38,7 @@ const ProblemSolve = () => {
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
-  const [width, setWidth] = React.useState({
-    left: '40%',
-    right: '60%',
-  });
   const [showDiscuss, setShowDiscuss] = React.useState(false);
-  const [isMounth, setIsMounth] = React.useState(false);
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -56,7 +51,7 @@ const ProblemSolve = () => {
   }, [monaco]);
   return (
     <div className="wrapper">
-      <div className="panel left" style={{ width: width.left }}>
+      <div className="panel left" style={{ width: '40%' }}>
         <div className="problem">
           <center>
             <h3>{data?.name}</h3>
@@ -68,7 +63,7 @@ const ProblemSolve = () => {
         </div>
       </div>
 
-      <div className="panel right" style={{ width: width.right }}>
+      <div className="panel right">
         <div className="editor_header">
           <div className="editor_header_language">
             <span>Change Language </span>

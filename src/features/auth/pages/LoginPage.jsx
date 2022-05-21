@@ -45,8 +45,8 @@ function LoginPage() {
               )}
             </div>
             <div className="login__form-submit">
-              <Button size="lg" type="submit">
-                Đăng Nhập
+              <Button size="full-lg" type="submit" isDisabled={auth.loading}>
+                {auth.loading ? <div className="circleLoading"></div> : 'Đăng nhập'}
               </Button>
             </div>
           </form>

@@ -24,6 +24,40 @@
   padding: 6px;
 }
 
+.tag {
+  display: inline-block;
+  height: 25px;
+  line-height: 27px;
+  padding: 0 8px;
+  margin-right: 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  vertical-align: middle;
+  opacity: 1;
+  overflow: hidden;
+  color: #ffffff;
+
+  &.topic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: rgb(24, 144, 255);
+    background-color: rgba(24, 144, 255, 0.08);
+  }
+}
+.divider {
+  position: relative;
+}
+
+.divider::after {
+  content: "";
+  background-color: #cfcfcfc5;
+  width: 100%;
+  position: absolute;
+  height: 2px;
+  top: 50%;
+  left: 0;
+}
+
 .circleLoading {
   width: 24px;
   height: 24px;
@@ -48,76 +82,42 @@
     animation: circleLoading 1s forwards infinite linear;
   }
 }
+.dots-loading {
+  @include flex(center, auto);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dots-loading > div {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background-color: $main-color;
+  margin: 0 1rem;
+  animation: dotLoading 1s forwards infinite linear;
+}
+
+.dots-loading > div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.dots-loading > div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.dots-loading > div:nth-child(4) {
+  animation-delay: 0.3s;
+}
 @keyframes circleLoading {
   to {
     transform: rotate(360deg);
   }
 }
 
-.table {
-  width: 100% !important;
-  border-collapse: collapse;
-  text-indent: initial;
-  border-spacing: 2px;
-  border-color: grey;
-  &_header {
-    position: relative;
-    height: 100%;
-    padding: 8px 0;
-  }
-  &_body {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-  }
-  &_row {
-    height: 45px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    transition: all 0.3s ease;
-    &:hover {
-      background-color: #f5f5f5;
-    }
-  }
-  &_cell {
-    padding: 0 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-    white-space: normal;
-    word-break: break-all;
-    user-select: none;
-
-    &.tool{
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    i {
-      font-size: 16px;
-    }
-  }
-}
-.tag {
-  display: inline-block;
-  height: 25px;
-  line-height: 27px;
-  padding: 0 8px;
-  margin-right: 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  vertical-align: middle;
-  opacity: 1;
-  overflow: hidden;
-  color: #ffffff;
-
-  &.topic {
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    color: #4d4d4d;
-    background-color: rgba(45, 139, 240, 0.1);
-    border: 1.5px solid rgba(45, 140, 240, 0.5);
+@keyframes dotLoading {
+  to {
+    opacity: 0;
   }
 }
