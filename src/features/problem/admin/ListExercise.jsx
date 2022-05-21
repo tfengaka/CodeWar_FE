@@ -98,7 +98,7 @@ const ListExercise = () => {
 };
 
 const TableRow = ({ data }) => {
-  const { id, name, des, level, topic, updatedAt } = data;
+  const { id, name, des, level, topic, updatedAt, metadata } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   let levelName = '';
   let levelColor = '';
@@ -122,7 +122,7 @@ const TableRow = ({ data }) => {
   const [removeProblem] = useMutation(UPDATE_PROBLEM);
   const handleListRemove = () => {
     removeProblem({
-      variables: { exerciseId: id, des, name, topic, level, updatedAt, status: 'deleted' },
+      variables: { exerciseId: id, des, name, topic, level, updatedAt, metadata, status: 'deleted' },
       onCompleted: () => {
         alert('Xóa thành công');
       },
