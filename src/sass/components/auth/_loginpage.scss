@@ -2,7 +2,7 @@
   position: relative;
   height: 100vh;
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     background-image: $bg-img;
     background-size: cover;
@@ -18,13 +18,13 @@
     transform: translate(-50%, -50%);
     box-shadow: 0 0 8px rgba(202, 198, 198, 0.5);
     width: 400px;
-    height: 380px;
+    height: 350px;
     border-radius: 6px;
     padding: 0 16px;
   }
 
   &__title {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     text-align: center;
     margin-top: 2.5rem;
@@ -33,29 +33,14 @@
   }
 
   &__form {
-    margin-top: 5rem;
+    font-family: "Roboto", sans-serif;
+    margin-top: 3rem;
     width: 100%;
 
     &-control {
       margin-bottom: 16px;
       font-size: 1.4rem;
       width: 100%;
-
-      input {
-        font-weight: 500;
-        background-color: #eee;
-        width: 100%;
-        padding: 1rem;
-        border-radius: 4px;
-        outline: none;
-        border: 2px solid transparent;
-        transition: all 0.25s ease;
-
-        &:focus {
-          background-color: #fff;
-          border-color: lightcoral;
-        }
-      }
     }
 
     &-submit {
@@ -63,19 +48,4 @@
       width: 100%;
     }
   }
-}
-
-.divider {
-  position: relative;
-  margin-top: 1.6rem;
-}
-
-.divider::after {
-  content: '';
-  background-color: #b6b6b6;
-  width: 100%;
-  position: absolute;
-  height: 2px;
-  top: 50%;
-  left: 0;
 }

@@ -46,12 +46,38 @@ export const UPDATE_CONTEST = gql`
     $startDate: timestamptz
     $endDate: timestamptz
     $status: String
+    $createdBy: String
   ) {
     update_contests_by_pk(
       pk_columns: { id: $contestId }
-      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, createdBy: $createdBy }
     ) {
       id
+    }
+  }
+`;
+
+export const INSERT_CONTEST = gql`
+  mutation INSERT_CONTEST(
+    $name: String!
+    $des: String!
+    $startDate: timestamptz!
+    $endDate: timestamptz!
+    $status: String!
+    $createdBy: String!
+  ) {
+    insert_contests_one(
+      object: {
+        name: $name
+        des: $des
+        endDate: $endDate
+        startDate: $startDate
+        status: $status
+        createdBy: $createdBy
+      }
+    ) {
+      name
+      des
     }
   }
 `;
@@ -106,6 +132,22 @@ export const ADD_DISCUSS = gql`
   mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
     insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
       accountId
+    }
+  }
+`;
+
+export const APPROVED_NEW_BLOG = gql`
+  mutation APPROVED_NEW_BLOG($blogID: String!, $reviewer: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true, updatedBy: $reviewer }) {
+      id
+      isApproved
+    }
+  }
+`;
+export const REMOVE_BLOG_BY_ID = gql`
+  mutation REMOVE_BLOG_BY_ID($blogID: String!) {
+    delete_blogs_by_pk(id: $blogID) {
+      id
     }
   }
 `;

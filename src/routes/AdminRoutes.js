@@ -1,7 +1,10 @@
 import NotFound from 'components/NotFound';
+import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
+import BlogDetail from 'features/blog/pages/BlogDetail';
+import CreateBlog from 'features/blog/pages/CreateBlog';
+import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
-import UpdateExercise from 'features/problem/admin/UpdateExercise';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/pages/CreateContest';
@@ -18,7 +21,14 @@ export function AdminRoutes() {
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />
+        <Route path=":id" element={<ListQuestionContest />} />
+        <Route path=":id/problems/:id" element={<CreateExercise />} />
         <Route path="create" element={<CreateContest />} />
+      </Route>
+      <Route path="blog">
+        <Route index element={<BlogAdmin />} />
+        <Route path=":slug" element={<BlogDetail />} />
+        <Route path="create" element={<CreateBlog />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Switch>

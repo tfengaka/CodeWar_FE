@@ -29,7 +29,7 @@ function LoginPage() {
         <div className="login__body">
           <form className="login__form" onSubmit={handleSubmit(auth.signIn)} autoComplete="off">
             <div className="login__form-control">
-              <input type="text" placeholder="Email" {...register('email')} />
+              <input type="text" placeholder="Email" {...register('email')} className="input_control" />
               {errors?.email ? (
                 <div className="message-error">{errors.email?.message}</div>
               ) : (
@@ -37,7 +37,7 @@ function LoginPage() {
               )}
             </div>
             <div className="login__form-control">
-              <input type="password" placeholder="Password" {...register('password')} />
+              <input type="password" placeholder="Password" {...register('password')} className="input_control" />
               {errors?.password ? (
                 <div className="message-error">{errors.password?.message}</div>
               ) : (
@@ -45,8 +45,8 @@ function LoginPage() {
               )}
             </div>
             <div className="login__form-submit">
-              <Button size="lg" type="submit">
-                Đăng Nhập
+              <Button size="full-lg" type="submit" isDisabled={auth.loading}>
+                {auth.loading ? <div className="circleLoading"></div> : 'Đăng nhập'}
               </Button>
             </div>
           </form>

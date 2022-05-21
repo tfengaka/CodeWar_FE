@@ -1,11 +1,11 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
-import MDEditor from '@uiw/react-md-editor';
 import Discuss from 'features/problem/Discuss';
 import { useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from './Button';
+import MDView from './MarkDownEdior/MDView';
 const languageOptions = {
   C: {
     id: 75,
@@ -38,12 +38,7 @@ const ProblemSolve = () => {
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
-  const [width, setWidth] = React.useState({
-    left: '40%',
-    right: '60%',
-  });
   const [showDiscuss, setShowDiscuss] = React.useState(false);
-  const [isMounth, setIsMounth] = React.useState(false);
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -56,19 +51,19 @@ const ProblemSolve = () => {
   }, [monaco]);
   return (
     <div className="wrapper">
-      <div className="panel left" style={{ width: width.left }}>
+      <div className="panel left" style={{ width: '45%' }}>
         <div className="problem">
           <center>
             <h3>{data?.name}</h3>
           </center>
           <div data-color-mode="light">
             <div className="wmde-markdown-var"> </div>
-            <MDEditor.Markdown source={data?.des} />
+            <MDView source={data?.des} />
           </div>
         </div>
       </div>
 
-      <div className="panel right" style={{ width: width.right }}>
+      <div className="panel right">
         <div className="editor_header">
           <div className="editor_header_language">
             <span>Change Language </span>

@@ -1,6 +1,6 @@
 import Logo from 'assets/images/IT_Derpart_Logo.png';
 import React from 'react';
-import DropdownCollapse from './DropdownCollapse';
+import CollapsePanel from './CollapsePanel';
 
 const sideBarOptions = [
   {
@@ -29,6 +29,19 @@ const sideBarOptions = [
       },
     ],
   },
+  {
+    title: 'Blog',
+    children: [
+      {
+        name: 'Danh sách bài viết',
+        path: '/admin/blog',
+      },
+      {
+        name: 'Viết bài mới',
+        path: '/admin/blog/create',
+      },
+    ],
+  },
 ];
 
 const SideBar = () => {
@@ -41,7 +54,7 @@ const SideBar = () => {
       </div>
       <div className="option">
         {sideBarOptions.map((option, index) => (
-          <DropdownCollapse key={index} {...option} />
+          <CollapsePanel key={index} {...option} />
         ))}
       </div>
     </div>

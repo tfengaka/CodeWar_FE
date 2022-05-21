@@ -24,15 +24,29 @@ const Login = ({ onChangeRegister, onChangeModal }) => {
       <div className="modal__body">
         <form onSubmit={handleSubmit(auth.signIn)} autoComplete="off">
           <div className="modal__body-control">
-            <input {...register('email')} type="text" id="email" placeholder="Email" />
+            <input
+              {...register('email')}
+              type="text"
+              id="email"
+              placeholder="Email"
+              className={`input_control ${errors?.email ? 'error' : ''}`}
+            />
             {errors?.email && <div className="message-error">{errors.email?.message}</div>}
           </div>
           <div className="modal__body-control">
-            <input {...register('password')} type="password" id="password" placeholder="Mật khẩu" />
+            <input
+              {...register('password')}
+              type="password"
+              id="password"
+              placeholder="Mật khẩu"
+              className={`input_control ${errors?.password ? 'error' : ''}`}
+            />
             {errors?.password && <div className="message-error">{errors.password?.message}</div>}
           </div>
           <div className="modal__body-submit">
-            <Button size="lg">{auth.loading ? <div className="loading"></div> : 'Đăng nhập'}</Button>
+            <Button type="submit" size="full-lg" isDisabled={auth.loading}>
+              {auth.loading ? <div className="circleLoading"></div> : 'Đăng nhập'}
+            </Button>
           </div>
         </form>
       </div>

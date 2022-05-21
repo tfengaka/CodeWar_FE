@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import Button from 'components/Button';
+import ServerError from 'components/ServerError';
 import { ADD_DISCUSS, UPDATE_DISCUSS_REACT } from 'graphql/Mutation';
 import { GET_ALL_DISCUSSES } from 'graphql/Queries';
 import { useAuth } from 'hooks/useAuth';
@@ -14,8 +15,8 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
   const [textArea, setTextArea] = React.useState('');
   const [isMounted, setIsMounted] = React.useState(true);
 
-  if (loading) return <div className="loading"></div>;
-  if (error) return <div>Load data failed</div>;
+  if (loading) return <div className="circleLoading"></div>;
+  if (error) return <ServerError />;
 
   const handleReact = (discussId, discussReactId = '') => {
     updateDiscussReact({
@@ -69,9 +70,7 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
           <i className="bx bx-x bx-md"></i>
         </Button>
       </div>
-      <center>
-        <h2>Hỏi Đáp</h2>
-      </center>
+      <h2>Hỏi Đáp</h2>
       <div className="discuss">
         {data.discusses.map((discuss, index) => (
           <div className="discuss_body" key={index}>
