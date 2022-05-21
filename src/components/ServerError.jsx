@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Button from './Button';
 const ServerError = () => {
   return (
     <div className="notfound">
@@ -10,9 +8,6 @@ const ServerError = () => {
           <p className="notfound_content_subtitle">There was an error, please try again later.</p>
           <img src="/static/illustration_500.svg" alt="" />
         </div>
-        <Button size="lg">
-          <Link to="/">Go To Home</Link>
-        </Button>
       </div>
     </div>
   );

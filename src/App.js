@@ -1,6 +1,7 @@
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { AuthProvider } from 'hooks/useAuth';
+import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 import { PrivateRoute } from 'routes';
 import { AdminLayout, ClientLayout } from './layout';
