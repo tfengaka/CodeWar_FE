@@ -1,7 +1,10 @@
 import Button from 'components/Button';
+import { useAuth } from 'hooks/useAuth';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
+  const { user } = useAuth();
   return (
     <div className="course_item">
       <img src={course.image} alt="" />
@@ -10,7 +13,9 @@ const CourseCard = ({ course }) => {
         <p>{course.des}</p>
       </div>
       <div className="course_item-footer">
-        <Button>Học ngay</Button>
+        <Link to={`/course/${course.id}`} state={{ courseData: course }}>
+          <Button isDisabled={user?.id ? false : true}>Học ngay</Button>
+        </Link>
       </div>
     </div>
   );

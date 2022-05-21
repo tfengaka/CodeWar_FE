@@ -13,7 +13,7 @@ export const GET_USER_INFO = gql`
 
 export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
-    exercises {
+    exercises(where: { conceptId: { _is_null: true } }) {
       id
       des
       name
@@ -74,6 +74,9 @@ export const GET_ALL_COURSE = gql`
       des
       createdBy
       createdAt
+      account {
+        fullName
+      }
     }
   }
 `;
@@ -107,6 +110,27 @@ export const GET_BLOG_BY_ID = gql`
           id
           title
         }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_CONCEPT_IN_COURSE = gql`
+  query GET_ALL_CONCEPT_IN_COURSE($courseId: String!) {
+    concepts(where: { courseId: { _eq: $courseId } }, order_by: { priority: asc }) {
+      id
+      name
+      priority
+      status
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+        contestId
       }
     }
   }
