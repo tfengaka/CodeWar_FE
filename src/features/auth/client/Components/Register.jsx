@@ -27,48 +27,58 @@ const Register = ({ onChangeRegister }) => {
 
   return (
     <>
-      <div className='modal__body'>
-        <form onSubmit={handleSubmit(auth.signUp)} autoComplete='off'>
-          <div className='modal__body-control'>
+      <div className="modal__body">
+        <form onSubmit={handleSubmit(auth.signUp)} autoComplete="off">
+          <div className="modal__body-control">
             <input
-              type='text'
-              id='displayName'
-              placeholder='Họ và tên'
+              type="text"
+              id="displayName"
+              placeholder="Họ và tên"
               {...register('displayName')}
+              className={`input_control ${errors?.displayName ? 'error' : ''}`}
             />
-            {errors?.displayName && (
-              <div className='message-error'>{errors.displayName?.message}</div>
-            )}
+            {errors?.displayName && <div className="message-error">{errors.displayName?.message}</div>}
           </div>
-          <div className='modal__body-control'>
-            <input type='text' id='email' placeholder='Email' {...register('email')} />
-            {errors?.email && <div className='message-error'>{errors.email?.message}</div>}
-          </div>
-          <div className='modal__body-control'>
-            <input type='password' id='password' placeholder='Mật khẩu' {...register('password')} />
-            {errors?.password && <div className='message-error'>{errors.password?.message}</div>}
-          </div>
-          <div className='modal__body-control'>
+          <div className="modal__body-control">
             <input
-              type='password'
-              id='repassword'
-              placeholder='Nhập lại mật khẩu'
-              {...register('repassword')}
+              type="text"
+              id="email"
+              placeholder="Email"
+              {...register('email')}
+              className={`input_control ${errors?.email ? 'error' : ''}`}
             />
-            {errors?.repassword && (
-              <div className='message-error'>{errors.repassword?.message}</div>
-            )}
+            {errors?.email && <div className="message-error">{errors.email?.message}</div>}
           </div>
-          <div className='modal__body-submit'>
-            <Button type='submit' size='lg'>
-              {auth.loading ? <div className='loading'></div> : 'Đăng kí'}
+          <div className="modal__body-control">
+            <input
+              type="password"
+              id="password"
+              placeholder="Mật khẩu"
+              {...register('password')}
+              className={`input_control ${errors?.password ? 'error' : ''}`}
+            />
+            {errors?.password && <div className="message-error">{errors.password?.message}</div>}
+          </div>
+          <div className="modal__body-control">
+            <input
+              type="password"
+              id="repassword"
+              placeholder="Nhập lại mật khẩu"
+              {...register('repassword')}
+              className={`input_control ${errors?.repassword ? 'error' : ''}`}
+            />
+            {errors?.repassword && <div className="message-error">{errors.repassword?.message}</div>}
+          </div>
+          <div className="modal__body-submit">
+            <Button type="submit" size="full-lg" isDisabled={auth.loading}>
+              {auth.loading ? <div className="circleLoading"></div> : 'Đăng kí'}
             </Button>
           </div>
         </form>
       </div>
-      <div className='modal__footer'>
-        <div className='modal__footer-register'>
-          <div className='modal__footer-link' onClick={() => onChangeRegister(false)}>
+      <div className="modal__footer">
+        <div className="modal__footer-register">
+          <div className="modal__footer-link" onClick={() => onChangeRegister(false)}>
             <span>Đã có tài khoản, Đăng nhập!</span>
           </div>
         </div>

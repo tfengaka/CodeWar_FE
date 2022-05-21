@@ -2,14 +2,12 @@ import React from 'react';
 import useCollapse from 'react-collapsed';
 import { Link, useLocation } from 'react-router-dom';
 
-const DropdownCollapse = ({ title, children }) => {
+const CollapsePanel = ({ title, children }) => {
   const { pathname } = useLocation();
-  const isActiveCollapse = children.findIndex((e) => pathname.includes(e.path));
-
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({ duration: 350 });
   return (
     <>
-      <div className={`option_button ${isExpanded || isActiveCollapse ? 'active' : ''}`} {...getToggleProps()}>
+      <div className={`option_button ${isExpanded ? 'active' : ''}`} {...getToggleProps()}>
         {title}
         <i className={`bx bx-chevron-down ${isExpanded ? 'show' : ''}`}></i>
       </div>
@@ -26,4 +24,4 @@ const DropdownCollapse = ({ title, children }) => {
   );
 };
 
-export default DropdownCollapse;
+export default CollapsePanel;

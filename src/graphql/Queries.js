@@ -21,6 +21,7 @@ export const GET_ALL_EXERCISE = gql`
       level
       metadata
       updatedAt
+      contestId
     }
   }
 `;
@@ -73,6 +74,40 @@ export const GET_ALL_COURSE = gql`
       des
       createdBy
       createdAt
+    }
+  }
+`;
+
+export const GET_ALL_BLOG = gql`
+  query GET_ALL_BLOGS {
+    blogs(order_by: { isApproved: desc }) {
+      id
+      title
+      content
+      isApproved
+      createdAt
+      updatedBy
+      account {
+        fullName
+      }
+    }
+  }
+`;
+export const GET_BLOG_BY_ID = gql`
+  query GET_BLOG_BY_ID($blogID: String!) {
+    blogs_by_pk(id: $blogID) {
+      id
+      title
+      content
+      isApproved
+      createdAt
+      account {
+        fullName
+        blogs(where: { _not: { id: { _eq: $blogID } } }) {
+          id
+          title
+        }
+      }
     }
   }
 `;
