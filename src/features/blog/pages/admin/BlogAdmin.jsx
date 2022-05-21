@@ -8,6 +8,7 @@ import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { generateSubStr } from 'utils';
+import Helmet from 'components/Helmet';
 const BlogAdmin = () => {
   const { loading, error, data } = useQuery(GET_ALL_BLOG);
 
@@ -17,86 +18,88 @@ const BlogAdmin = () => {
     return;
   }
   return (
-    <div className="table">
-      <div className="container">
-        <div className="table_head">
-          <div className="table_head_title">
-            <span>Danh sách bài viết</span>
+    <Helmet title="Danh sách bài viết">
+      <div className="table">
+        <div className="container">
+          <div className="table_head">
+            <div className="table_head_title">
+              <span>Danh sách bài viết</span>
+            </div>
           </div>
-        </div>
-        <div className="table_body">
-          <div className="table_body_heading">
-            <table>
-              <colgroup>
-                <col width="10" />
-                <col width="100" />
-                <col />
-                <col width="200" />
-                <col width="170" />
-                <col width="100" />
-                <col width="200" />
-                <col width="270" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th className="table_body_heading_item"></th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>ID</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Tiêu đề</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Tác giả</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Tải lên lúc</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Trạng thái</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Duyệt bởi</span>
-                    </div>
-                  </th>
-                  <th className="table_body_heading_item">
-                    <div className="table_cell">
-                      <span>Thao Tác</span>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <div className="table_body_content">
-            <table>
-              <colgroup>
-                <col width="10" />
-                <col width="100" />
-                <col />
-                <col width="200" />
-                <col width="170" />
-                <col width="100" />
-                <col width="200" />
-                <col width="270" />
-              </colgroup>
-              <tbody>{data && data.blogs.map((blog, index) => <Row key={index} {...blog} />)}</tbody>
-            </table>
+          <div className="table_body">
+            <div className="table_body_heading">
+              <table>
+                <colgroup>
+                  <col width="10" />
+                  <col width="100" />
+                  <col />
+                  <col width="200" />
+                  <col width="170" />
+                  <col width="100" />
+                  <col width="200" />
+                  <col width="270" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th className="table_body_heading_item"></th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>ID</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Tiêu đề</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Tác giả</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Tải lên lúc</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Trạng thái</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Duyệt bởi</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Thao Tác</span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div className="table_body_content">
+              <table>
+                <colgroup>
+                  <col width="10" />
+                  <col width="100" />
+                  <col />
+                  <col width="200" />
+                  <col width="170" />
+                  <col width="100" />
+                  <col width="200" />
+                  <col width="270" />
+                </colgroup>
+                <tbody>{data && data.blogs.map((blog, index) => <Row key={index} {...blog} />)}</tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Helmet>
   );
 };
 
@@ -105,7 +108,7 @@ export default BlogAdmin;
 const Row = ({ id, title, account, isApproved, updatedBy, createdAt }) => {
   const { user } = useAuth();
   const [removeBlog] = useMutation(REMOVE_BLOG_BY_ID, {
-    variables: { id },
+    variables: { blogID: id },
     onCompleted: () => {
       alert('Xóa bài viết thành công');
     },
