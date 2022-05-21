@@ -1,5 +1,5 @@
 .blog {
-  padding: 8px;
+  padding: 16px 24px 4px;
   .container {
     background-color: #fff;
     border-radius: 4px;
@@ -176,6 +176,7 @@
   &.post {
     background-color: #fff;
     padding: 8px;
+    border-radius: 4px;
     .title {
       @include flex(center, space-between);
       gap: 16px;
