@@ -28,24 +28,12 @@
     border-radius: 6px;
   }
   &_header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    @include flex(center, flex-end);
     height: $header-height;
-    padding: 0 10px;
+    position: relative;
     background-color: #fff;
     box-shadow: $box-shadow;
-
-    &_account {
-      font-family: 'Roboto', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      color: $text-second-color;
-      font-size: 18px;
-      font-weight: 500;
-      -webkit-font-smoothing: antialiased;
-    }
+    z-index: 99;
   }
   &_content {
     height: calc(100vh - $header-height);

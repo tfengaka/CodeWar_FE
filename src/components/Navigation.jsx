@@ -1,9 +1,14 @@
+import { useMutation } from '@apollo/client';
+import banner from 'assets/images/banner.png';
 import Button from 'components/Button';
 import Modal from 'features/auth/client/Modal';
+import { UPDATE_AVATAR } from 'graphql/Mutation';
+import { GET_USER_INFO } from 'graphql/Queries';
 import { useAuth } from 'hooks/useAuth';
+import { useFirebase } from 'hooks/useFirebase';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import banner from 'assets/images/banner.png';
+import { generateSubStr } from 'utils';
 import Dropdown from './Dropdown';
 const routing = [
   { path: '/course', display: 'Học Tập', icon: 'bx bxs-book-reader' },
@@ -16,9 +21,33 @@ const routing = [
 export default function Navigation() {
   const { pathname } = useLocation();
   const activeNav = routing.findIndex((e) => pathname.includes(e.path));
+
+  const auth = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const auth = useAuth();
+  const avatarRef = React.useRef(null);
+
+  const [updateAvatar] = useMutation(UPDATE_AVATAR);
+  const { loading, uploadFile } = useFirebase('Avatar', 'image/jpeg');
+
+  const changeHandler = async (event) => {
+    const file = event.target.files[0];
+    const fileName = `${generateSubStr(auth.user.id, 8)}-${auth.user.email}`;
+    await uploadFile(file, fileName, (url) => {
+      updateAvatar({
+        variables: { userID: auth.user.id, avatarUrl: url },
+        refetchQueries: [GET_USER_INFO],
+        onCompleted: () => {
+          alert('Cập nhật ảnh đại diện thành công');
+        },
+        onError: (err) => {
+          alert('Có lỗi xảy ra');
+          console.error(err.message);
+        },
+      });
+    });
+  };
+
   return (
     <>
       <div className="header">
@@ -45,18 +74,30 @@ export default function Navigation() {
                   onClick={() => setShowDropdown(true)}
                 >
                   <span>{auth.user.fullName}</span>
-                  <i className="bx bxs-down-arrow"></i>
+                  <div className="header__account__info_avatar">
+                    {loading ? (
+                      <div className="circleLoading color-main"></div>
+                    ) : (
+                      <img src={auth.user.avatarUrl || '/static/defaultAvatar.jpg'} alt="avatar" />
+                    )}
+                  </div>
                 </div>
                 {showDropdown && (
                   <Dropdown setActive={setShowDropdown}>
-                    <div className="dropdown_item">
-                      <Link to="/profile/me">Hồ sơ cá nhân</Link>
+                    <div className="dropdown_item" onClick={() => avatarRef.current.click()}>
+                      <input
+                        type="file"
+                        style={{ display: 'none' }}
+                        ref={avatarRef}
+                        onChange={(e) => changeHandler(e)}
+                      />
+                      <span>Đổi Avatar</span>
                     </div>
                     <div className="dropdown_item">
                       <Link to="/blog/create">Viết Blog</Link>
                     </div>
                     <div className="dropdown_item" onClick={() => auth.signOut()}>
-                      <span>Đăng xuất</span>
+                      <span>Đăng Xuất</span>
                     </div>
                   </Dropdown>
                 )}

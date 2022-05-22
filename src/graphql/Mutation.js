@@ -195,3 +195,11 @@ export const EDIT_BLOG_BY_ID = gql`
     }
   }
 `;
+export const UPDATE_AVATAR = gql`
+  mutation UPDATE_AVATAR($userID: String!, $avatarUrl: String!) {
+    update_account_by_pk(pk_columns: { id: $userID }, _set: { avatarUrl: $avatarUrl }) {
+      id
+      status
+    }
+  }
+`;
