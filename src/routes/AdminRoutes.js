@@ -2,6 +2,7 @@ import NotFound from 'components/NotFound';
 import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
+import EditBlog from 'features/blog/pages/EditBlog';
 import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
@@ -29,7 +30,10 @@ export function AdminRoutes() {
       </Route>
       <Route path="blog">
         <Route index element={<BlogAdmin />} />
-        <Route path=":slug" element={<BlogDetail />} />
+        <Route path=":slug">
+          <Route index element={<BlogDetail />} />
+          <Route path="edit" element={<EditBlog />} />
+        </Route>
         <Route path="create" element={<CreateBlog />} />
       </Route>
       <Route path="course">

@@ -184,3 +184,14 @@ export const UPDATE_COURSE_IMAGE = gql`
     }
   }
 `;
+
+export const EDIT_BLOG_BY_ID = gql`
+  mutation EDIT_BLOG_BY_ID($blogID: String!, $blogTitle: String!, $blogContent: String!) {
+    update_blogs_by_pk(
+      pk_columns: { id: $blogID }
+      _set: { title: $blogTitle, content: $blogContent, isApproved: false }
+    ) {
+      id
+    }
+  }
+`;

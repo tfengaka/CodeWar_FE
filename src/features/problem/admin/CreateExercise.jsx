@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
-import { useMutation, useQuery } from '@apollo/client';
-
-import { GET_ALL_EXERCISE } from 'graphql/Queries';
-import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
-import moment from 'moment';
-import { useLocation, useNavigate } from 'react-router-dom';
 import MDEditor from 'components/MarkDownEdior/MDEditor';
+import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import moment from 'moment';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { checkAllObjectIsNullOfArray } from 'utils';
+
+const initialCase = {
+  input: '',
+  output: '',
+  point: '',
+  time: '',
+};
 
 const CreateExercise = () => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
   const navigate = useNavigate();
-  // const [questionList, setQuestionList] = useState([{ question: '' }]);
-
-  // const handleQuestionChange = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const list = [...questionList];
-  //   list[index][name] = value;
-  //   setQuestionList(list);
-  // };
 
   const haveExerciseData = exerciseData ? true : false;
   const [input, setInput] = useState(
@@ -33,36 +32,27 @@ const CreateExercise = () => {
       : {},
   );
   const [value, setValue] = useState(haveExerciseData ? exerciseData.des : '');
-  const [caseData, setCaseData] = useState(haveExerciseData ? exerciseData.metadata : [{}]);
+  const [caseData, setCaseData] = useState(haveExerciseData ? exerciseData.metadata : [initialCase]);
 
   const [saveExercise] = useMutation(INSERT_PROBLEM);
   const [updateExercise] = useMutation(UPDATE_PROBLEM);
 
   const handleQuestionAdd = () => {
-    console.log(caseData);
-    // setCaseData([...caseData, inputCase]);
+    setCaseData([...caseData, initialCase]);
   };
 
-  const handleQuestionRemove = (index) => {
-    const list = [...caseData];
-    list.splice(index, 1);
-    setCaseData(list);
+  const handleQuestionRemove = (indexRemove) => {
+    setCaseData(caseData.filter((_, index) => index !== indexRemove));
   };
 
-  // const handleAddCase = () => {
-  //   setCaseData([...caseData, inputCase]);
-  //   return setOpen(false);
-  // };
-
-  const handleChange = (e) => {
-    console.log(caseData);
-    setCaseData([
-      ...caseData,
-      ...(e.target.name === 'point'
-        ? { [e.target.name]: parseInt(e.target.value, 10) }
-        : { [e.target.name]: e.target.value }),
-    ]);
+  const handleChange = (e, index) => {
+    const obj = {
+      ...caseData[index],
+      [e.target.name]: e.target.name === 'point' ? parseInt(e.target.value, 10) : e.target.value,
+    };
+    setCaseData([...caseData.slice(0, index), obj, ...caseData.slice(index + 1)]);
   };
+
   const handleChangeInput = (e) => {
     setInput({
       ...input,
@@ -73,12 +63,20 @@ const CreateExercise = () => {
   };
 
   const handleSaveExercise = () => {
-    const allTags = input.tag.split(', ').join(', ');
+    if (!input?.topic) {
+      return alert('Vui lòng nhập từ khoá');
+    }
+
+    const isNull = checkAllObjectIsNullOfArray(caseData);
+    if (isNull) {
+      return alert('Vui lòng nhập đầy đủ các case');
+    }
+    const allTags = input.topic.split(', ').join(', ');
     if (haveExerciseData) {
       updateExercise({
         variables: {
           exerciseId: exerciseData.id,
-          name: input.title,
+          name: input.name,
           level: input.level ? input.level : 1,
           des: value,
           topic: [allTags],
@@ -95,7 +93,7 @@ const CreateExercise = () => {
     } else {
       saveExercise({
         variables: {
-          name: input.title,
+          name: input.name,
           level: input.level ? input.level : 1,
           des: value,
           topic: [allTags],
@@ -118,7 +116,7 @@ const CreateExercise = () => {
         <div className="card__item">
           <label>Tiêu đề: </label>
           <input
-            name="title"
+            name="name"
             onChange={handleChangeInput}
             className="card__item-text card__item-input"
             defaultValue={input.name}
@@ -135,7 +133,7 @@ const CreateExercise = () => {
 
           <label>Từ khóa: </label>
           <input
-            name="tag"
+            name="topic"
             onChange={handleChangeInput}
             className="card__item-text card__item-input"
             defaultValue={input.topic}
@@ -163,44 +161,44 @@ const CreateExercise = () => {
               <div className="card__body">
                 <div className="card__body-control">
                   <input
-                    defaultValue={item.input}
+                    value={item.input}
                     type="text"
                     name="input"
                     placeholder="Đầu vào"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                 </div>
                 <div className="card__body-control">
                   <input
-                    defaultValue={item.output}
+                    value={item.output}
                     type="text"
                     name="output"
                     placeholder="Đầu ra"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                 </div>
 
                 <div className="card__body-control">
                   <input
-                    defaultValue={item.point}
+                    value={item.point}
                     type="number"
                     name="point"
                     placeholder="Điểm"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                 </div>
                 <div className="card__body-control">
                   <input
-                    defaultValue={item.time}
+                    value={item.time}
                     type="text"
                     name="time"
                     placeholder="Thời gian"
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e, index)}
                   />
                 </div>
                 <div className="card__body-submit">
                   {caseData.length > 0 && (
-                    <Button backgroundColor="red" className="btn" onClick={() => handleQuestionRemove(index)}>
+                    <Button backgroundColor="red" className="btn" onClick={(e) => handleQuestionRemove(index)}>
                       Xóa
                     </Button>
                   )}
@@ -209,7 +207,7 @@ const CreateExercise = () => {
             </div>
           ))}
         <div className="card__crud">
-          <Button className="btn" onClick={handleQuestionAdd} isDisabled={caseData.length ? false : true}>
+          <Button className="btn" onClick={handleQuestionAdd}>
             Thêm case
           </Button>
 

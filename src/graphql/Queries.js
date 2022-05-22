@@ -91,6 +91,7 @@ export const GET_ALL_BLOG = gql`
       createdAt
       updatedBy
       account {
+        id
         fullName
       }
     }
@@ -104,7 +105,9 @@ export const GET_BLOG_BY_ID = gql`
       content
       isApproved
       createdAt
+      updatedAt
       account {
+        id
         fullName
         blogs(where: { _not: { id: { _eq: $blogID } } }) {
           id
