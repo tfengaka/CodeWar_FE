@@ -7,7 +7,6 @@ export const useRedirect = (subRoute) => {
   const redirect = () => {
     if (isAdminPage) {
       navigate(`/admin/${subRoute}`);
-      window.location.reload();
       return;
     }
     navigate(`/${subRoute}`);

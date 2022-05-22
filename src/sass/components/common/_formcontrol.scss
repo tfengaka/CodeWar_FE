@@ -82,8 +82,8 @@
     height: 100%;
     border-radius: inherit;
     border: 2px solid transparent;
-    border-right-color: $text-white;
-    border-bottom-color: $text-white;
+    border-right-color: currentColor;
+    border-bottom-color: currentColor;
     animation: circleLoading 1s forwards infinite linear;
   }
 }
