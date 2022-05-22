@@ -106,6 +106,8 @@
       display: inline-block;
       user-select: none;
       width: 100%;
+      display: flex;
+      justify-content: space-between;
 
       textarea {
         background-color: #eee;
@@ -113,6 +115,7 @@
         border-radius: 5px;
         font-size: 1.8rem;
         width: 100%;
+        max-width: 850px;
         padding: 8px 16px;
         height: 615px;
         border: 1.5px solid transparent;

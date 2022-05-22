@@ -122,19 +122,6 @@ export const UPDATE_PROBLEM = gql`
   }
 `;
 
-export const INSERT_COURSE = gql`
-  mutation INSERT_COURSE($name: String!, $des: String!, $image: String!, $status: String!, $createdBy: String!) {
-    insert_courses(objects: { name: $name, des: $des, image: $image, status: $status }) {
-      returning {
-        des
-        image
-        name
-        status
-      }
-    }
-  }
-`;
-
 export const UPDATE_DISCUSS_REACT = gql`
   mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
     discussReactUpdate(data: { id: $id, discussId: $discussId })
@@ -174,6 +161,24 @@ export const ADD_NEW_BLOG = gql`
         content
         isApproved
       }
+    }
+  }
+`;
+
+export const INSERT_COURSE = gql`
+  mutation INSERT_COURSE($name: String!, $des: String!) {
+    insert_courses(objects: { des: $des, name: $name }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_COURSE_IMAGE = gql`
+  mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
+    update_courses(where: { id: { _eq: $courseId } }, _set: { image: $image }) {
+      id
     }
   }
 `;
