@@ -22,8 +22,15 @@ export function AdminRoutes() {
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />
-        <Route path=":id" element={<ListQuestionContest />} />
-        <Route path=":id/problems/:id" element={<CreateExercise />} />
+        <Route path=":id">
+          <Route index element={<ListQuestionContest />} />
+          <Route path="problems/update">
+            <Route index element={<CreateExercise />} />
+          </Route>
+          <Route path="problems/create">
+            <Route index element={<CreateExercise />} />
+          </Route>
+        </Route>
         <Route path="create" element={<CreateContest />} />
       </Route>
       <Route path="blog">

@@ -18,25 +18,29 @@ const CreateContest = () => {
   const [saveContests] = useMutation(INSERT_CONTEST);
 
   const handleListAdd = () => {
-    saveContests({
-      variables: {
-        name: inputName,
-        des: inputDes,
-        startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        status: 'active',
-        createdBy: auth.user.fullName,
-      },
-      onCompleted: () => {
-        alert('Thêm thành công');
-        handleListReset();
-      },
-      onError: (error) => {
-        alert('Tiêu đề đã tồn tại');
-        console.log(error.message);
-      },
-      refetchQueries: [getContests],
-    });
+    if (!inputName || !inputDes) {
+      return alert('Vui lòng nhập đầy đủ thông tin');
+    } else {
+      saveContests({
+        variables: {
+          name: inputName,
+          des: inputDes,
+          startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          status: 'active',
+          createdBy: auth.user.fullName,
+        },
+        onCompleted: () => {
+          alert('Thêm thành công');
+          handleListReset();
+        },
+        onError: (error) => {
+          alert('Tiêu đề đã tồn tại');
+          console.log(error.message);
+        },
+        refetchQueries: [getContests],
+      });
+    }
   };
 
   const handleListReset = () => {

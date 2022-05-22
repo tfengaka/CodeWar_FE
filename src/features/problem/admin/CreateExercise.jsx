@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
 import MDEditor from '@uiw/react-md-editor';
-import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import Button from 'components/Button';
 import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
 import moment from 'moment';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkAllObjectIsNullOfArray } from 'utils';
 
@@ -18,8 +18,10 @@ const initialCase = {
 const CreateExercise = () => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
-  const navigate = useNavigate();
+  const contestId = location.state?.contestId || null;
+  const refetchQueries = [contestId ? GET_ALL_EXERCISE_CONTEST : GET_ALL_EXERCISE];
 
+  const navigate = useNavigate();
   const haveExerciseData = exerciseData ? true : false;
   const [input, setInput] = useState(
     haveExerciseData
@@ -83,8 +85,9 @@ const CreateExercise = () => {
           metadata: caseData,
           status: 'active',
           updatedAt: moment(),
+          contestId,
         },
-        refetchQueries: [GET_ALL_EXERCISE],
+        refetchQueries,
 
         onError: (err) => {
           alert(err.message);
@@ -98,15 +101,21 @@ const CreateExercise = () => {
           des: value,
           topic: [allTags],
           metadata: caseData,
+          contestId,
         },
-        refetchQueries: [GET_ALL_EXERCISE],
+        refetchQueries,
 
         onError: (err) => {
           alert(err.message);
         },
       });
     }
-    navigate('/admin/problems');
+
+    if (!contestId) {
+      return navigate('/admin/problems');
+    }
+
+    return navigate(`/admin/contest/${contestId}`);
   };
 
   return (

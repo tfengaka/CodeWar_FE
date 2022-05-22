@@ -138,3 +138,20 @@ export const GET_ALL_CONCEPT_IN_COURSE = gql`
     }
   }
 `;
+
+export const GET_ALL_EXERCISE_CONTEST = gql`
+  query GET_ALL_EXERCISE_CONTEST($contestId: String!) {
+    contests_by_pk(id: $contestId) {
+      id
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+      }
+    }
+  }
+`;

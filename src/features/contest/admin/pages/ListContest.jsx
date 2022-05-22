@@ -171,7 +171,7 @@ const TableRow = ({ data }) => {
           <Button backgroundColor="red" onClick={() => handleListRemove()}>
             <i className="bx bxs-trash-alt"></i>Xóa
           </Button>
-          <Link to={`${id}`}>
+          <Link to={`${id}`} state={{ contestId: id }}>
             <Button backgroundColor="blue">
               <i className="bx bx-question-mark"></i>Câu hỏi
             </Button>
