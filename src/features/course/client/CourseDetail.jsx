@@ -25,7 +25,7 @@ const CourseDetail = () => {
         <div className="banner_header">
           <br />
           <img
-            src="https://scontent.fhan3-3.fna.fbcdn.net/v/t39.30808-6/275368185_2158782244296225_2996082221714874021_n.jpg?_nc_cat=108&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=Gu9auXSDeAEAX8IUXZn&tn=QwtPadnGUAAFdHtj&_nc_ht=scontent.fhan3-3.fna&oh=00_AT9sIpiEK5ZLIqdx2Runo3nDIZwd84GP6aan2wNpuH9GsA&oe=62886C72"
+            src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/275368185_2158782244296225_2996082221714874021_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=IeX3_nADEU4AX9T-Bdy&tn=QwtPadnGUAAFdHtj&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT_fpuTiL894v5qlmGmOvRgCd2vL5aFFs3GlSyWqE3AX0A&oe=628E5B32"
             alt=""
           />
           <div className="banner_content">
@@ -35,8 +35,8 @@ const CourseDetail = () => {
         </div>
       </div>
       <div className="course-concepts">
-        {data?.concepts?.map((concept) => (
-          <div className="course-concepts_card">
+        {data?.concepts?.map((concept, index) => (
+          <div className="course-concepts_card" key={index}>
             <div className="course-concepts_card-title">
               <h2>{concept.name}</h2>
             </div>
@@ -44,10 +44,11 @@ const CourseDetail = () => {
               {concept.exercises.map((exercise, index) => (
                 <Link
                   className="exercise_number"
+                  key={index}
                   to={`/problem/${exercise?.id?.substr(0, 8).toUpperCase()}`}
                   state={{ data: exercise }}
                 >
-                  <h3>{index + 1}</h3>
+                  {index + 1}
                 </Link>
               ))}
             </div>
