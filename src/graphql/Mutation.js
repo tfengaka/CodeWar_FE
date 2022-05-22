@@ -64,18 +64,8 @@ export const INSERT_CONTEST = gql`
     $startDate: timestamptz!
     $endDate: timestamptz!
     $status: String!
-    $createdBy: String!
   ) {
-    insert_contests_one(
-      object: {
-        name: $name
-        des: $des
-        endDate: $endDate
-        startDate: $startDate
-        status: $status
-        createdBy: $createdBy
-      }
-    ) {
+    insert_contests_one(object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }) {
       name
       des
     }

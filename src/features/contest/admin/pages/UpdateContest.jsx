@@ -12,7 +12,6 @@ const UpdateContest = (props) => {
   const [updateContest] = useMutation(UPDATE_CONTEST);
   const show = props.show;
   const data = props.data;
-  const auth = useAuth();
   const [startDate, setStartDate] = useState(new Date(data.startDate));
   const [endDate, setEndDate] = useState(new Date(data.endDate));
   const [inputName, setInputName] = useState(data.name);
@@ -31,7 +30,6 @@ const UpdateContest = (props) => {
         startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         status: 'active',
-        createdBy: auth.user.fullName,
       },
       onCompleted: () => {
         alert('Cập nhật thành công');

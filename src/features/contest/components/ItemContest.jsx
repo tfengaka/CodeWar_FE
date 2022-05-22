@@ -60,6 +60,7 @@ const ItemContest = (props) => {
                 <p className="title">
                   <Link to={'/contest/' + conversionURL(item.name) + '.' + item.id + '.html'}>{item.name}</Link>
                 </p>
+                <p>{item.des}</p>
                 <ul className="detail">
                   <li>
                     <i className="bx bx-calendar"></i>
@@ -99,6 +100,7 @@ const ItemContest = (props) => {
                     <i className='bx bx-time'></i> {item.endDate}
                   </li> */}
                 </ul>
+                <p>{item.des}</p>
               </div>
               <div className="status">
                 <div className="status__tag">

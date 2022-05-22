@@ -34,7 +34,7 @@ const ListContest = () => {
                   <col width="250" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="435" />
+                  <col width="350" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -153,7 +153,9 @@ const TableRow = ({ data }) => {
         </div>
       </td>
       <td className="table_body_content_item">
-        <div className="table_cell">{createdBy}</div>
+        <div className="table_cell">
+          <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+        </div>
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">{status}</div>

@@ -3,6 +3,7 @@
   ol {
     list-style: none;
     padding: 0;
+    margin: 0;
     .body__item {
       background-color: $main-background;
       box-shadow: $item-color 0px 1px 0px;
@@ -14,11 +15,11 @@
         align-items: center;
         width: 100%;
         .logo {
-          width: 6%;
+          width: 100px;
           height: 100%;
         }
         .content__main {
-          width: 75%;
+          width: 65%;
           .title {
             font-size: large;
             font-weight: bold;
@@ -48,7 +49,7 @@
           }
         }
         .status {
-          width: 15%;
+          width: 25%;
           display: flex;
           align-items: center;
           justify-content: center;

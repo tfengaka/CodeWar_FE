@@ -9,7 +9,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 const CreateContest = () => {
-  const auth = useAuth();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [inputName, setInputName] = useState('');
@@ -28,11 +27,9 @@ const CreateContest = () => {
           startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
           endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
           status: 'active',
-          createdBy: auth.user.fullName,
         },
         onCompleted: () => {
           alert('Thêm thành công');
-          handleListReset();
         },
         onError: (error) => {
           alert('Tiêu đề đã tồn tại');
@@ -41,13 +38,6 @@ const CreateContest = () => {
         refetchQueries: [getContests],
       });
     }
-  };
-
-  const handleListReset = () => {
-    setInputName('');
-    setInputDes('');
-    setStartDate(new Date());
-    setEndDate(new Date());
   };
 
   // const [questionList, setQuestionList] = useState([{ question: '' }]);
