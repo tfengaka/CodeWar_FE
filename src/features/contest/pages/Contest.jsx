@@ -35,68 +35,71 @@ const Contest = () => {
         return val;
       }
     })
-    .map(({ id, name, des, startDate, endDate, status }) => ({
+    .map(({ id, name, des, startDate, endDate, status, createdBy }) => ({
       id,
       name,
       des,
       startDate,
       endDate,
       status,
+      createdBy,
     }));
 
   return (
     <div className="content">
-      <div className="panel__title">Tất cả cuộc thi</div>
-      <div className="panel__extra">
-        <ul className="filter">
-          <li>
-            <div
-              className="dropdown"
-              onMouseEnter={(e) => setIsActive(!isActive)}
-              onMouseLeave={(e) => setIsActive(false)}
-            >
-              <div className="dropdown__btn">
-                <span>{selected}</span>
-                <i className="bx bxs-down-arrow"></i>
-              </div>
-              {isActive && (
-                <div className="dropdown__content">
-                  {options.map((item) => (
-                    <div
-                      key={item.id}
-                      className="dropdown__content__item"
-                      onClick={() => {
-                        if (item.id === 0) {
-                          setSelected('Trạng thái');
-                          setIsActive(false);
-                        } else {
-                          setSelected(item.text);
-                          setIsActive(false);
-                        }
-                      }}
-                    >
-                      {item.text}
-                    </div>
-                  ))}
+      <div className="content_container">
+        <div className="panel__title">Tất cả cuộc thi</div>
+        <div className="panel__extra">
+          <ul className="filter">
+            <li>
+              <div
+                className="dropdowns"
+                onMouseEnter={(e) => setIsActive(!isActive)}
+                onMouseLeave={(e) => setIsActive(false)}
+              >
+                <div className="dropdowns__btn">
+                  <span>{selected}</span>
+                  <i className="bx bxs-down-arrow"></i>
                 </div>
-              )}
-            </div>
-          </li>
-          <li>
-            <div className="input__wrapper">
-              <input
-                autoComplete="off"
-                spellCheck="false"
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Từ khóa"
-              ></input>
-              <i className="bx bx-search-alt-2"></i>
-            </div>
-          </li>
-        </ul>
+                {isActive && (
+                  <div className="dropdowns__content">
+                    {options.map((item) => (
+                      <div
+                        key={item.id}
+                        className="dropdowns__content__item"
+                        onClick={() => {
+                          if (item.id === 0) {
+                            setSelected('Trạng thái');
+                            setIsActive(false);
+                          } else {
+                            setSelected(item.text);
+                            setIsActive(false);
+                          }
+                        }}
+                      >
+                        {item.text}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </li>
+            <li>
+              <div className="input__wrapper">
+                <input
+                  autoComplete="off"
+                  spellCheck="false"
+                  type="text"
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Từ khóa"
+                ></input>
+                <i className="bx bx-search-alt-2"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <ItemContest itemProps={items} />
       </div>
-      <ItemContest itemProps={items} />
     </div>
   );
 };

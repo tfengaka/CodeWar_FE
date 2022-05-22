@@ -24,7 +24,7 @@ const CreateContest = () => {
         des: inputDes,
         startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        status: 'Đang diễn ra',
+        status: 'active',
         createdBy: auth.user.fullName,
       },
       onCompleted: () => {

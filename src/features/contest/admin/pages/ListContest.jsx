@@ -119,7 +119,7 @@ const TableRow = ({ data }) => {
 
   const handleListRemove = () => {
     removeContest({
-      variables: { contestId: id, status: 'deleted', name, des, startDate, endDate },
+      variables: { contestId: id, status: 'deleted', name, des, startDate, endDate, createdBy },
       onCompleted: () => {
         alert('Xóa thành công');
       },
@@ -179,15 +179,7 @@ const TableRow = ({ data }) => {
         </div>
       </td>
       <td className="table_body_content_item">
-        <UpdateContest
-          show={show}
-          id={id}
-          name={name}
-          des={des}
-          startDatetime={startDate}
-          endDatetime={endDate}
-          onClose={() => setShow(false)}
-        />
+        <UpdateContest show={show} data={{ id, name, des, startDate, endDate }} onClose={() => setShow(false)} />
       </td>
     </tr>
   );

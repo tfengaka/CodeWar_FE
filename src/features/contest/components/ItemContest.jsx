@@ -9,42 +9,45 @@ const ItemContest = (props) => {
 
   const colorStart = '#00dd55';
   const colorEnd = '#ed4014';
+  const statusStart = 'Đang diễn ra';
+  const statusEnd = 'Đã kết thúc';
 
   const itemStart = options
     .filter((b) => {
-      if (b.status === 'Đang diễn ra') {
-        return b;
-      } else if (b.status === '') {
+      const date1 = new Date(b.endDate);
+      const date2 = new Date();
+      if (date1.getTime() >= date2.getTime() && b.status !== 'deleted') {
         return b;
       }
     })
-    .map(({ id, name, des, startDate, endDate, status }) => ({
+    .map(({ id, name, des, startDate, endDate }) => ({
       id,
       name,
       des,
       startDate,
       endDate,
-      status,
+      statusStart,
       colorStart,
     }));
 
   const itemEnd = options
     .filter((b) => {
-      if (b.status === 'Đã kết thúc') {
-        return b;
-      } else if (b.status === '') {
+      const date1 = new Date(b.endDate);
+      const date2 = new Date();
+      if (date1.getTime() < date2.getTime() && b.status !== 'deleted') {
         return b;
       }
     })
-    .map(({ id, name, des, startDate, endDate, status }) => ({
+    .map(({ id, name, des, startDate, endDate }) => ({
       id,
       name,
       des,
       startDate,
       endDate,
-      status,
+      statusEnd,
       colorEnd,
     }));
+  console.log(itemEnd);
 
   return (
     <div className="panel__body">
@@ -72,7 +75,7 @@ const ItemContest = (props) => {
               </div>
               <div className="status">
                 <div className="status__tag">
-                  <i className="bx bxs-circle" style={{ color: item.colorStart }}></i> {item.status}
+                  <i className="bx bxs-circle" style={{ color: item.colorStart }}></i> {item.statusStart}
                 </div>
               </div>
             </div>
@@ -99,7 +102,7 @@ const ItemContest = (props) => {
               </div>
               <div className="status">
                 <div className="status__tag">
-                  <i className="bx bxs-circle" style={{ color: item.colorEnd }}></i> {item.status}
+                  <i className="bx bxs-circle" style={{ color: item.colorEnd }}></i> {item.statusEnd}
                 </div>
               </div>
             </div>

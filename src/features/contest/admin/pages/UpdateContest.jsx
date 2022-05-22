@@ -11,16 +11,12 @@ import moment from 'moment';
 const UpdateContest = (props) => {
   const [updateContest] = useMutation(UPDATE_CONTEST);
   const show = props.show;
-  const id = props.id;
-  const name = props.name;
-  const des = props.des;
-  const startDatetime = props.startDatetime;
-  const endDatetime = props.endDatetime;
+  const data = props.data;
   const auth = useAuth();
-  const [startDate, setStartDate] = useState(new Date(startDatetime));
-  const [endDate, setEndDate] = useState(new Date(endDatetime));
-  const [inputName, setInputName] = useState(name);
-  const [inputDes, setInputDes] = useState('');
+  const [startDate, setStartDate] = useState(new Date(data.startDate));
+  const [endDate, setEndDate] = useState(new Date(data.endDate));
+  const [inputName, setInputName] = useState(data.name);
+  const [inputDes, setInputDes] = useState(data.des);
   const onClose = props.onClose;
   if (!show) {
     return null;
@@ -29,12 +25,12 @@ const UpdateContest = (props) => {
   const handleListUpdate = () => {
     updateContest({
       variables: {
-        contestId: id,
+        contestId: data.id,
         name: inputName,
         des: inputDes,
         startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        status: 'Đang diễn ra',
+        status: 'active',
         createdBy: auth.user.fullName,
       },
       onCompleted: () => {
@@ -50,10 +46,10 @@ const UpdateContest = (props) => {
   };
 
   const handleListReset = () => {
-    setInputName(name);
-    setInputDes(des);
-    setStartDate(new Date(startDatetime));
-    setEndDate(new Date(endDate));
+    setInputName(data.name);
+    setInputDes(data.des);
+    setStartDate(new Date(data.startDate));
+    setEndDate(new Date(data.endDate));
     onClose();
   };
   return (
@@ -94,7 +90,7 @@ const UpdateContest = (props) => {
                   placeholder="Nội dung"
                   onChange={(e) => setInputDes(e.target.value)}
                 >
-                  {des}
+                  {inputDes}
                 </textarea>
               </div>
             </li>

@@ -11,10 +11,11 @@
       .row__flex {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 100%;
         .logo {
-          width: 8%;
-          width: 58px;
+          width: 6%;
+          height: 100%;
         }
         .content__main {
           width: 75%;
