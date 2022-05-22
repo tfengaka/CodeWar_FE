@@ -4,9 +4,9 @@
   padding-top: 20px;
 
   &_body {
-    display: grid;
-    grid-template-columns: 21% 21% 21% 21%;
-    gap: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 
     .course_item {
       width: 350px;
@@ -23,7 +23,7 @@
 
       &-content {
         padding: 10px;
-        height: 140px;
+        height: 200px;
 
         & > p {
           display: -webkit-box;
