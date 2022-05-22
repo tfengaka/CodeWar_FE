@@ -32,13 +32,12 @@ const CreateCourse = () => {
   const handleSubmit = async () => {
     let courseId = null;
 
-    saveCourse({
+    await saveCourse({
       variables: {
         name: input.name,
         des: input.des,
       },
       onCompleted: (data) => {
-        console.log(data);
         courseId = data.insert_courses.returning[0].id;
       },
       onError: (error) => {
@@ -46,7 +45,7 @@ const CreateCourse = () => {
       },
     });
 
-    uploadFileToFirebase(file, `CourseThumbnail/${courseId}`, file.type, courseId, function (id, url) {
+    await uploadFileToFirebase(file, `CourseThumbnail/${courseId}`, file.type, courseId, async (id, url) =>
       updateCourseImage({
         variables: {
           courseId: id,
@@ -55,8 +54,8 @@ const CreateCourse = () => {
         onError: (error) => {
           alert(error.message);
         },
-      });
-    });
+      }),
+    );
   };
 
   return (

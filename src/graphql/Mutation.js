@@ -178,7 +178,9 @@ export const INSERT_COURSE = gql`
 export const UPDATE_COURSE_IMAGE = gql`
   mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
     update_courses(where: { id: { _eq: $courseId } }, _set: { image: $image }) {
-      id
+      returning {
+        id
+      }
     }
   }
 `;
