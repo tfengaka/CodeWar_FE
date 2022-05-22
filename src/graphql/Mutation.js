@@ -164,6 +164,27 @@ export const ADD_NEW_BLOG = gql`
     }
   }
 `;
+
+export const INSERT_COURSE = gql`
+  mutation INSERT_COURSE($name: String!, $des: String!) {
+    insert_courses(objects: { des: $des, name: $name }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_COURSE_IMAGE = gql`
+  mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
+    update_courses(where: { id: { _eq: $courseId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export const EDIT_BLOG_BY_ID = gql`
   mutation EDIT_BLOG_BY_ID($blogID: String!, $blogTitle: String!, $blogContent: String!) {
     update_blogs_by_pk(

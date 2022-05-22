@@ -4,6 +4,7 @@ import BlogClient from 'features/blog/pages/client/BlogClient';
 import CreateBlog from 'features/blog/pages/CreateBlog';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
+import Rank from 'features/rank/Rank';
 // import Rank from 'features/rank/Rank';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
