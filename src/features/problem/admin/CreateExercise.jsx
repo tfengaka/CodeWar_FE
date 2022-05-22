@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Button from 'components/Button';
 import { useMutation } from '@apollo/client';
-import MDEditor from '@uiw/react-md-editor';
-import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import Button from 'components/Button';
+import MDEditor from 'components/MarkDownEdior/MDEditor';
 import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE } from 'graphql/Queries';
 import moment from 'moment';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkAllObjectIsNullOfArray } from 'utils';
 
@@ -143,14 +143,7 @@ const CreateExercise = () => {
           <label>Nội dung: </label>
           <div data-color-mode="light">
             <div className="wmde-markdown-var"> </div>
-            <MDEditor
-              name="des"
-              value={value}
-              height={600}
-              onChange={(val) => {
-                setValue(val);
-              }}
-            />
+            <MDEditor name="des" value={value} style={{ height: '600px' }} onChange={setValue} />
           </div>
         </div>
 
