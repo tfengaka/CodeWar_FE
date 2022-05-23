@@ -1,10 +1,9 @@
 .mdeditor {
-  font-family: "Roboto", sans-serif;
-  line-height: 1.5;
+  font-family: "Montserrat", sans-serif;
+  line-height: 2;
   width: 100%;
   min-height: 400px;
   border-radius: 4px;
-  color: #333;
   overflow: auto;
   box-shadow: 0 2px 10px 0 rgb(29 31 89 / 25%);
 }
@@ -24,10 +23,12 @@
   }
 }
 .markdown {
+  font-family: "Montserrat", sans-serif !important;
+  color: #292929;
   &_inline {
-    padding: 2px 6px;
-    border-radius: 4px;
-    background-color: #6680991a;
+    background-color: rgba(96, 125, 139, 0.2);
+    border-radius: 3px;
+    padding: 3px 4px;
     color: #333;
   }
 }
@@ -50,14 +51,13 @@
     font-weight: 500 !important;
   }
   blockquote {
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.5;
-    border-radius: 3px;
-    padding: 2px 16px;
-    color: #333;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 16px;
+    padding: 1px 0 1px 16px;
+    color: #6d6d6d;
     border: none;
     background-color: #6680991a;
-    border-left: 10px solid $main-color;
+    border-left: 6px solid $main-color;
   }
 }

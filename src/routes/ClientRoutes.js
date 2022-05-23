@@ -2,16 +2,15 @@ import NotFound from 'components/NotFound';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import BlogClient from 'features/blog/pages/client/BlogClient';
 import CreateBlog from 'features/blog/pages/CreateBlog';
+import CourseDetail from 'features/course/client/CourseDetail';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
-// import Rank from 'features/rank/Rank';
+import Rank from 'features/rank/Rank';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
 import ContentContest from '../features/contest/client/ContentContest';
 import Contest from '../features/contest/client/Contest';
-import ComingSoon from 'components/ComingSoon';
-import CourseDetail from 'features/course/client/CourseDetail';
 
 export function ClientRoutes() {
   return (
@@ -19,6 +18,7 @@ export function ClientRoutes() {
       <Route path="/" element={<Navigate to="/course" />} />
       <Route path="/course">
         <Route index element={<CoursesList />} />
+        <Route path=":id" element={<CourseDetail />} />
       </Route>
       <Route path="/problem">
         <Route index element={<Problem />} />
@@ -36,10 +36,9 @@ export function ClientRoutes() {
         <Route path="create" element={<CreateBlog />} />
       </Route>
 
-      <Route path="/rank" element={<ComingSoon />} />
+      <Route path="/rank" element={<Rank />} />
+
       <Route path="*" element={<NotFound />} />
-      <Route path="/course" element={<CoursesList />} />
-      <Route path="/course/:id" element={<CourseDetail />} />
     </Switch>
   );
 }

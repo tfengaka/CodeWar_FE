@@ -6,6 +6,8 @@ import EditBlog from 'features/blog/pages/EditBlog';
 import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
+import CreateCourse from 'features/course/admin/CreateCourse';
+import ListCourse from 'features/course/admin/ListCourse';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/CreateContest';
@@ -40,6 +42,11 @@ export function AdminRoutes() {
           <Route path="edit" element={<EditBlog />} />
         </Route>
         <Route path="create" element={<CreateBlog />} />
+      </Route>
+      <Route path="course">
+        <Route index element={<ListCourse />} />
+        <Route path="create" element={<CreateCourse />} />
+        <Route path="update" element={<CreateCourse />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Switch>

@@ -1,7 +1,9 @@
 .input_control {
+  font-family: inherit;
+  font-size: inherit;
   background-color: #eee;
   width: 100%;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 4px;
   outline: none;
   border: 2px solid transparent;
@@ -82,11 +84,60 @@
     height: 100%;
     border-radius: inherit;
     border: 2px solid transparent;
-    border-right-color: $text-white;
-    border-bottom-color: $text-white;
+    border-right-color: currentColor;
+    border-bottom-color: currentColor;
     animation: circleLoading 1s forwards infinite linear;
   }
 }
+
+.blog {
+  &__header {
+    text-align: center;
+    margin: 25px 0;
+  }
+  &__label {
+    margin: 10px 0;
+  }
+  &__content {
+    margin: 20px 0;
+
+    h3 {
+      margin: 10px 0;
+    }
+    &__input {
+      display: inline-block;
+      user-select: none;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      textarea {
+        background-color: #eee;
+        resize: none;
+        border-radius: 5px;
+        font-size: 1.8rem;
+        width: 100%;
+        max-width: 850px;
+        padding: 8px 16px;
+        height: 615px;
+        border: 1.5px solid transparent;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #fff;
+          border-color: rgba(240, 128, 128, 0.8);
+        }
+
+        &:focus {
+          background-color: #fff;
+          border-color: lightcoral;
+          box-shadow: rgba(240, 128, 128, 0.3) 0px 0px 14px;
+        }
+      }
+    }
+  }
+}
+
 .dots-loading {
   @include flex(center, auto);
   position: absolute;

@@ -165,6 +165,27 @@ export const ADD_NEW_BLOG = gql`
     }
   }
 `;
+
+export const INSERT_COURSE = gql`
+  mutation INSERT_COURSE($name: String!, $des: String!) {
+    insert_courses(objects: { des: $des, name: $name }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_COURSE_IMAGE = gql`
+  mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
+    update_courses(where: { id: { _eq: $courseId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export const EDIT_BLOG_BY_ID = gql`
   mutation EDIT_BLOG_BY_ID($blogID: String!, $blogTitle: String!, $blogContent: String!) {
     update_blogs_by_pk(
@@ -172,6 +193,14 @@ export const EDIT_BLOG_BY_ID = gql`
       _set: { title: $blogTitle, content: $blogContent, isApproved: false }
     ) {
       id
+    }
+  }
+`;
+export const UPDATE_AVATAR = gql`
+  mutation UPDATE_AVATAR($userID: String!, $avatarUrl: String!) {
+    update_account_by_pk(pk_columns: { id: $userID }, _set: { avatarUrl: $avatarUrl }) {
+      id
+      status
     }
   }
 `;

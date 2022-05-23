@@ -42,6 +42,20 @@ const sideBarOptions = [
       },
     ],
   },
+
+  {
+    title: 'Khóa học',
+    children: [
+      {
+        name: 'Danh sách khóa học',
+        path: '/admin/course',
+      },
+      {
+        name: 'Tạo mới khóa học',
+        path: '/admin/course/create',
+      },
+    ],
+  },
 ];
 
 const SideBar = () => {

@@ -1,8 +1,15 @@
 import { useMutation } from '@apollo/client';
+<<<<<<< HEAD
 import MDEditor from '@uiw/react-md-editor';
 import Button from 'components/Button';
 import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
 import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
+=======
+import Button from 'components/Button';
+import MDEditor from 'components/MarkDownEdior/MDEditor';
+import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import { GET_ALL_EXERCISE } from 'graphql/Queries';
+>>>>>>> 100a0a1e44cfb23c82efa9ec21b3a7782e058135
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -152,14 +159,7 @@ const CreateExercise = () => {
           <label>Nội dung: </label>
           <div data-color-mode="light">
             <div className="wmde-markdown-var"> </div>
-            <MDEditor
-              name="des"
-              value={value}
-              height={600}
-              onChange={(val) => {
-                setValue(val);
-              }}
-            />
+            <MDEditor name="des" value={value} style={{ height: '600px' }} onChange={setValue} />
           </div>
         </div>
 

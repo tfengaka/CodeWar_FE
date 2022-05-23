@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import Helmet from 'components/Helmet';
 import { ADD_NEW_BLOG } from 'graphql/Mutation';
+import { GET_ALL_BLOG } from 'graphql/Queries';
 import { useRedirect } from 'hooks/useRedirect';
 import React from 'react';
 import BlogWritting from '../components/BlogWritting';
@@ -14,6 +15,7 @@ const CreateBlog = () => {
     onError: (err) => {
       alert('Có lỗi xảy ra trong quá trình tải lên, vui lòng thử lại sau');
     },
+    refetchQueries: [GET_ALL_BLOG],
   });
 
   return (

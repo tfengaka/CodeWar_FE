@@ -12,7 +12,7 @@ const BlogReview = ({ title, content, createdAt, account, adminPage }) => {
       {/* Blog content */}
       <div className="blog_detail">
         <div className="blog_detail_title">
-          <h3>{title}</h3>
+          <strong>{title}</strong>
         </div>
         <div className="blog_detail_header">
           <div className="blog_detail_header_user">
