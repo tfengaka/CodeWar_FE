@@ -57,7 +57,9 @@ const ItemContest = (props) => {
               <img src={LogoUTC} alt="" className="body_card--logo" />
               <div className="body_card--content">
                 <h3>
-                  <Link to={'/contest/' + conversionURL(item.name) + '.' + item.id + '.html'}>{item.name}</Link>
+                  <Link to={'/contest/' + conversionURL(item.name)} state={{ item }}>
+                    {item.name}
+                  </Link>
                 </h3>
                 <p>{item.des}</p>
               </div>
@@ -79,7 +81,9 @@ const ItemContest = (props) => {
               <img src={LogoUTC} alt="" className="body_card--logo" />
               <div className="body_card--content">
                 <h3>
-                  <Link to={'/contest/' + conversionURL(item.name) + '.' + item.id + '.html'}>{item.name}</Link>
+                  <Link to={'/contest/' + conversionURL(item.name)} state={{ item }}>
+                    {item.name}
+                  </Link>
                 </h3>
                 <p>{item.des}</p>
               </div>

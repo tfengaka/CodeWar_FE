@@ -33,7 +33,8 @@ const languageOptions = {
 
 const ProblemSolve = () => {
   const location = useLocation();
-  const { data } = location.state;
+  let { data } = location.state;
+  data = data.length ? data[0] : data;
   const auth = useAuth();
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
 

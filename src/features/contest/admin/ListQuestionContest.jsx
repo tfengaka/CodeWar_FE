@@ -1,13 +1,12 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Button from 'components/Button';
 import { UPDATE_PROBLEM } from 'graphql/Mutation';
 
 const ListQuestionContest = () => {
-  // const location = useLocation();
   const { id } = useParams();
 
   let { loading, error, data } = useQuery(GET_ALL_EXERCISE_CONTEST, { variables: { contestId: id } });

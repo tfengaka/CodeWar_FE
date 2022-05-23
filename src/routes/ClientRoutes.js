@@ -2,6 +2,7 @@ import NotFound from 'components/NotFound';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import BlogClient from 'features/blog/pages/client/BlogClient';
 import CreateBlog from 'features/blog/pages/CreateBlog';
+import Competition from 'features/contest/client/Competition';
 import CourseDetail from 'features/course/client/CourseDetail';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
@@ -25,9 +26,12 @@ export function ClientRoutes() {
         <Route path=":id" element={<ProblemSolve />} />
       </Route>
 
-      <Route path="/contest">
+      <Route path="contest">
         <Route index element={<Contest />} />
-        <Route path=":id" element={<ContentContest />} />
+        <Route path=":id">
+          <Route index element={<ContentContest />} />
+          <Route path="competition" element={<Competition />} />
+        </Route>
       </Route>
 
       <Route path="/blog">
