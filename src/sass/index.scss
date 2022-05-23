@@ -1,32 +1,34 @@
-@import "./variables";
-@import "./base";
+@import './variables';
+@import './base';
 
-@import "./components/common/header";
-@import "./components/common/sidebar";
-@import "./components/common/button";
-@import "./components/common/notfound";
-@import "./components/common/dropdown";
-@import "./components/common/table";
-@import "./components/common/formcontrol";
-@import "./components/common/layout";
-@import "./components/common/mdeditor";
+@import './components/common/header';
+@import './components/common/sidebar';
+@import './components/common/button';
+@import './components/common/notfound';
+@import './components/common/dropdown';
+@import './components/common/table';
+@import './components/common/formcontrol';
+@import './components/common/layout';
+@import './components/common/mdeditor';
 
-@import "./components/auth/loginpage";
-@import "./components/auth/modal";
+@import './components/auth/loginpage';
+@import './components/auth/modal';
 
-@import "./components/contest/contest";
-@import "./components/contest/itemContest";
-@import "./components/contest/contentContest";
-@import "./components/contest/createContest";
-@import "./components/contest/updateContest";
+@import './components/contest/contest';
+@import './components/contest/itemContest';
+@import './components/contest/contentContest';
+@import './components/contest/createContest';
+@import './components/contest/updateContest';
 
-@import "./components/course/course-card";
-@import "./components/problem/editor";
-@import "./components/problem/testcase";
-@import "./components/problem/createProblem";
-@import "./components/problem/discuss";
+@import './components/course/course-card';
+@import './components/problem/editor';
+@import './components/problem/testcase';
+@import './components/problem/createProblem';
+@import './components/problem/discuss';
 
-@import "./components/course/course-card";
-@import "./components/course/course-detail";
+@import './components/course/course-card';
+@import './components/course/course-detail';
 
-@import "./components/blog/blog";
+@import './components/blog/blog';
+
+@import './components/challenge/challenge-card';

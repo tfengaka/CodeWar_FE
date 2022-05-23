@@ -139,3 +139,28 @@ export const GET_ALL_CONCEPT_IN_COURSE = gql`
     }
   }
 `;
+
+export const GET_ALL_CHALLENGE = gql`
+  query GET_ALL_CHALLENGES {
+    challenges {
+      id
+      image
+      name
+      priority
+      startDate
+      endDate
+      des
+      account {
+        fullName
+        avatarUrl
+      }
+      exercises {
+        exercise_results_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
+      }
+    }
+  }
+`;
