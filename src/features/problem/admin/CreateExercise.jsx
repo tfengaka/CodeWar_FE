@@ -1,8 +1,11 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
 import MDEditor from 'components/MarkDownEdior/MDEditor';
-import { INSERT_PROBLEM, UPDATE_PROBLEM } from 'graphql/Mutation';
+import PageLoading from 'components/PageLoading';
+import { INSERT_EXERCISE_CHALLENGE, INSERT_PROBLEM, UPDATE_CHALLENGE_IMAGE, UPDATE_PROBLEM } from 'graphql/Mutation';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import { useFirebase } from 'hooks/useFirebase';
+import { useRedirect } from 'hooks/useRedirect';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,10 +18,16 @@ const initialCase = {
   time: '',
 };
 
-const CreateExercise = () => {
+const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate }) => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
   const navigate = useNavigate();
+
+  const { loading, uploadFile } = useFirebase('Challenge');
+  const { redirect } = useRedirect('challenge');
+
+  const [saveChallenge] = useMutation(INSERT_EXERCISE_CHALLENGE);
+  const [updateChallengeImage] = useMutation(UPDATE_CHALLENGE_IMAGE);
 
   const haveExerciseData = exerciseData ? true : false;
   const [input, setInput] = useState(
@@ -45,6 +54,7 @@ const CreateExercise = () => {
     setCaseData(caseData.filter((_, index) => index !== indexRemove));
   };
 
+  // handle case
   const handleChange = (e, index) => {
     const obj = {
       ...caseData[index],
@@ -62,7 +72,7 @@ const CreateExercise = () => {
     });
   };
 
-  const handleSaveExercise = () => {
+  const handleSaveExercise = async () => {
     if (!input?.topic) {
       return alert('Vui lòng nhập từ khoá');
     }
@@ -72,6 +82,47 @@ const CreateExercise = () => {
       return alert('Vui lòng nhập đầy đủ các case');
     }
     const allTags = input.topic.split(', ').join(', ');
+
+    if (isChallenge) {
+      let challengeId = null;
+
+      await saveChallenge({
+        variables: {
+          name: inputChallenge.name,
+          des: inputChallenge.des,
+          startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          level: input.level ? input.level : 1,
+          desExercise: value,
+          topic: [allTags],
+          metadata: caseData,
+        },
+        refetchQueries: [GET_ALL_EXERCISE],
+        onCompleted: (data) => {
+          challengeId = data.insert_challenges.returning[0].id;
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      });
+
+      return uploadFile(file, challengeId, file.type, (url) => {
+        updateChallengeImage({
+          variables: {
+            challengeId,
+            image: url,
+          },
+          onCompleted: () => {
+            alert('Thêm thử thách thành công');
+            redirect();
+          },
+          onError: (error) => {
+            alert(error.message);
+          },
+        });
+      });
+    }
+
     if (haveExerciseData) {
       updateExercise({
         variables: {
@@ -112,16 +163,20 @@ const CreateExercise = () => {
   return (
     <div className="container-card">
       <div className="card">
-        <h3>Tạo bài toán</h3>
-        <div className="card__item">
-          <label>Tiêu đề: </label>
-          <input
-            name="name"
-            onChange={handleChangeInput}
-            className="card__item-text card__item-input"
-            defaultValue={input.name}
-          ></input>
-        </div>
+        {!isChallenge && (
+          <>
+            <h3>Tạo bài toán</h3>
+            <div className="card__item">
+              <label>Tiêu đề: </label>
+              <input
+                name="name"
+                onChange={handleChangeInput}
+                className="card__item-text card__item-input"
+                defaultValue={input.name}
+              ></input>
+            </div>
+          </>
+        )}
         <div className="card__item wrap">
           <label>Mức: </label>
 
@@ -212,10 +267,11 @@ const CreateExercise = () => {
           </Button>
 
           <Button backgroundColor="green" onClick={handleSaveExercise}>
-            Lưu bài toán
+            {isChallenge ? 'Tạo thử thách' : 'Lưu bài toán'}
           </Button>
         </div>
       </div>
+      {loading && <PageLoading />}
     </div>
   );
 };

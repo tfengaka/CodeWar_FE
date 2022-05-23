@@ -203,3 +203,40 @@ export const UPDATE_AVATAR = gql`
     }
   }
 `;
+
+export const INSERT_EXERCISE_CHALLENGE = gql`
+  mutation INSERT_EXERCISE_CHALLENGE(
+    $name: String!
+    $des: String!
+    $startDate: timestamptz!
+    $endDate: timestamptz
+    $metadata: jsonb!
+    $topic: jsonb!
+    $desExercise: String!
+    $level: Int!
+  ) {
+    insert_challenges(
+      objects: {
+        name: $name
+        des: $des
+        startDate: $startDate
+        endDate: $endDate
+        exercises: { data: { level: $level, metadata: $metadata, name: $name, topic: $topic, des: $desExercise } }
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_CHALLENGE_IMAGE = gql`
+  mutation UPDATE_CHALLENGE_IMAGE($image: String!, $challengeId: String!) {
+    update_challenges(where: { id: { _eq: $challengeId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
+    }
+  }
+`;

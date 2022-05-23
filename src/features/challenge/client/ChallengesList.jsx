@@ -10,7 +10,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import background from '../../../assets/images/background.png';
 
-const ChallengesList = () => {
+const ChallengesList = ({ isChallengesList }) => {
   const { data, loading, error } = useQuery(GET_ALL_CHALLENGE);
   const { user } = useAuth();
 
@@ -53,9 +53,22 @@ const ChallengesList = () => {
                     to={`/problem/${challenge.exercises[0].id.substr(0, 8).toUpperCase()}`}
                     state={{ data: challenge.exercises[0] }}
                   >
-                    <Button backgroundColor="green" isDisabled={user?.id ? false : true}>
-                      Chiến Ngay
-                    </Button>
+                    {isChallengesList ? (
+                      <>
+                        <Button backgroundColor="green" isDisabled={user?.id ? false : true}>
+                          Sửa
+                        </Button>
+                        <Button backgroundColor="green" isDisabled={user?.id ? false : true}>
+                          Xóa
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button backgroundColor="green" isDisabled={user?.id ? false : true}>
+                          Chiến thôi
+                        </Button>
+                      </>
+                    )}
                   </Link>
                 </div>
               </div>
