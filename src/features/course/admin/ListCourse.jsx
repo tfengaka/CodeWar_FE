@@ -27,7 +27,6 @@ const ListCourse = () => {
                 <col width="50" />
                 <col width="120" />
                 <col width="300" />
-
                 <col width="400" />
                 <col width="100" />
               </colgroup>
@@ -64,9 +63,8 @@ const ListCourse = () => {
                 <col width="50" />
                 <col width="120" />
                 <col width="300" />
-
                 <col width="400" />
-                <col width="100" />
+                <col width="180" />
               </colgroup>
               <tbody>
                 {data?.exercises.map((item, index) => (

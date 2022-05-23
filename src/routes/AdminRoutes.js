@@ -39,7 +39,6 @@ export function AdminRoutes() {
       <Route path="course">
         <Route index element={<ListCourse />} />
         <Route path="create" element={<CreateCourse />} />
-        <Route path="update" element={<CreateCourse />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Switch>
