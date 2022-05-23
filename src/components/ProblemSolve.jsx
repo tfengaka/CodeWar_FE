@@ -36,7 +36,7 @@ const ProblemSolve = () => {
   const { data } = location.state;
   const auth = useAuth();
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
-
+  console.log(data);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);

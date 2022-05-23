@@ -155,6 +155,13 @@ export const GET_ALL_CHALLENGE = gql`
         avatarUrl
       }
       exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
         exercise_results_aggregate {
           aggregate {
             count(columns: id)
