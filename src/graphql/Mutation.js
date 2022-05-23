@@ -21,33 +21,185 @@ export const SIGN_UP = gql`
 export const SUBMIT_CODE = gql`
   mutation SUBMIT_CODE(
     $exerciseId: String!
+    $caseFailed: jsonb!
     $excuteTime: float8!
     $memory: Int!
     $point: float8!
-    $caseFailed: jsonb!
   ) {
-    insert_pratice_results(
-      objects: {
-        exerciseId: $exerciseId
+    resultExercise(
+      data: {
+        caseFailed: $caseFailed
         excuteTime: $excuteTime
+        exerciseId: $exerciseId
         memory: $memory
         point: $point
-        caseFailed: $caseFailed
+      }
+    )
+  }
+`;
+
+export const UPDATE_CONTEST = gql`
+  mutation UPDATE_CONTEST(
+    $contestId: String!
+    $name: String
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+    $status: String
+    $createdBy: String
+  ) {
+    update_contests_by_pk(
+      pk_columns: { id: $contestId }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, createdBy: $createdBy }
+    ) {
+      id
+    }
+  }
+`;
+
+export const INSERT_CONTEST = gql`
+  mutation INSERT_CONTEST(
+    $name: String!
+    $des: String!
+    $startDate: timestamptz!
+    $endDate: timestamptz!
+    $status: String!
+    $createdBy: String!
+  ) {
+    insert_contests_one(
+      object: {
+        name: $name
+        des: $des
+        endDate: $endDate
+        startDate: $startDate
+        status: $status
+        createdBy: $createdBy
       }
     ) {
-      affected_rows
+      name
+      des
     }
   }
 `;
 
 export const INSERT_PROBLEM = gql`
-  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: String!, $metadata: jsonb!) {
+  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: jsonb!, $metadata: jsonb!) {
     insert_exercises(objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata }) {
       returning {
         des
         level
         name
       }
+    }
+  }
+`;
+
+export const UPDATE_PROBLEM = gql`
+  mutation UPDATE_PROBLEM(
+    $exerciseId: String!
+    $name: String
+    $des: String
+    $level: Int
+    $topic: jsonb
+    $updatedAt: timestamptz
+    $status: String
+    $metadata: jsonb
+  ) {
+    update_exercises_by_pk(
+      pk_columns: { id: $exerciseId }
+      _set: {
+        name: $name
+        des: $des
+        level: $level
+        topic: $topic
+        updatedAt: $updatedAt
+        status: $status
+        metadata: $metadata
+      }
+    ) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_DISCUSS_REACT = gql`
+  mutation UPDATE_DISCUSS_REACT($id: String!, $discussId: String!) {
+    discussReactUpdate(data: { id: $id, discussId: $discussId })
+  }
+`;
+
+export const ADD_DISCUSS = gql`
+  mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
+    insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
+      accountId
+    }
+  }
+`;
+
+export const APPROVED_NEW_BLOG = gql`
+  mutation APPROVED_NEW_BLOG($blogID: String!, $reviewer: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true, updatedBy: $reviewer }) {
+      id
+      isApproved
+    }
+  }
+`;
+export const REMOVE_BLOG_BY_ID = gql`
+  mutation REMOVE_BLOG_BY_ID($blogID: String!) {
+    delete_blogs_by_pk(id: $blogID) {
+      id
+    }
+  }
+`;
+
+export const ADD_NEW_BLOG = gql`
+  mutation ADD_NEW_BLOG($blogContent: String!, $authorID: String, $blogTitle: String!) {
+    insert_blogs(objects: { content: $blogContent, accountId: $authorID, title: $blogTitle }) {
+      returning {
+        id
+        title
+        content
+        isApproved
+      }
+    }
+  }
+`;
+
+export const INSERT_COURSE = gql`
+  mutation INSERT_COURSE($name: String!, $des: String!) {
+    insert_courses(objects: { des: $des, name: $name }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_COURSE_IMAGE = gql`
+  mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
+    update_courses(where: { id: { _eq: $courseId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const EDIT_BLOG_BY_ID = gql`
+  mutation EDIT_BLOG_BY_ID($blogID: String!, $blogTitle: String!, $blogContent: String!) {
+    update_blogs_by_pk(
+      pk_columns: { id: $blogID }
+      _set: { title: $blogTitle, content: $blogContent, isApproved: false }
+    ) {
+      id
+    }
+  }
+`;
+export const UPDATE_AVATAR = gql`
+  mutation UPDATE_AVATAR($userID: String!, $avatarUrl: String!) {
+    update_account_by_pk(pk_columns: { id: $userID }, _set: { avatarUrl: $avatarUrl }) {
+      id
+      status
     }
   }
 `;

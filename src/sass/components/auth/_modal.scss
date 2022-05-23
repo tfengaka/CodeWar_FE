@@ -16,14 +16,14 @@
     width: 400px;
     height: auto;
     border-radius: 6px;
-    animation: fadeIn 0.2s ease-in;
   }
 
   &__header {
     position: relative;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-weight: 600;
     width: 100%;
-    padding-top: 16px;
+    padding: 16px 0 8px;
     text-align: center;
     user-select: none;
   }
@@ -49,41 +49,17 @@
     @include flex(center, center);
     flex-direction: column;
     width: 100%;
-    padding: 16px;
+    padding: 8px 16px;
 
     form {
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
       width: 100%;
+      margin-top: 16px;
     }
-
     &-control {
       margin-bottom: 16px;
-      width: 100%;
-
-      input {
-        font-size: 1.6rem;
-        background-color: #eee;
-        width: 100%;
-        padding: 8px 16px;
-        border-radius: 4px;
-        outline: none;
-        border: 2px solid transparent;
-        transition: all 0.25s ease-in-out;
-
-        &:hover {
-          background-color: #fff;
-          border-color: rgba(240, 128, 128, 0.8);
-        }
-
-        &:focus {
-          background-color: #fff;
-          border-color: lightcoral;
-          box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
-        }
-      }
-    }
-
-    &-submit {
-      // margin: 8px 0;
       width: 100%;
     }
   }
@@ -111,15 +87,5 @@
         opacity: 0.8;
       }
     }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }

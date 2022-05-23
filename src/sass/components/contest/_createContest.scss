@@ -4,50 +4,56 @@
   overflow: auto;
   white-space: nowrap;
   padding: 15px 0;
-  margin-bottom: 15px;
+  border-radius: 4px;
   .create_description {
-    .create_card {
-      h1 {
-        font-size: 20px;
-        box-shadow: $item-color 0px 2px 0px;
-        margin-bottom: 10px;
-        padding: 10px 0;
-      }
+    h1 {
+      font-size: 20px;
+      box-shadow: $item-color 0px 2px 0px;
+      margin-bottom: 10px;
+      padding: 10px 0;
+      margin: 10px 25px;
+    }
+    ul {
+      list-style: none;
+      padding: 0 40px;
       h3 {
         font-size: 15px;
       }
-      list-style: none;
-      padding: 0 40px;
-      &--input {
-        display: inline-block;
-        box-sizing: border-box;
-        border: 2px solid $item-color;
-        border-radius: 4px;
-        user-select: none;
-        margin: 20px 0;
-        width: 100%;
-        textarea {
-          padding: 10px;
+      .create_card {
+        margin-left: 10px;
+        &--input {
+          display: inline-block;
+          box-sizing: border-box;
+          border: 2px solid $item-color;
+          border-radius: 4px;
+          user-select: none;
+          margin: 20px 0;
           width: 100%;
-          height: 100px;
-          resize: none;
-          font-size: 15px;
+          textarea {
+            padding: 10px;
+            height: 100px;
+            resize: none;
+            font-size: 15px;
+            width: 100%;
+          }
+          input[type='text'] {
+            padding: 10px;
+            font-size: 15px;
+            width: 100%;
+          }
+          &:hover {
+            border: 2px solid $main-color;
+          }
         }
-        input[type='text'] {
-          padding: 10px;
-          width: 100%;
-          font-size: 15px;
+        .datetime {
+          display: grid;
+          gap: 30px;
+          grid-template-areas: 'header header';
         }
-        &:hover {
-          border: 2px solid $main-color;
-        }
-      }
-      &--button {
-        text-align: right;
-        width: 100%;
-        .btn {
-          display: inline;
-          margin-right: 10px;
+        &--button {
+          display: flex;
+          margin-bottom: 10px;
+          justify-content: flex-end;
         }
       }
     }

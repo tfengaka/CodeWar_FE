@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { getContests } from 'graphql/Queries';
-import moment from 'moment';
+import { format, parse } from 'date-fns';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
+import { UPDATE_CONTEST } from 'graphql/Mutation';
+import { Link } from 'react-router-dom';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(getContests);
@@ -11,71 +13,68 @@ const ListContest = () => {
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
   return (
-    <div className="contest">
-      <div className="contest_container">
-        <div className="contest_head">
-          <div className="contest_head_title">
-            <span>Danh sách cuộc thi</span>
+    <div style={{ padding: '16px' }}>
+      <div className="table">
+        <div className="container">
+          <div className="table_head">
+            <div className="table_head_title">
+              <span>Danh sách cuộc thi</span>
+            </div>
           </div>
-        </div>
-        <div className="contest_content">
-          <div className="contest_content_table">
-            <div className="contest_content_table_header">
-              <table className="table">
+
+          <div className="table_body">
+            <div className="table_body_heading">
+              <table>
                 <colgroup>
+                  <col width="30" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="200" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
-                  <col width="120" />
-                  <col width="100" />
-                  <col width="100" />
+                  <col width="150" />
+                  <col width="435" />
                 </colgroup>
                 <thead>
                   <tr>
-                    <th className="table_header">
+                    <th className="table_body_heading_item"></th>
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>ID</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Tiêu đề</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Nội dung</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Ngày bắt đầu</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Ngày kết thúc</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Tạo bởi</span>
                       </div>
                     </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Trạng thái</span>
                       </div>
                     </th>
-                    <th className="table_header">
-                      <div className="table_cell">
-                        <span> </span>
-                      </div>
-                    </th>
-                    <th className="table_header">
+                    <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span> </span>
                       </div>
@@ -84,20 +83,20 @@ const ListContest = () => {
                 </thead>
               </table>
             </div>
-            <div className="contest_content_table_body">
-              <table className="table">
+            <div className="table_body_content">
+              <table>
                 <colgroup>
+                  <col width="30" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="200" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="300" />
+                  <col width="250" />
+                  <col width="250" />
                   <col width="120" />
-                  <col width="120" />
-                  <col width="100" />
-                  <col width="100" />
+                  <col width="150" />
+                  <col width="330" />
                 </colgroup>
-                <tbody className="table_body">
+                <tbody>
                   {data?.contests.map((item, index) => (
                     <TableRow key={index} data={item} />
                   ))}
@@ -115,56 +114,80 @@ const TableRow = ({ data }) => {
   const { id, name, des, startDate, endDate, createdBy, status } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   const [show, setShow] = useState(false);
-  const [contestItem, setItem] = useState();
+
+  const [removeContest] = useMutation(UPDATE_CONTEST);
+
+  const handleListRemove = () => {
+    removeContest({
+      variables: { contestId: id, status: 'deleted', name, des, startDate, endDate },
+      onCompleted: () => {
+        alert('Xóa thành công');
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+      refetchQueries: [getContests],
+    });
+  };
+
   return (
-    <tr className="table">
-      <td>
+    <tr className="table_row">
+      <td className="table_body_content_item"></td>
+      <td className="table_body_content_item">
         <div className="table_cell">{displayID}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">{name}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">{des}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{moment(startDate).format('DD/MM/YYYY - HH:MM:ss')}</span>
+          <span>{format(parse(startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{moment(endDate).format('DD/MM/YYYY - HH:MM:ss')}</span>
+          <span>{format(parse(endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
         </div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">{createdBy}</div>
       </td>
-      <td>
+      <td className="table_body_content_item">
         <div className="table_cell">{status}</div>
       </td>
-      <td>
-        <div className="table_cell">
+      <td className="table_body_content_item">
+        <div className="table_cell tool">
           <Button
             backgroundColor="green"
-            className="btn"
             onClick={() => {
-              setItem(id, name, des, startDate, endDate, createdBy, status);
+              setShow(true);
             }}
           >
-            Cập nhật
+            <i className="bx bxs-edit"></i>Sửa
           </Button>
+          <Button backgroundColor="red" onClick={() => handleListRemove()}>
+            <i className="bx bxs-trash-alt"></i>Xóa
+          </Button>
+          <Link to={`${id}`}>
+            <Button backgroundColor="blue">
+              <i className="bx bx-question-mark"></i>Câu hỏi
+            </Button>
+          </Link>
         </div>
       </td>
-      <td>
-        <div className="table_cell">
-          <Button backgroundColor="red" className="btn">
-            Xóa
-          </Button>
-        </div>
-      </td>
-      <td>
-        <UpdateContest show={show} item={contestItem} onClose={() => setShow(false)} />
+      <td className="table_body_content_item">
+        <UpdateContest
+          show={show}
+          id={id}
+          name={name}
+          des={des}
+          startDatetime={startDate}
+          endDatetime={endDate}
+          onClose={() => setShow(false)}
+        />
       </td>
     </tr>
   );

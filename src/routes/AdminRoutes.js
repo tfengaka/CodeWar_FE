@@ -1,5 +1,13 @@
 import NotFound from 'components/NotFound';
-import CreateProblem from 'features/problem/admin/CreateProblem';
+import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
+import BlogDetail from 'features/blog/pages/BlogDetail';
+import CreateBlog from 'features/blog/pages/CreateBlog';
+import EditBlog from 'features/blog/pages/EditBlog';
+import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
+import CreateExercise from 'features/problem/admin/CreateExercise';
+import ListExercise from 'features/problem/admin/ListExercise';
+import CreateCourse from 'features/course/admin/CreateCourse';
+import ListCourse from 'features/course/admin/ListCourse';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/pages/CreateContest';
@@ -10,12 +18,28 @@ export function AdminRoutes() {
     <Switch>
       <Route index element={<Navigate to="/admin/problems" />} />
       <Route path="problems">
-        <Route index element={<div>Admin Problem</div>} />
-        <Route path="create" element={<CreateProblem />} />
+        <Route index element={<ListExercise />} />
+        <Route path="create" element={<CreateExercise />} />
+        <Route path="update" element={<CreateExercise />} />
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />
+        <Route path=":id" element={<ListQuestionContest />} />
+        <Route path=":id/problems/:id" element={<CreateExercise />} />
         <Route path="create" element={<CreateContest />} />
+      </Route>
+      <Route path="blog">
+        <Route index element={<BlogAdmin />} />
+        <Route path=":slug">
+          <Route index element={<BlogDetail />} />
+          <Route path="edit" element={<EditBlog />} />
+        </Route>
+        <Route path="create" element={<CreateBlog />} />
+      </Route>
+      <Route path="course">
+        <Route index element={<ListCourse />} />
+        <Route path="create" element={<CreateCourse />} />
+        <Route path="update" element={<CreateCourse />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Switch>

@@ -1,24 +1,43 @@
 import NotFound from 'components/NotFound';
-import PostCard from 'features/problem/admin/CreateProblem';
+import BlogDetail from 'features/blog/pages/BlogDetail';
+import BlogClient from 'features/blog/pages/client/BlogClient';
+import CreateBlog from 'features/blog/pages/CreateBlog';
+import CourseDetail from 'features/course/client/CourseDetail';
+import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/problem/Problem';
+import Rank from 'features/rank/Rank';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
 import ContentContest from '../features/contest/info/ContentContest';
 import Contest from '../features/contest/pages/Contest';
-import DiscussPage from '../features/discuss/pages/DiscussPage';
 
 export function ClientRoutes() {
   return (
     <Switch>
-      <Route path="/" element={<Navigate to="/problem" />} />
-      <Route path="/problem" element={<Problem />} />
-      <Route path="/problem/:id" element={<ProblemSolve />} />
-      <Route path="/discuss" element={<DiscussPage />} />
-      <Route path="/contest" element={<Contest />} />
-      <Route path="/contest/:id" element={<ContentContest />} />
-      <Route path="/rank" element={<div>Rank page</div>} />
-      <Route path="/upload" element={<div>upload page</div>} />
+      <Route path="/" element={<Navigate to="/course" />} />
+      <Route path="/course">
+        <Route index element={<CoursesList />} />
+        <Route path=":id" element={<CourseDetail />} />
+      </Route>
+      <Route path="/problem">
+        <Route index element={<Problem />} />
+        <Route path=":id" element={<ProblemSolve />} />
+      </Route>
+
+      <Route path="/contest">
+        <Route index element={<Contest />} />
+        <Route path=":id" element={<ContentContest />} />
+      </Route>
+
+      <Route path="/blog">
+        <Route index element={<BlogClient />} />
+        <Route path=":id" element={<BlogDetail />} />
+        <Route path="create" element={<CreateBlog />} />
+      </Route>
+
+      <Route path="/rank" element={<Rank />} />
+
       <Route path="*" element={<NotFound />} />
     </Switch>
   );
