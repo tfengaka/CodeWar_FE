@@ -152,19 +152,20 @@
         }
       }
     }
-    &.post {
-      background-color: #fff;
-      padding: 8px;
-      border-radius: 4px;
-      .title {
-        @include flex(center, space-between);
-        gap: 16px;
-        margin-bottom: 9px;
-        font-size: 2rem;
-        font-weight: 500;
-        input {
-          flex: 1;
-        }
+  }
+  &.post {
+    font-family: "Montserrat", sans-serif;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    .title {
+      @include flex(center, space-between);
+      gap: 16px;
+      margin-bottom: 9px;
+      font-size: 16px;
+      font-weight: 500;
+      input {
+        flex: 1;
       }
     }
   }

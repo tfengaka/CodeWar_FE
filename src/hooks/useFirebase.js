@@ -1,13 +1,13 @@
 import { storage } from 'app/firebaseConfig';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useState } from 'react';
-export const useFirebase = (category, metadata) => {
-  const metaData = {
-    contentType: metadata,
-  };
+export const useFirebase = (category) => {
   const [loading, setLoading] = useState(false);
 
-  const uploadFile = (file, fileName, callback) => {
+  const uploadFile = (file, fileName, type, callback) => {
+    const metaData = {
+      contentType: type,
+    };
     const storageRef = ref(storage, `${category}/${fileName}`);
     const uploadTask = uploadBytesResumable(storageRef, file, metaData);
 

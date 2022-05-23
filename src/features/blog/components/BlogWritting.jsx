@@ -8,15 +8,6 @@ const BlogWritting = ({ blogid, blogcontent, blogtitle, mutationHandle }) => {
   const [content, setContent] = React.useState(blogcontent || '');
   const [title, setTitle] = React.useState(blogtitle || '');
 
-  const onImageUpload = (file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (data) => {
-        resolve(data.target.result);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
   const onHandleSubmit = () => {
     const blog = { blogID: blogid, blogTitle: title, blogContent: content, authorID: user.id };
     if (window.confirm('Bạn đã chắc chắn sẽ tải lên bài viết này?')) {
@@ -38,7 +29,7 @@ const BlogWritting = ({ blogid, blogcontent, blogtitle, mutationHandle }) => {
           Tải lên
         </Button>
       </div>
-      <MDEditor style={{ height: '780px' }} value={content} onChange={setContent} onImageUpload={onImageUpload} />
+      <MDEditor style={{ height: '780px' }} value={content} onChange={setContent} />
     </section>
   );
 };

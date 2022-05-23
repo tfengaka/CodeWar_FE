@@ -28,12 +28,12 @@ export default function Navigation() {
   const avatarRef = React.useRef(null);
 
   const [updateAvatar] = useMutation(UPDATE_AVATAR);
-  const { loading, uploadFile } = useFirebase('Avatar', 'image/jpeg');
+  const { loading, uploadFile } = useFirebase('Avatar');
 
   const changeHandler = async (event) => {
     const file = event.target.files[0];
     const fileName = `${generateSubStr(auth.user.id, 8)}-${auth.user.email}`;
-    await uploadFile(file, fileName, (url) => {
+    await uploadFile(file, fileName, file.type, (url) => {
       updateAvatar({
         variables: { userID: auth.user.id, avatarUrl: url },
         refetchQueries: [GET_USER_INFO],

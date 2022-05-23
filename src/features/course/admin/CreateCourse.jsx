@@ -1,8 +1,10 @@
 import { useMutation } from '@apollo/client';
-import { uploadFileToFirebase } from 'app/uploadFIle';
 import Button from 'components/Button';
 import Helmet from 'components/Helmet';
+import PageLoading from 'components/PageLoading';
 import { INSERT_COURSE, UPDATE_COURSE_IMAGE } from 'graphql/Mutation';
+import { useFirebase } from 'hooks/useFirebase';
+import { useRedirect } from 'hooks/useRedirect';
 import React, { useState } from 'react';
 
 const CreateCourse = () => {
@@ -10,12 +12,14 @@ const CreateCourse = () => {
     name: '',
     des: '',
   });
+  const { loading, uploadFile } = useFirebase('CourseThumbnail');
+  const { redirect } = useRedirect('course');
+  const [file, setFile] = useState(null);
+  const thumbnailRef = React.useRef(null);
   const [saveCourse] = useMutation(INSERT_COURSE);
   const [updateCourseImage] = useMutation(UPDATE_COURSE_IMAGE);
-  let file = null;
 
   const handleChangeInput = (e) => {
-    // console.log(e.target);
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -23,10 +27,7 @@ const CreateCourse = () => {
   };
 
   const handleChange = (e) => {
-    file = e.target.files[0];
-    var image = document.getElementById('output');
-    const fileURL = URL.createObjectURL(file);
-    image.src = fileURL;
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async () => {
@@ -44,18 +45,21 @@ const CreateCourse = () => {
         alert(error.message);
       },
     });
-
-    await uploadFileToFirebase(file, `CourseThumbnail/${courseId}`, file.type, courseId, async (id, url) =>
+    uploadFile(file, courseId, file.type, (url) => {
       updateCourseImage({
         variables: {
-          courseId: id,
+          courseId: courseId,
           image: url,
+        },
+        onCompleted: () => {
+          alert('Thêm khóa học thành công');
+          redirect();
         },
         onError: (error) => {
           alert(error.message);
         },
-      }),
-    );
+      });
+    });
   };
 
   return (
@@ -72,10 +76,10 @@ const CreateCourse = () => {
             className="input_control"
             onChange={(e) => handleChangeInput(e)}
           />
-          <label onChange={(e) => handleChange(e)}>
-            <input id="contained-button-file" type="file" style={{ display: 'none' }} />
-            <i className="bx bx-image-add" style={{ fontSize: '6rem' }}></i>
-          </label>
+          <button onClick={() => thumbnailRef.current.click()}>
+            <input type="file" style={{ display: 'none' }} ref={thumbnailRef} onChange={(e) => handleChange(e)} />
+            <i className="bx bx-image-add" style={{ fontSize: '3rem' }}></i>
+          </button>
         </div>
         <div className="blog__content">
           <h3>Nội dung</h3>
@@ -97,21 +101,24 @@ const CreateCourse = () => {
                 backgroundColor: '#eee',
               }}
             >
-              <img
-                id="output"
-                alt=""
-                style={{
-                  width: '100%',
-                  maxWidth: '450px',
-                  height: '100%',
-                  transform: 'translateX(127px)',
-                }}
-              />
+              {file && (
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt=""
+                  style={{
+                    width: '100%',
+                    maxWidth: '450px',
+                    height: '100%',
+                    transform: 'translateX(127px)',
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
         <Button onClick={handleSubmit}>Tạo khóa học</Button>
       </section>
+      {loading && <PageLoading />}
     </Helmet>
   );
 };
