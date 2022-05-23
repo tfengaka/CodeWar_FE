@@ -31,10 +31,10 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = () => {
+const ProblemSolve = ({ isContest, exerciseContest }) => {
   const location = useLocation();
   let { data } = location.state;
-  data = data.length ? data[0] : data;
+  data = isContest ? exerciseContest : data;
   const auth = useAuth();
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
 
@@ -148,19 +148,16 @@ const ProblemSolve = () => {
                           {data.metadata[currentCase].input ? data.metadata[currentCase].input : '[]'}
                         </div>
                       </div>
-
-                      <div className="testcase_body_result_item">
-                        <span>Output</span>
-                        <div className="testcase_body_result_item_value">
-                          {resultData && resultData[currentCase].data.stdout
-                            ? resultData[currentCase].data.stdout
-                            : '[]'}
-                        </div>
-                      </div>
                       <div className="testcase_body_result_item">
                         <span>Expected</span>
                         <div className="testcase_body_result_item_value">
                           {data.metadata[currentCase].output ? data.metadata[currentCase].output : '[]'}
+                        </div>
+                      </div>
+                      <div className="testcase_body_result_item">
+                        <span>Time Limit</span>
+                        <div className="testcase_body_result_item_value">
+                          {data.metadata[currentCase].output ? data.metadata[currentCase].time : 1000}
                         </div>
                       </div>
                     </>
@@ -169,6 +166,9 @@ const ProblemSolve = () => {
                     <div className="testcase_body_result_console">
                       {resultData ? (
                         <React.Fragment>
+                          {console.log(resultData[currentCase])}
+                          <span>Time Excute: </span>
+                          {resultData[currentCase].data.time || 0} ms
                           {resultData[currentCase].data?.stdout ? (
                             <div className="testcase_body_result_item">{resultData[currentCase].data.stdout}</div>
                           ) : (
@@ -191,16 +191,20 @@ const ProblemSolve = () => {
               <Button onClick={() => runCode(data.id)} backgroundColor="green" isDisabled={!auth.isLogged}>
                 Run Code
               </Button>
-              <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
-                Submit
-              </Button>
+              {!isContest && (
+                <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
+                  Submit
+                </Button>
+              )}
             </div>
           </div>
         </div>
-        <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
-          <i className="bx bxs-message-rounded bx-md" />
-          <span>Hỏi đáp</span>
-        </div>
+        {!isContest && (
+          <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
+            <i className="bx bxs-message-rounded bx-md" />
+            <span>Hỏi đáp</span>
+          </div>
+        )}
         {showDiscuss && <Discuss exerciseId={data.id} setShowDiscuss={setShowDiscuss} />}
       </div>
     </Helmet>

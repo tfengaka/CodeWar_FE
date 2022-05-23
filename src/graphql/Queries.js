@@ -14,7 +14,9 @@ export const GET_USER_INFO = gql`
 
 export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
-    exercises(where: { _and: { challengeId: { _is_null: true }, conceptId: { _is_null: true } } }) {
+    exercises(
+      where: { _and: { contestId: { _is_null: true }, challengeId: { _is_null: true }, conceptId: { _is_null: true } } }
+    ) {
       id
       des
       name
@@ -77,6 +79,7 @@ export const GET_ALL_COURSE = gql`
       createdAt
       account {
         fullName
+        avatarUrl
       }
     }
   }

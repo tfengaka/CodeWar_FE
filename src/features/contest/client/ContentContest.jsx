@@ -20,8 +20,6 @@ const ContentContest = () => {
   if (loading) return <PageLoading />;
   if (error) return <ServerError />;
 
-  console.log(data?.contests_by_pk.exercises);
-
   return (
     <div className="content">
       <div className="content__container">
