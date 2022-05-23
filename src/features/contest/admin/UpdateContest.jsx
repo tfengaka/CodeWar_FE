@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
-import { INSERT_CONTEST, UPDATE_CONTEST } from 'graphql/Mutation';
+import { UPDATE_CONTEST } from 'graphql/Mutation';
 import { getContests } from 'graphql/Queries';
-import { useAuth } from 'hooks/useAuth';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';

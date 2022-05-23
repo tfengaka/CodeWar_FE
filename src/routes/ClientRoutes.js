@@ -8,8 +8,8 @@ import Problem from 'features/problem/Problem';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
-import ContentContest from '../features/contest/info/ContentContest';
-import Contest from '../features/contest/pages/Contest';
+import ContentContest from '../features/contest/client/ContentContest';
+import Contest from '../features/contest/client/Contest';
 import ComingSoon from 'components/ComingSoon';
 import CourseDetail from 'features/course/client/CourseDetail';
 

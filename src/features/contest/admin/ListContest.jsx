@@ -119,7 +119,7 @@ const TableRow = ({ data }) => {
 
   const handleListRemove = () => {
     removeContest({
-      variables: { contestId: id, status: 'deleted', name, des, startDate, endDate, createdBy },
+      variables: { contestId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate, createdBy },
       onCompleted: () => {
         alert('Xóa thành công');
       },

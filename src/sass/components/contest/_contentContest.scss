@@ -3,8 +3,6 @@
     background-color: $main-background;
     box-shadow: $box-shadow;
     color: $text-second-color;
-    overflow: auto;
-    white-space: nowrap;
     border-radius: 5px;
     .content__description {
       padding: 4rem;
@@ -25,10 +23,8 @@
           align-items: center;
           background-color: $main-background;
           box-shadow: $item-color 0px 0px 0px 1px;
-          padding-left: 15px;
-          padding-right: 15px;
-          padding-top: 3px;
-          padding-bottom: 3px;
+          padding: 3px 15px;
+          margin-right: 10px;
           i {
             padding-right: 3px;
           }
@@ -38,17 +34,10 @@
           margin-bottom: 2rem;
         }
         &--button {
+          display: flex;
           grid-area: button;
-          background-color: $main-color;
-          color: $text-white;
-          padding: 5px 15px;
-          border-radius: 5px;
-          margin: 10px 0px;
-          cursor: pointer;
-
-          &:hover {
-            opacity: 0.8;
-          }
+          margin: 10px;
+          justify-content: flex-end;
         }
       }
       .content__table {
@@ -57,9 +46,14 @@
           'header header header'
           'item item item';
         justify-content: space-between;
-
+        padding: 0 5px;
+        margin-right: 5px;
         &--item {
           font-weight: bold;
+        }
+        &--createBy {
+          display: flex;
+          justify-content: center;
         }
       }
     }

@@ -3,13 +3,13 @@ import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
 import EditBlog from 'features/blog/pages/EditBlog';
-import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
+import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
-import CreateContest from '../features/contest/admin/pages/CreateContest';
-import ListContest from '../features/contest/admin/pages/ListContest';
+import CreateContest from '../features/contest/admin/CreateContest';
+import ListContest from '../features/contest/admin/ListContest';
 
 export function AdminRoutes() {
   return (
