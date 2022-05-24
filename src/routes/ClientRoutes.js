@@ -19,7 +19,10 @@ export function ClientRoutes() {
       <Route path="/" element={<Navigate to="/course" />} />
       <Route path="/course">
         <Route index element={<CoursesList />} />
-        <Route path=":id" element={<CourseDetail />} />
+        <Route path=":id">
+          <Route index element={<CourseDetail />} />
+          <Route path=":id" element={<ProblemSolve />} />
+        </Route>
       </Route>
       <Route path="/problem">
         <Route index element={<Problem />} />
@@ -39,6 +42,7 @@ export function ClientRoutes() {
 
       <Route path="/challenge">
         <Route index element={<ChallengesList />} />
+        <Route path=":id" element={<ProblemSolve />} />
       </Route>
 
       <Route path="/rank" element={<Rank />} />

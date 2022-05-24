@@ -42,7 +42,7 @@ const CourseDetail = () => {
                 <Link
                   className="exercise_number"
                   key={index}
-                  to={`/problem/${exercise?.id?.substr(0, 8).toUpperCase()}`}
+                  to={`/course/${concept.id}/${exercise?.id?.substr(0, 8).toUpperCase()}`}
                   state={{ data: exercise }}
                 >
                   {index + 1}
