@@ -3,7 +3,7 @@ import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
 import EditBlog from 'features/blog/pages/EditBlog';
-import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
+import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
 import CreateCourse from 'features/course/admin/CreateCourse';
 import ListCourse from 'features/course/admin/ListCourse';
 import CreateExercise from 'features/problem/admin/CreateExercise';
