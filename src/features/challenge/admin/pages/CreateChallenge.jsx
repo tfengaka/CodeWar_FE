@@ -1,5 +1,5 @@
 import Helmet from 'components/Helmet';
-import CreateExercise from 'features/problem/admin/CreateExercise';
+import CreateExercise from 'features/exercise/admin/CreateExercise';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
