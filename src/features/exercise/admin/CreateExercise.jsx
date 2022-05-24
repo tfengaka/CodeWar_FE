@@ -83,7 +83,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
     if (isNull) {
       return alert('Vui lòng nhập đầy đủ các case');
     }
-    const allTags = input.topic.split(', ').join(', ');
+    const allTags = input.topic.split(', ');
 
     if (isChallenge) {
       let challengeId = null;
@@ -132,7 +132,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           name: input.name,
           level: input.level ? input.level : 1,
           des: value,
-          topic: [allTags],
+          topic: allTags,
           metadata: caseData,
           status: 'active',
           updatedAt: moment(),
@@ -150,7 +150,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           name: input.name,
           level: input.level ? input.level : 1,
           des: value,
-          topic: [allTags],
+          topic: allTags,
           metadata: caseData,
           contestId,
         },

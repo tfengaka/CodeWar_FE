@@ -1,5 +1,5 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
-import Discuss from 'features/problem/Discuss';
+import Discuss from 'features/exercise/Discuss';
 import { useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
