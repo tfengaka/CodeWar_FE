@@ -3,15 +3,16 @@ import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
 import EditBlog from 'features/blog/pages/EditBlog';
-import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
-import CreateExercise from 'features/problem/admin/CreateExercise';
-import ListExercise from 'features/problem/admin/ListExercise';
+import ListQuestionContest from 'features/contest/admin/pages/ListQuestionContest';
 import CreateCourse from 'features/course/admin/CreateCourse';
 import ListCourse from 'features/course/admin/ListCourse';
-import React from 'react';
+import CreateExercise from 'features/problem/admin/CreateExercise';
+import ListExercise from 'features/problem/admin/ListExercise';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/CreateContest';
 import ListContest from '../features/contest/admin/ListContest';
+import CreateChallenge from 'features/challenge/admin/pages/CreateChallenge';
+import ChallengesList from 'features/challenge/client/ChallengesList';
 
 export function AdminRoutes() {
   return (
@@ -47,6 +48,12 @@ export function AdminRoutes() {
         <Route index element={<ListCourse />} />
         <Route path="create" element={<CreateCourse />} />
         <Route path="update" element={<CreateCourse />} />
+      </Route>
+
+      <Route path="challenge">
+        <Route index element={<ChallengesList isChallengesList={true} />} />
+        <Route path="create" element={<CreateChallenge />} />
+        <Route path="update" element={<CreateChallenge />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Switch>

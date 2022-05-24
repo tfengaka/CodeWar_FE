@@ -163,3 +163,26 @@ export const GET_ALL_EXERCISE_CONTEST = gql`
     }
   }
 `;
+
+export const GET_ALL_CHALLENGE = gql`
+  query GET_ALL_CHALLENGES {
+    challenges {
+      id
+      image
+      name
+      priority
+      startDate
+      endDate
+      des
+      account {
+        fullName
+        avatarUrl
+      }
+      exercise_results_aggregate {
+        aggregate {
+          count(columns: id)
+        }
+      }
+    }
+  }
+`;
