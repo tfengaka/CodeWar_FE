@@ -24,10 +24,7 @@ const CourseDetail = () => {
         <h1>{courseData.name}</h1>
         <div className="banner_header">
           <br />
-          <img
-            src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/275368185_2158782244296225_2996082221714874021_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=IeX3_nADEU4AX9T-Bdy&tn=QwtPadnGUAAFdHtj&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT_fpuTiL894v5qlmGmOvRgCd2vL5aFFs3GlSyWqE3AX0A&oe=628E5B32"
-            alt=""
-          />
+          <img src={courseData.account.avatarUrl || '/static/defaultAvatar.jpg'} alt="" />
           <div className="banner_content">
             <h2>{courseData.account.fullName}</h2>
             <p>{courseData.des}</p>

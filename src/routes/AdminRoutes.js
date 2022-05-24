@@ -9,8 +9,8 @@ import ListCourse from 'features/course/admin/ListCourse';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
-import CreateContest from '../features/contest/admin/pages/CreateContest';
-import ListContest from '../features/contest/admin/pages/ListContest';
+import CreateContest from '../features/contest/admin/CreateContest';
+import ListContest from '../features/contest/admin/ListContest';
 import CreateChallenge from 'features/challenge/admin/pages/CreateChallenge';
 import ChallengesList from 'features/challenge/client/ChallengesList';
 
@@ -25,8 +25,15 @@ export function AdminRoutes() {
       </Route>
       <Route path="contest">
         <Route index element={<ListContest />} />
-        <Route path=":id" element={<ListQuestionContest />} />
-        <Route path=":id/problems/:id" element={<CreateExercise />} />
+        <Route path=":id">
+          <Route index element={<ListQuestionContest />} />
+          <Route path="problems/update">
+            <Route index element={<CreateExercise />} />
+          </Route>
+          <Route path="problems/create">
+            <Route index element={<CreateExercise />} />
+          </Route>
+        </Route>
         <Route path="create" element={<CreateContest />} />
       </Route>
       <Route path="blog">
