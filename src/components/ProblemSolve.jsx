@@ -31,17 +31,30 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = ({ isContest, exerciseContest }) => {
+const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeOfContest, setSourceCodeOfContest }) => {
+  const auth = useAuth();
   const location = useLocation();
   let { data } = location.state;
   data = isContest ? exerciseContest : data;
-  const auth = useAuth();
+
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
 
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
+
+  console.log(sourceCodeOfContest);
+  const handleChangeSourceCode = (value) => {
+    setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
+    if (isContest) {
+      setSourceCodeOfContest((prevSourceCode) => [
+        ...prevSourceCode.slice(0, currentExercise),
+        value,
+        ...prevSourceCode.slice(currentExercise + 1),
+      ]);
+    }
+  };
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -52,6 +65,7 @@ const ProblemSolve = ({ isContest, exerciseContest }) => {
       });
     }
   }, [monaco]);
+
   return (
     <Helmet title={data.name}>
       <div className="wrapper">
@@ -98,7 +112,8 @@ const ProblemSolve = ({ isContest, exerciseContest }) => {
               }}
               theme="dracula"
               language={language.value}
-              onChange={(value) => setSourceCode(value)}
+              value={!isContest ? null : sourceCodeOfContest[currentExercise]}
+              onChange={(value) => handleChangeSourceCode(value)}
             />
             <div className="testcase">
               <div className="testcase_header">

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
 import { INSERT_CONTEST } from 'graphql/Mutation';
-import { getContests } from 'graphql/Queries';
+import { GET_CONTEST } from 'graphql/Queries';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -36,7 +36,7 @@ const CreateContest = () => {
           alert('Tiêu đề đã tồn tại');
           console.log(error.message);
         },
-        refetchQueries: [getContests],
+        refetchQueries: [GET_CONTEST],
       });
     }
     return navigate(`/admin/contest/`);

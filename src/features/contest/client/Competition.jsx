@@ -1,31 +1,16 @@
 import Button from 'components/Button';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import ProblemSolve from '../../../components/ProblemSolve';
-import Countdown, { zeroPad } from 'react-countdown';
 
-const Competition = () => {
-  const location = useLocation();
-  let { data } = location.state;
-
+const Competition = ({ exercisesData, component: Component, ...rest }) => {
   const [currentExercise, setCurrentExercise] = React.useState(0);
-
-  const renderer = ({ hours, minutes, seconds, completed }) => {
-    if (completed) {
-      return <h3>Hết giờ</h3>;
-    }
-    return (
-      <h3>
-        {zeroPad(hours)}:{zeroPad(minutes)}:{zeroPad(seconds)}
-      </h3>
-    );
-  };
+  const [sourceCode, setSourceCode] = React.useState([]);
 
   return (
     <div className="competition">
       <div className="competition_header">
         <div className="competition_header-left">
-          {data.map((_, index) => (
+          {exercisesData.map((_, index) => (
             <Button
               key={index}
               onClick={() => setCurrentExercise(index)}
@@ -36,12 +21,18 @@ const Competition = () => {
           ))}
         </div>
         <div className="competition_header-right">
-          <Countdown date={Date.now() + 5000} renderer={renderer} />
+          <Component {...rest} />
           <Button>Nộp bài</Button>
         </div>
       </div>
       <div>
-        <ProblemSolve isContest={true} exerciseContest={data[currentExercise]} />
+        <ProblemSolve
+          isContest={true}
+          exerciseContest={exercisesData[currentExercise]}
+          currentExercise={currentExercise}
+          sourceCodeOfContest={sourceCode}
+          setSourceCodeOfContest={setSourceCode}
+        />
       </div>
     </div>
   );

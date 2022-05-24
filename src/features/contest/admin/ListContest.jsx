@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { getContests } from 'graphql/Queries';
+import { GET_CONTEST } from 'graphql/Queries';
 import { format, parse } from 'date-fns';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
@@ -8,10 +8,11 @@ import { UPDATE_CONTEST } from 'graphql/Mutation';
 import { Link } from 'react-router-dom';
 
 const ListContest = () => {
-  let { loading, error, data } = useQuery(getContests);
+  let { loading, error, data } = useQuery(GET_CONTEST);
 
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
+
   return (
     <div style={{ padding: '16px' }}>
       <div className="table">
@@ -111,7 +112,7 @@ const ListContest = () => {
 };
 
 const TableRow = ({ data }) => {
-  const { id, name, des, startDate, endDate, createdBy, status } = data;
+  const { id, name, des, startDate, endDate, account, status } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   const [show, setShow] = useState(false);
 
@@ -119,14 +120,14 @@ const TableRow = ({ data }) => {
 
   const handleListRemove = () => {
     removeContest({
-      variables: { contestId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate, createdBy },
+      variables: { contestId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate },
       onCompleted: () => {
         alert('Xóa thành công');
       },
       onError: (error) => {
         alert(error.message);
       },
-      refetchQueries: [getContests],
+      refetchQueries: [GET_CONTEST],
     });
   };
 
@@ -154,7 +155,11 @@ const TableRow = ({ data }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+          {account ? (
+            <img id="avatar-contest_list" src={account?.avatarUrl} alt="" />
+          ) : (
+            <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+          )}
         </div>
       </td>
       <td className="table_body_content_item">

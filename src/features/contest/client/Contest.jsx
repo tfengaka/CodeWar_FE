@@ -2,14 +2,14 @@ import { useQuery } from '@apollo/client';
 import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import ServerError from 'components/ServerError';
-import { getContests } from 'graphql/Queries';
+import { GET_CONTEST } from 'graphql/Queries';
 import { React, useState } from 'react';
 import ItemContest from './ItemContest';
 
 const Contest = () => {
   const [search, setSearch] = useState('');
 
-  const { loading, error, data } = useQuery(getContests);
+  const { loading, error, data } = useQuery(GET_CONTEST);
   if (loading) return <PageLoading />;
   if (error) return <ServerError />;
 

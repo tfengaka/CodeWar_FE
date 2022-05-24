@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
-import { getContests } from 'graphql/Queries';
+import { GET_CONTEST } from 'graphql/Queries';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -38,7 +38,7 @@ const UpdateContest = (props) => {
         alert('Tiêu đề đã tồn tại');
         console.log(error.message);
       },
-      refetchQueries: [getContests],
+      refetchQueries: [GET_CONTEST],
     });
   };
 

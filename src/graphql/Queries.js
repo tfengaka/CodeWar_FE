@@ -29,16 +29,19 @@ export const GET_ALL_EXERCISE = gql`
   }
 `;
 
-export const getContests = gql`
-  query getContests {
+export const GET_CONTEST = gql`
+  query GET_CONTEST {
     contests {
       id
       name
       des
       startDate
       endDate
-      createdBy
       status
+      account {
+        fullName
+        avatarUrl
+      }
     }
   }
 `;
@@ -147,6 +150,7 @@ export const GET_ALL_EXERCISE_CONTEST = gql`
   query GET_ALL_EXERCISE_CONTEST($contestId: String!) {
     contests_by_pk(id: $contestId) {
       id
+      time
       exercises {
         id
         des

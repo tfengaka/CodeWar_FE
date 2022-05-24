@@ -38,7 +38,7 @@ const ContentContest = () => {
               {item.statusStart != null ? (
                 <Link
                   to={`/contest/${conversionURL(item.name)}/competition`}
-                  state={{ data: data?.contests_by_pk.exercises }}
+                  state={{ contestData: data?.contests_by_pk }}
                 >
                   <Button>Làm bài</Button>
                 </Link>
