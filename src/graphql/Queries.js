@@ -37,6 +37,7 @@ export const GET_CONTEST = gql`
       des
       startDate
       endDate
+      time
       status
       account {
         fullName
@@ -178,19 +179,9 @@ export const GET_ALL_CHALLENGE = gql`
         fullName
         avatarUrl
       }
-      exercises {
-        id
-        des
-        name
-        topic
-        level
-        metadata
-        updatedAt
-        contestId
-        exercise_results_aggregate {
-          aggregate {
-            count(columns: id)
-          }
+      exercise_results_aggregate {
+        aggregate {
+          count(columns: id)
         }
       }
     }

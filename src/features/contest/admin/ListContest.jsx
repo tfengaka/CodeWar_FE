@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(GET_CONTEST);
@@ -33,9 +34,10 @@ const ListContest = () => {
                   <col width="300" />
                   <col width="250" />
                   <col width="250" />
+                  <col width="200" />
                   <col width="120" />
                   <col width="150" />
-                  <col width="350" />
+                  <col width="380" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -67,6 +69,11 @@ const ListContest = () => {
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
+                        <span>Thời gian làm bài</span>
+                      </div>
+                    </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
                         <span>Tạo bởi</span>
                       </div>
                     </th>
@@ -93,6 +100,7 @@ const ListContest = () => {
                   <col width="300" />
                   <col width="250" />
                   <col width="250" />
+                  <col width="200" />
                   <col width="120" />
                   <col width="150" />
                   <col width="330" />
@@ -112,7 +120,7 @@ const ListContest = () => {
 };
 
 const TableRow = ({ data }) => {
-  const { id, name, des, startDate, endDate, account, status } = data;
+  const { id, name, des, startDate, endDate, time, account, status } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   const [show, setShow] = useState(false);
 
@@ -130,6 +138,9 @@ const TableRow = ({ data }) => {
       refetchQueries: [GET_CONTEST],
     });
   };
+
+  const result = new Date(time).toISOString().slice(11, 19);
+  console.log(result);
 
   return (
     <tr className="table_row">
@@ -151,6 +162,11 @@ const TableRow = ({ data }) => {
       <td className="table_body_content_item">
         <div className="table_cell">
           <span>{format(parse(endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
+        </div>
+      </td>
+      <td className="table_body_content_item">
+        <div className="table_cell">
+          <span>{result}</span>
         </div>
       </td>
       <td className="table_body_content_item">

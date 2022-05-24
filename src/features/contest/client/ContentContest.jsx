@@ -54,7 +54,11 @@ const ContentContest = () => {
             <div>{format(parse(item.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</div>
             {/* <div>{value.day}</div> */}
             <div className="content__table--createBy">
-              <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+              {item.account ? (
+                <img id="avatar-contest_list" src={item.account?.avatarUrl} alt="" />
+              ) : (
+                <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+              )}
             </div>
           </div>
         </div>
