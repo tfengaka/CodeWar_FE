@@ -31,16 +31,30 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = () => {
-  const location = useLocation();
-  const { data } = location.state;
+const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeOfContest, setSourceCodeOfContest }) => {
   const auth = useAuth();
+  const location = useLocation();
+  let { data } = location.state;
+  data = isContest ? exerciseContest : data;
+
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
   console.log(data);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
+
+  console.log(sourceCodeOfContest);
+  const handleChangeSourceCode = (value) => {
+    setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
+    if (isContest) {
+      setSourceCodeOfContest((prevSourceCode) => [
+        ...prevSourceCode.slice(0, currentExercise),
+        value,
+        ...prevSourceCode.slice(currentExercise + 1),
+      ]);
+    }
+  };
 
   const monaco = useMonaco();
   React.useEffect(() => {
@@ -51,6 +65,7 @@ const ProblemSolve = () => {
       });
     }
   }, [monaco]);
+
   return (
     <Helmet title={data.name}>
       <div className="wrapper">
@@ -97,7 +112,8 @@ const ProblemSolve = () => {
               }}
               theme="dracula"
               language={language.value}
-              onChange={(value) => setSourceCode(value)}
+              value={!isContest ? null : sourceCodeOfContest[currentExercise]}
+              onChange={(value) => handleChangeSourceCode(value)}
             />
             <div className="testcase">
               <div className="testcase_header">
@@ -147,19 +163,16 @@ const ProblemSolve = () => {
                           {data.metadata[currentCase].input ? data.metadata[currentCase].input : '[]'}
                         </div>
                       </div>
-
-                      <div className="testcase_body_result_item">
-                        <span>Output</span>
-                        <div className="testcase_body_result_item_value">
-                          {resultData && resultData[currentCase].data.stdout
-                            ? resultData[currentCase].data.stdout
-                            : '[]'}
-                        </div>
-                      </div>
                       <div className="testcase_body_result_item">
                         <span>Expected</span>
                         <div className="testcase_body_result_item_value">
                           {data.metadata[currentCase].output ? data.metadata[currentCase].output : '[]'}
+                        </div>
+                      </div>
+                      <div className="testcase_body_result_item">
+                        <span>Time Limit</span>
+                        <div className="testcase_body_result_item_value">
+                          {data.metadata[currentCase].output ? data.metadata[currentCase].time : 1000}
                         </div>
                       </div>
                     </>
@@ -168,6 +181,9 @@ const ProblemSolve = () => {
                     <div className="testcase_body_result_console">
                       {resultData ? (
                         <React.Fragment>
+                          {console.log(resultData[currentCase])}
+                          <span>Time Excute: </span>
+                          {resultData[currentCase].data.time || 0} ms
                           {resultData[currentCase].data?.stdout ? (
                             <div className="testcase_body_result_item">{resultData[currentCase].data.stdout}</div>
                           ) : (
@@ -190,16 +206,20 @@ const ProblemSolve = () => {
               <Button onClick={() => runCode(data.id)} backgroundColor="green" isDisabled={!auth.isLogged}>
                 Run Code
               </Button>
-              <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
-                Submit
-              </Button>
+              {!isContest && (
+                <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
+                  Submit
+                </Button>
+              )}
             </div>
           </div>
         </div>
-        <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
-          <i className="bx bxs-message-rounded bx-md" />
-          <span>Hỏi đáp</span>
-        </div>
+        {!isContest && (
+          <div className="btn_popup" onClick={() => setShowDiscuss(true)}>
+            <i className="bx bxs-message-rounded bx-md" />
+            <span>Hỏi đáp</span>
+          </div>
+        )}
         {showDiscuss && <Discuss exerciseId={data.id} setShowDiscuss={setShowDiscuss} />}
       </div>
     </Helmet>

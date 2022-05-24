@@ -3,7 +3,7 @@ import Button from 'components/Button';
 import MDEditor from 'components/MarkDownEdior/MDEditor';
 import PageLoading from 'components/PageLoading';
 import { INSERT_EXERCISE_CHALLENGE, INSERT_PROBLEM, UPDATE_CHALLENGE_IMAGE, UPDATE_PROBLEM } from 'graphql/Mutation';
-import { GET_ALL_EXERCISE } from 'graphql/Queries';
+import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
 import { useFirebase } from 'hooks/useFirebase';
 import { useRedirect } from 'hooks/useRedirect';
 import moment from 'moment';
@@ -21,8 +21,10 @@ const initialCase = {
 const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate }) => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
-  const navigate = useNavigate();
+  const contestId = location.state?.contestId || null;
+  const refetchQueries = [contestId ? GET_ALL_EXERCISE_CONTEST : GET_ALL_EXERCISE];
 
+  const navigate = useNavigate();
   const { loading, uploadFile } = useFirebase('Challenge');
   const { redirect } = useRedirect('challenge');
 
@@ -134,8 +136,9 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           metadata: caseData,
           status: 'active',
           updatedAt: moment(),
+          contestId,
         },
-        refetchQueries: [GET_ALL_EXERCISE],
+        refetchQueries,
 
         onError: (err) => {
           alert(err.message);
@@ -149,15 +152,21 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           des: value,
           topic: [allTags],
           metadata: caseData,
+          contestId,
         },
-        refetchQueries: [GET_ALL_EXERCISE],
+        refetchQueries,
 
         onError: (err) => {
           alert(err.message);
         },
       });
     }
-    navigate('/admin/problems');
+
+    if (!contestId) {
+      return navigate('/admin/problems');
+    }
+
+    return navigate(`/admin/contest/${contestId}`);
   };
 
   return (
