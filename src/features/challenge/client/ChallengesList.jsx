@@ -50,7 +50,7 @@ const ChallengesList = ({ isChallengesList }) => {
                     <p>{challenge.account.fullName}</p>
                   </>
                   <Link
-                    to={`/problem/${challenge.exercises[0].id.substr(0, 8).toUpperCase()}`}
+                    to={`/challenge/${challenge.exercises[0].id.substr(0, 8).toUpperCase()}`}
                     state={{ data: challenge.exercises[0] }}
                   >
                     {isChallengesList ? (
