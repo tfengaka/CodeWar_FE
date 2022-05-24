@@ -123,6 +123,7 @@ const TableRow = ({ data }) => {
   const handleListRemove = () => {
     removeProblem({
       variables: { exerciseId: id, des, name, topic, level, updatedAt, metadata, status: 'deleted' },
+      // variables: { exerciseId: id, des, name: 'deleted'+ name, topic, level, updatedAt, metadata, status: 'deleted' },
       onCompleted: () => {
         alert('Xóa thành công');
       },

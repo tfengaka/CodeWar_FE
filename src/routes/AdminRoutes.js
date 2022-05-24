@@ -11,8 +11,8 @@ import ListExercise from 'features/problem/admin/ListExercise';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/pages/CreateContest';
 import ListContest from '../features/contest/admin/pages/ListContest';
-import CreateChallenge from 'features/challenge/admin/pages/CreateChallenge';
-import ChallengesList from 'features/challenge/client/ChallengesList';
+
+import CreateChallenge from 'features/challenge/admin/CreateChallenge';
 
 export function AdminRoutes() {
   return (
@@ -44,7 +44,7 @@ export function AdminRoutes() {
       </Route>
 
       <Route path="challenge">
-        <Route index element={<ChallengesList isChallengesList={true} />} />
+        {/* <Route index element={<ChallengesListAdmin isChallengesList={true} />} /> */}
         <Route path="create" element={<CreateChallenge />} />
         <Route path="update" element={<CreateChallenge />} />
       </Route>
