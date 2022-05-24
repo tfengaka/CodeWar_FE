@@ -46,11 +46,10 @@ export const UPDATE_CONTEST = gql`
     $startDate: timestamptz
     $endDate: timestamptz
     $status: String
-    $createdBy: String
   ) {
     update_contests_by_pk(
       pk_columns: { id: $contestId }
-      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, createdBy: $createdBy }
+      _set: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }
     ) {
       id
     }
@@ -64,18 +63,8 @@ export const INSERT_CONTEST = gql`
     $startDate: timestamptz!
     $endDate: timestamptz!
     $status: String!
-    $createdBy: String!
   ) {
-    insert_contests_one(
-      object: {
-        name: $name
-        des: $des
-        endDate: $endDate
-        startDate: $startDate
-        status: $status
-        createdBy: $createdBy
-      }
-    ) {
+    insert_contests_one(object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }) {
       name
       des
     }
@@ -83,8 +72,17 @@ export const INSERT_CONTEST = gql`
 `;
 
 export const INSERT_PROBLEM = gql`
-  mutation INSERT_PROBLEM($name: String!, $des: String!, $level: Int!, $topic: jsonb!, $metadata: jsonb!) {
-    insert_exercises(objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata }) {
+  mutation INSERT_PROBLEM(
+    $name: String!
+    $des: String!
+    $level: Int!
+    $topic: jsonb!
+    $metadata: jsonb!
+    $contestId: String
+  ) {
+    insert_exercises(
+      objects: { name: $name, des: $des, level: $level, topic: $topic, metadata: $metadata, contestId: $contestId }
+    ) {
       returning {
         des
         level
@@ -104,6 +102,7 @@ export const UPDATE_PROBLEM = gql`
     $updatedAt: timestamptz
     $status: String
     $metadata: jsonb
+    $contestId: String
   ) {
     update_exercises_by_pk(
       pk_columns: { id: $exerciseId }
@@ -115,6 +114,7 @@ export const UPDATE_PROBLEM = gql`
         updatedAt: $updatedAt
         status: $status
         metadata: $metadata
+        contestId: $contestId
       }
     ) {
       id
@@ -200,6 +200,43 @@ export const UPDATE_AVATAR = gql`
     update_account_by_pk(pk_columns: { id: $userID }, _set: { avatarUrl: $avatarUrl }) {
       id
       status
+    }
+  }
+`;
+
+export const INSERT_EXERCISE_CHALLENGE = gql`
+  mutation INSERT_EXERCISE_CHALLENGE(
+    $name: String!
+    $des: String!
+    $startDate: timestamptz!
+    $endDate: timestamptz
+    $metadata: jsonb!
+    $topic: jsonb!
+    $desExercise: String!
+    $level: Int!
+  ) {
+    insert_challenges(
+      objects: {
+        name: $name
+        des: $des
+        startDate: $startDate
+        endDate: $endDate
+        exercises: { data: { level: $level, metadata: $metadata, name: $name, topic: $topic, des: $desExercise } }
+      }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_CHALLENGE_IMAGE = gql`
+  mutation UPDATE_CHALLENGE_IMAGE($image: String!, $challengeId: String!) {
+    update_challenges(where: { id: { _eq: $challengeId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
     }
   }
 `;

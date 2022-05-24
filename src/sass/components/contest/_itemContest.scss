@@ -1,28 +1,29 @@
-.panel__body {
+.panel_body {
   grid-area: item;
   ol {
     list-style: none;
     padding: 0;
-    .body__item {
+    margin: 0;
+    li {
       background-color: $main-background;
       box-shadow: $item-color 0px 1px 0px;
       margin-bottom: 1px;
       padding: 2rem;
-      .row__flex {
+      .body_card {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         width: 100%;
-        .logo {
-          width: 8%;
-          width: 58px;
+        padding-left: 20px;
+        &--logo {
+          width: 100px;
+          height: 100%;
+          padding-right: 20px;
         }
-        .content__main {
-          width: 75%;
-          .title {
-            font-size: large;
-            font-weight: bold;
+        &--content {
+          width: 55%;
+          h3 {
             cursor: pointer;
-            user-select: none;
             &:hover {
               transition: all 0.3s ease-out;
               color: $main-color;
@@ -30,39 +31,36 @@
               border-color: $main-color;
             }
           }
-          ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            li {
-              display: flex;
-              align-items: center;
-              padding-top: 10px;
-              padding-right: 20px;
-              i {
-                margin-right: 5px;
-                color: $main-color;
-              }
-            }
+          & > p {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
-        .status {
-          width: 15%;
+        &--item {
+          width: 35%;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
           margin-right: 10px;
-          &__tag {
+          .date {
+            margin-right: 20px;
+            i {
+              margin-right: 8px;
+              color: $main-color;
+            }
+          }
+          .status {
             display: flex;
             align-items: center;
             background-color: $main-background;
             box-shadow: $item-color 0px 0px 0px 1px;
-            padding-left: 15px;
-            padding-right: 15px;
-            padding-top: 3px;
-            padding-bottom: 3px;
+            padding: 3px 15px;
+            margin-right: 15px;
             i {
-              margin-right: 5px;
+              margin-right: 8px;
             }
           }
         }

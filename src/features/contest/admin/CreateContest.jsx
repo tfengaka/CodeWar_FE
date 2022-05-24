@@ -1,49 +1,45 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
 import { INSERT_CONTEST } from 'graphql/Mutation';
-import { getContests } from 'graphql/Queries';
-import { useAuth } from 'hooks/useAuth';
+import { GET_CONTEST } from 'graphql/Queries';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const CreateContest = () => {
-  const auth = useAuth();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [inputName, setInputName] = useState('');
   const [inputDes, setInputDes] = useState('');
+  const navigate = useNavigate();
 
   const [saveContests] = useMutation(INSERT_CONTEST);
 
   const handleListAdd = () => {
-    saveContests({
-      variables: {
-        name: inputName,
-        des: inputDes,
-        startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
-        status: 'Đang diễn ra',
-        createdBy: auth.user.fullName,
-      },
-      onCompleted: () => {
-        alert('Thêm thành công');
-        handleListReset();
-      },
-      onError: (error) => {
-        alert('Tiêu đề đã tồn tại');
-        console.log(error.message);
-      },
-      refetchQueries: [getContests],
-    });
-  };
-
-  const handleListReset = () => {
-    setInputName('');
-    setInputDes('');
-    setStartDate(new Date());
-    setEndDate(new Date());
+    if (!inputName || !inputDes) {
+      return alert('Vui lòng nhập đầy đủ thông tin');
+    } else {
+      saveContests({
+        variables: {
+          name: inputName,
+          des: inputDes,
+          startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+          status: 'active',
+        },
+        // onCompleted: () => {
+        //   alert('Thêm thành công');
+        // },
+        onError: (error) => {
+          alert('Tiêu đề đã tồn tại');
+          console.log(error.message);
+        },
+        refetchQueries: [GET_CONTEST],
+      });
+    }
+    return navigate(`/admin/contest/`);
   };
 
   // const [questionList, setQuestionList] = useState([{ question: '' }]);

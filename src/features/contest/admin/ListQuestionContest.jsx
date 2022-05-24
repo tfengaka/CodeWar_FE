@@ -1,28 +1,19 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_ALL_EXERCISE } from 'graphql/Queries';
-import { Link, useLocation } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
+import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import Button from 'components/Button';
+import { UPDATE_PROBLEM } from 'graphql/Mutation';
 
 const ListQuestionContest = () => {
-  const location = useLocation();
-  const pathName = location.pathname;
-  let { loading, error, data } = useQuery(GET_ALL_EXERCISE);
+  const { id } = useParams();
 
+  let { loading, error, data } = useQuery(GET_ALL_EXERCISE_CONTEST, { variables: { contestId: id } });
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
 
-  const item = data?.exercises
-    ?.filter((b) => '/admin/contest/' + b.contestId === pathName)
-    .map(({ id, name, level, topic, updatedAt, contestId }) => ({
-      id,
-      name,
-      level,
-      topic,
-      updatedAt,
-      contestId,
-    }));
+  const exerciseList = data?.contests_by_pk?.exercises || [];
 
   return (
     <div style={{ padding: '16px' }}>
@@ -43,6 +34,7 @@ const ListQuestionContest = () => {
                   <col width="400" />
                   <col width="150" />
                   <col width="400" />
+                  <col width="200" />
                   <col width="200" />
                 </colgroup>
                 <thead>
@@ -73,6 +65,11 @@ const ListQuestionContest = () => {
                         <span>Cập nhật lúc</span>
                       </div>
                     </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Thao tác</span>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -86,16 +83,17 @@ const ListQuestionContest = () => {
                   <col width="150" />
                   <col width="400" />
                   <col width="200" />
+                  <col width="200" />
                 </colgroup>
                 <tbody>
-                  {item.map((item, index) => (
-                    <TableRow key={index} data={item} />
+                  {exerciseList?.map((item, index) => (
+                    <TableRow key={index} data={item} contestId={id} />
                   ))}
                 </tbody>
               </table>
             </div>
             <div className="table_body_button">
-              <Link to={`problems/create`}>
+              <Link to={`/admin/contest/${id}/problems/create`} state={{ contestId: id }}>
                 <Button backgroundColor="blue">
                   <i className="bx bx-plus"></i>Thêm câu hỏi
                 </Button>
@@ -108,11 +106,12 @@ const ListQuestionContest = () => {
   );
 };
 
-const TableRow = ({ data }) => {
-  const { id, name, level, topic, updatedAt } = data;
+const TableRow = ({ data, contestId }) => {
+  const { id, des, name, level, topic, updatedAt, metadata } = data;
   const displayID = id.substr(0, 8).toUpperCase();
   let levelName = '';
   let levelColor = '';
+
   switch (level) {
     case 1:
       levelName = 'Dễ';
@@ -129,6 +128,20 @@ const TableRow = ({ data }) => {
     default:
       break;
   }
+
+  const [removeProblem] = useMutation(UPDATE_PROBLEM);
+  const handleListRemove = () => {
+    removeProblem({
+      variables: { exerciseId: id, des, name, topic, level, updatedAt, metadata, status: 'deleted' },
+      onCompleted: () => {
+        alert('Xóa thành công');
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+      refetchQueries: [GET_ALL_EXERCISE_CONTEST, GET_ALL_EXERCISE],
+    });
+  };
 
   return (
     <tr className="table_row">
@@ -158,6 +171,21 @@ const TableRow = ({ data }) => {
       <td className="table_body_content_item">
         <div className="table_cell">
           <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
+        </div>
+      </td>
+      <td className="table_body_content_item">
+        <div className="table_cell actions">
+          <Link to={`/admin/contest/${contestId}/problems/update`} state={{ exerciseData: data, contestId: contestId }}>
+            <Button backgroundColor="blue">
+              <i className="bx bxs-edit"></i>
+              <span>Sửa</span>
+            </Button>
+          </Link>
+
+          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
+            <i className="bx bxs-trash"></i>
+            <span>Xóa</span>
+          </Button>
         </div>
       </td>
     </tr>
