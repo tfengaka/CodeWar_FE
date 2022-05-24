@@ -9,11 +9,10 @@ import ListCourse from 'features/course/admin/ListCourse';
 import CreateExercise from 'features/problem/admin/CreateExercise';
 import ListExercise from 'features/problem/admin/ListExercise';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
-import CreateContest from '../features/contest/admin/pages/CreateContest';
-import ListContest from '../features/contest/admin/pages/ListContest';
-
-import CreateChallenge from 'features/challenge/admin/pages/CreateChallenge';
-import ChallengesList from 'features/challenge/client/ChallengesList';
+import CreateContest from '../features/contest/admin/CreateContest';
+import ListContest from '../features/contest/admin/ListContest';
+import CreateChallenge from 'features/challenge/admin/CreateChallenge';
+import ChallengesListAdmin from 'features/challenge/admin/ChallengesListAdmin';
 
 export function AdminRoutes() {
   return (
@@ -52,7 +51,7 @@ export function AdminRoutes() {
       </Route>
 
       <Route path="challenge">
-        {/* <Route index element={<ChallengesListAdmin isChallengesList={true} />} /> */}
+        <Route index element={<ChallengesListAdmin />} />
         <Route path="create" element={<CreateChallenge />} />
         <Route path="update" element={<CreateChallenge />} />
       </Route>
