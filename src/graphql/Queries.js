@@ -178,9 +178,19 @@ export const GET_ALL_CHALLENGE = gql`
         fullName
         avatarUrl
       }
-      exercise_results_aggregate {
-        aggregate {
-          count(columns: id)
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+        contestId
+        exercise_results_aggregate {
+          aggregate {
+            count(columns: id)
+          }
         }
       }
     }
