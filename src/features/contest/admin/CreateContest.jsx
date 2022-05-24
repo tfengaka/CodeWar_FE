@@ -11,11 +11,17 @@ import { useNavigate } from 'react-router-dom';
 const CreateContest = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   const [inputName, setInputName] = useState('');
   const [inputDes, setInputDes] = useState('');
   const navigate = useNavigate();
 
   const [saveContests] = useMutation(INSERT_CONTEST);
+
+  let hms = moment(time).format('HH:mm:ss');
+  let a = hms.split(':');
+
+  let seconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
 
   const handleListAdd = () => {
     if (!inputName || !inputDes) {
@@ -28,6 +34,7 @@ const CreateContest = () => {
           startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
           endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
           status: 'active',
+          time: seconds * 1000,
         },
         // onCompleted: () => {
         //   alert('Thêm thành công');
@@ -41,25 +48,6 @@ const CreateContest = () => {
     }
     return navigate(`/admin/contest/`);
   };
-
-  // const [questionList, setQuestionList] = useState([{ question: '' }]);
-
-  // const handleQuestionChange = (e, index) => {
-  //   const { name, value } = e.target;
-  //   const list = [...questionList];
-  //   list[index][name] = value;
-  //   setQuestionList(list);
-  // };
-
-  // const handleQuestionAdd = () => {
-  //   setQuestionList([...questionList, { question: '' }]);
-  // };
-
-  // const handleQuestionRemove = (index) => {
-  //   const list = [...questionList];
-  //   list.splice(index, 1);
-  //   setQuestionList(list);
-  // };
 
   return (
     <>
@@ -93,6 +81,19 @@ const CreateContest = () => {
               </li>
               <div className="datetime">
                 <li>
+                  <h3>Thời gian làm bài</h3>
+                  <div className="create_card--input">
+                    <DatePicker
+                      selected={time}
+                      onChange={(date) => setTime(date)}
+                      showTimeSelectOnly
+                      timeInputLabel="Time:"
+                      dateFormat="HH:mm:ss"
+                      showTimeInput
+                    />
+                  </div>
+                </li>
+                <li>
                   <h3>Ngày giờ bắt đầu</h3>
                   <div className="create_card--input">
                     <DatePicker
@@ -124,36 +125,6 @@ const CreateContest = () => {
                   <Button onClick={() => handleListAdd()}>Lưu</Button>
                 </div>
               </li>
-              {/* {questionList.map((item, index) => (
-                <li key={index}>
-                  <h3>Câu hỏi</h3>
-                  <div className="create_card--input">
-                    <textarea
-                      name="question"
-                      autoComplete="off"
-                      spellCheck="false"
-                      placeholder="Câu hỏi"
-                      value={item.question}
-                      onChange={(e) => handleQuestionChange(e, index)}
-                      required
-                    ></textarea>
-                  </div>
-                  <div className="create_card--button">
-                    <Button>Chọn câu hỏi</Button>
-                    {questionList.length - 1 === index && questionList.length < 4 && (
-                      <Button backgroundColor="green" className="btn" onClick={handleQuestionAdd}>
-                        Thêm câu hỏi
-                      </Button>
-                    )}
-                    {questionList.length > 1 && (
-                      <Button backgroundColor="red" className="btn" onClick={() => handleQuestionRemove(index)}>
-                        Xóa
-                      </Button>
-                    )}
-                    <Button>Lưu</Button>
-                  </div>
-                </li>
-              ))} */}
             </div>
           </ul>
         </div>

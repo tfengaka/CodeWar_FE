@@ -6,12 +6,11 @@ import CompetitionCountDown from 'features/contest/client/CountDown';
 import ChallengesList from 'features/challenge/client/ChallengesList';
 import CourseDetail from 'features/course/client/CourseDetail';
 import CoursesList from 'features/course/client/CoursesList';
-import Problem from 'features/problem/Problem';
+import Problem from 'features/exercise/Problem';
 import Rank from 'features/rank/Rank';
 import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
-import ContentContest from '../features/contest/client/ContentContest';
 import Contest from '../features/contest/client/Contest';
 
 export function ClientRoutes() {
@@ -20,7 +19,10 @@ export function ClientRoutes() {
       <Route path="/" element={<Navigate to="/course" />} />
       <Route path="/course">
         <Route index element={<CoursesList />} />
-        <Route path=":id" element={<CourseDetail />} />
+        <Route path=":id">
+          <Route index element={<CourseDetail />} />
+          <Route path=":id" element={<ProblemSolve />} />
+        </Route>
       </Route>
       <Route path="/problem">
         <Route index element={<Problem />} />
@@ -29,10 +31,7 @@ export function ClientRoutes() {
 
       <Route path="contest">
         <Route index element={<Contest />} />
-        <Route path=":id">
-          <Route index element={<ContentContest />} />
-          <Route path="competition" element={<CompetitionCountDown />} />
-        </Route>
+        <Route path=":id/competition" element={<CompetitionCountDown />} />
       </Route>
 
       <Route path="/blog">
@@ -43,6 +42,7 @@ export function ClientRoutes() {
 
       <Route path="/challenge">
         <Route index element={<ChallengesList />} />
+        <Route path=":id" element={<ProblemSolve />} />
       </Route>
 
       <Route path="/rank" element={<Rank />} />

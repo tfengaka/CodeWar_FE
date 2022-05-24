@@ -63,8 +63,11 @@ export const INSERT_CONTEST = gql`
     $startDate: timestamptz!
     $endDate: timestamptz!
     $status: String!
+    $time: Int!
   ) {
-    insert_contests_one(object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status }) {
+    insert_contests_one(
+      object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, time: $time }
+    ) {
       name
       des
     }
@@ -103,6 +106,7 @@ export const UPDATE_PROBLEM = gql`
     $status: String
     $metadata: jsonb
     $contestId: String
+    $challengeId: String
   ) {
     update_exercises_by_pk(
       pk_columns: { id: $exerciseId }
@@ -115,6 +119,7 @@ export const UPDATE_PROBLEM = gql`
         status: $status
         metadata: $metadata
         contestId: $contestId
+        challengeId: $challengeId
       }
     ) {
       id

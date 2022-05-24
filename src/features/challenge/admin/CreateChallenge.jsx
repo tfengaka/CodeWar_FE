@@ -1,9 +1,10 @@
 import { useMutation } from '@apollo/client';
 import Helmet from 'components/Helmet';
-import CreateExercise from 'features/problem/admin/CreateExercise';
+
 import { UPDATE_CHALLENGE } from 'graphql/Mutation';
 import { GET_ALL_CHALLENGE } from 'graphql/Queries';
 import moment from 'moment';
+import CreateExercise from 'features/exercise/admin/CreateExercise';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useLocation } from 'react-router-dom';
@@ -13,7 +14,7 @@ const CreateChallenge = () => {
   const location = useLocation();
   const challengeData = location.state?.challengeData;
   const haveChallengeData = challengeData ? true : false;
-  console.log(challengeData);
+
   const [startDate, setStartDate] = useState(haveChallengeData ? new Date(challengeData.startDate) : Date.now());
   const [endDate, setEndDate] = useState(haveChallengeData ? new Date(challengeData.endDate) : Date.now());
   const [input, setInput] = useState(
@@ -34,8 +35,8 @@ const CreateChallenge = () => {
     updateChallenge({
       variables: {
         challengeId: challengeData.id,
-        name: challengeData.name,
-        des: challengeData.des,
+        name: input.name,
+        des: input.des,
         startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
         status: 'active',
@@ -153,6 +154,7 @@ const CreateChallenge = () => {
           endDate={endDate}
           haveChallengeData={haveChallengeData}
           handleChallengeUpdate={handleChallengeUpdate}
+          challengeId={challengeData?.id}
         />
       </section>
     </Helmet>

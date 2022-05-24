@@ -1,5 +1,5 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
-import Discuss from 'features/problem/Discuss';
+import Discuss from 'features/exercise/Discuss';
 import { useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -38,7 +38,6 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
   data = isContest ? exerciseContest : data;
 
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
-  console.log(data);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);

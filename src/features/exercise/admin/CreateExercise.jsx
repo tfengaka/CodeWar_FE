@@ -26,9 +26,11 @@ const CreateExercise = ({
   endDate,
   haveChallengeData,
   handleChallengeUpdate,
+  challengeId,
 }) => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
+  const challengeData = location.state?.challengeData;
   const contestId = location.state?.contestId || null;
   const refetchQueries = [contestId ? GET_ALL_EXERCISE_CONTEST : GET_ALL_EXERCISE];
 
@@ -133,6 +135,7 @@ const CreateExercise = ({
         });
       });
     }
+    console.log(haveExerciseData);
 
     if (haveExerciseData) {
       updateExercise({
@@ -146,6 +149,10 @@ const CreateExercise = ({
           status: 'active',
           updatedAt: moment(),
           contestId,
+          challengeId,
+        },
+        onCompleted: () => {
+          handleChallengeUpdate(challengeId);
         },
         refetchQueries,
 
@@ -284,7 +291,7 @@ const CreateExercise = ({
             Thêm case
           </Button>
 
-          <Button backgroundColor="green" onClick={haveChallengeData ? handleChallengeUpdate : handleSaveExercise}>
+          <Button backgroundColor="green" onClick={handleSaveExercise}>
             {isChallenge ? (haveChallengeData ? 'Lưu thử thách' : 'Tạo thử thách') : 'Lưu bài toán'}
           </Button>
         </div>

@@ -3,98 +3,79 @@ import { Link } from 'react-router-dom';
 import LogoUTC from '../../../assets/images/logo-utc.png';
 import { conversionURL } from './ConversionURL';
 import { format, parse } from 'date-fns';
+import moment from 'moment';
+import Button from 'components/Button';
 
 const ItemContest = (props) => {
-  const options = props.itemProps;
+  const contestsList = props.itemProps;
 
-  const colorStart = '#00dd55';
-  const colorEnd = '#ed4014';
   const statusStart = 'Đang diễn ra';
   const statusEnd = 'Đã kết thúc';
 
-  const itemStart = options
-    .filter((b) => {
-      const date1 = new Date(b.endDate);
-      const date2 = new Date();
-      if (date1.getTime() >= date2.getTime() && b.status !== 'deleted') {
-        return b;
-      }
-    })
-    .map(({ id, name, des, startDate, endDate }) => ({
-      id,
-      name,
-      des,
-      startDate,
-      endDate,
-      statusStart,
-      colorStart,
-    }));
+  const handleFilterTag = (items) => {
+    let topicsList = [];
 
-  const itemEnd = options
-    .filter((b) => {
-      const date1 = new Date(b.endDate);
-      const date2 = new Date();
-      if (date1.getTime() < date2.getTime() && b.status !== 'deleted') {
-        return b;
+    for (let item of items) {
+      if (!topicsList.length) {
+        topicsList = item.topic;
+        continue;
       }
-    })
-    .map(({ id, name, des, startDate, endDate }) => ({
-      id,
-      name,
-      des,
-      startDate,
-      endDate,
-      statusEnd,
-      colorEnd,
-    }));
+
+      // eslint-disable-next-line no-loop-func
+      let diff = item.topic.filter((x) => !topicsList.includes(x));
+      topicsList = [...topicsList, ...diff];
+    }
+    return topicsList;
+  };
 
   return (
     <div className="panel_body">
       <ol>
-        {itemStart.map((item) => (
+        {contestsList.map((item) => (
           <li key={item.id}>
             <div className="body_card">
               <img src={LogoUTC} alt="" className="body_card--logo" />
               <div className="body_card--content">
-                <h3>
-                  <Link to={'/contest/' + conversionURL(item.name)} state={{ item }}>
-                    {item.name}
-                  </Link>
-                </h3>
-                <p>{item.des}</p>
+                <h3>{item.name}</h3>
+                <p title={item.des}>{item.des}</p>
+                <div className="topic">
+                  {handleFilterTag(item.exercises).map((topic, index) => (
+                    <div className="topic--item" key={index}>
+                      {topic}
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="body_card--item">
                 <div className="date">
-                  <i className="bx bx-calendar"></i>
+                  <i className="bx bx-calendar bx-md"></i>
+                  {format(parse(item.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}
+                  <b>&nbsp;&nbsp;-&nbsp;&nbsp;</b>
                   {format(parse(item.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}
                 </div>
-                <div className="status">
-                  <i className="bx bxs-circle" style={{ color: item.colorStart }}></i> {item.statusStart}
-                </div>
-              </div>
-            </div>
-          </li>
-        ))}
-        {itemEnd.map((item) => (
-          <li key={item.id}>
-            <div className="body_card">
-              <img src={LogoUTC} alt="" className="body_card--logo" />
-              <div className="body_card--content">
-                <h3>
-                  <Link to={'/contest/' + conversionURL(item.name)} state={{ item }}>
-                    {item.name}
-                  </Link>
-                </h3>
-                <p>{item.des}</p>
-              </div>
-              <div className="body_card--item">
                 <div className="date">
-                  <i className="bx bx-calendar"></i>
-                  {format(parse(item.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}
+                  <i className="bx bx-user bx-md"></i>0
                 </div>
-                <div className="status">
-                  <i className="bx bxs-circle" style={{ color: item.colorEnd }}></i> {item.statusEnd}
-                </div>
+
+                {moment(item.startDate) < moment() && moment(item.endDate) > moment() ? (
+                  <div className="body_card--item_right">
+                    <div className="status">
+                      <i className="bx bxs-circle color-green"></i> {statusStart}
+                    </div>
+
+                    <Button>
+                      <Link to={`/contest/${conversionURL(item.name)}/competition`} state={{ contestId: item.id }}>
+                        Làm bài
+                      </Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="body_card--item_right">
+                    <div className="status">
+                      <i className="bx bxs-circle color-red"></i> {statusEnd}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </li>
