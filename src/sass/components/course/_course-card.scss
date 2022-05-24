@@ -46,8 +46,13 @@
       }
     }
   }
-
+  &.title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #515a6e;
+  }
   &.create {
+    position: relative;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -56,16 +61,26 @@
       border-radius: 4px;
       padding: 16px;
     }
+    input[disabled],
+    textarea[disabled] {
+      pointer-events: none;
+      user-select: none;
+    }
   }
   &_banner {
-    margin: 16px 0;
+    margin: 16px 0 8px;
+    background-color: #eee;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    &:hover {
+      background-color: #fff;
+    }
     &_img {
       position: relative;
       margin: 0 auto;
       width: 100%;
       height: 20rem;
-      border: 1px solid #eee;
-      border-radius: 4px;
       cursor: pointer;
       .handler {
         display: flex;
@@ -97,6 +112,53 @@
           height: 100%;
           object-fit: cover;
         }
+      }
+    }
+  }
+  &_desc {
+    width: 100%;
+    user-select: none;
+    textarea {
+      resize: none;
+      height: 150px;
+      margin-bottom: 8px;
+    }
+  }
+  &_topics {
+    margin-top: 16px;
+
+    .topic {
+      margin: 8px 0 16px;
+      &_title {
+        @include flex(center, center);
+        gap: 8px;
+        input {
+          flex: 1;
+        }
+        .btn {
+          width: 90px;
+        }
+      }
+    }
+    &_extends {
+      @include flex(center, center);
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      gap: 4px;
+      width: 100%;
+      margin-bottom: 16px;
+      padding: 6px;
+      border: 1.5px solid transparent;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      background-color: rgba(57, 255, 156, 0.05);
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(57, 255, 156, 0.1);
+        border-color: rgba(57, 255, 156, 0.8);
+      }
+      i {
+        font-size: 2rem;
       }
     }
   }

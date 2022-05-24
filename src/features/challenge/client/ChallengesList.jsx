@@ -15,7 +15,10 @@ const ChallengesList = ({ isChallengesList }) => {
   const { user } = useAuth();
 
   if (loading) return <PageLoading />;
-  if (error) return <ServerError />;
+  if (error) {
+    console.error(error.message);
+    return <ServerError />;
+  }
 
   return (
     <Helmet title="Thử thách">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Helmet = ({ title, children }) => {
-  document.title = title + ' - CodingWar';
+  document.title = title + ' | CodingWar';
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

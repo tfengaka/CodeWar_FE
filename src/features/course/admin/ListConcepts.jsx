@@ -1,40 +1,45 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Button from 'components/Button';
 import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import ServerError from 'components/ServerError';
-import { UPDATE_PROBLEM } from 'graphql/Mutation';
-import { GET_ALL_COURSE } from 'graphql/Queries';
+import { GET_ALL_CONCEPT_BY_COURSEID } from 'graphql/Queries';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-
-const ListCourse = () => {
-  let { loading, error, data } = useQuery(GET_ALL_COURSE);
-
+import React from 'react';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { generateSubStr } from 'utils';
+const ListConcepts = () => {
+  const { id } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { loading, error, data } = useQuery(GET_ALL_CONCEPT_BY_COURSEID, { variables: { courseId: id } });
   if (loading) return <PageLoading />;
   if (error) {
     console.error(error.message);
     return <ServerError />;
   }
   return (
-    <Helmet title="Danh sách khoá học">
+    <Helmet title={state.courseName || 'Khoá học'}>
       <div className="table">
         <div className="container">
           <div className="table_head">
+            <div className="rollback" onClick={() => navigate(-1)}>
+              <i className="bx bx-arrow-back"></i>
+              <span>Quay lại</span>
+            </div>
             <div className="table_head_title">
-              <span>Danh sách khóa học</span>
+              <span>{state.courseName}</span>
             </div>
           </div>
-
           <div className="table_body">
             <div className="table_body_heading">
               <table>
                 <colgroup>
-                  <col width="50" />
-                  <col width="120" />
-                  <col width="300" />
-                  <col width="400" />
+                  <col width="10" />
                   <col width="100" />
+                  <col />
+                  <col width="200" />
+                  <col width="300" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -57,6 +62,11 @@ const ListCourse = () => {
                         <span>Cập nhật lúc</span>
                       </div>
                     </th>
+                    <th className="table_body_heading_item">
+                      <div className="table_cell">
+                        <span>Thao Tác</span>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -64,17 +74,13 @@ const ListCourse = () => {
             <div className="table_body_content">
               <table>
                 <colgroup>
-                  <col width="50" />
-                  <col width="120" />
+                  <col width="10" />
+                  <col width="100" />
+                  <col />
+                  <col width="200" />
                   <col width="300" />
-                  <col width="400" />
-                  <col width="180" />
                 </colgroup>
-                <tbody>
-                  {data?.courses.map((item, index) => (
-                    <TableRow key={index} data={item} />
-                  ))}
-                </tbody>
+                {data && data.concepts.map((concept, index) => <Concept key={index} {...concept} />)}
               </table>
             </div>
           </div>
@@ -84,52 +90,41 @@ const ListCourse = () => {
   );
 };
 
-const TableRow = ({ data }) => {
-  const { id, name, des, level, topic, updatedAt } = data;
-  const displayID = id.substr(0, 8).toUpperCase();
-
-  const [removeCourse] = useMutation(UPDATE_PROBLEM);
-  const handleListRemove = () => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa khóa học này?')) {
-      removeCourse({
-        variables: { exerciseId: id, des, name, topic, level, updatedAt, status: 'deleted' },
-        onCompleted: () => {
-          alert('Xóa thành công');
-        },
-        onError: (error) => {
-          alert(error.message);
-        },
-        refetchQueries: [GET_ALL_COURSE],
-      });
-    }
-  };
+const Concept = ({ id, name, createdAt }) => {
   return (
     <tr className="table_row">
       <td className="table_body_content_item"></td>
       <td className="table_body_content_item">
-        <div className="table_cell">{displayID}</div>
+        <div className="table_cell">
+          <span>{`${generateSubStr(id, 8)}...`}</span>
+        </div>
       </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">{name}</div>
-      </td>
-
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
+          <span>{name}</span>
+        </div>
+      </td>
+      <td className="table_body_content_item">
+        <div className="table_cell">
+          <span>{moment(createdAt).format('DD/MM/YYYY - hh:mm')}</span>
         </div>
       </td>
       <td className="table_body_content_item">
         <div className="table_cell actions">
-          <Link to={`/admin/course/${id}`} state={{ courseName: name }}>
+          <Button backgroundColor="green" onClick={() => {}}>
+            <i className="bx bxs-book-content"></i>
+            <span>Bài tập</span>
+          </Button>
+
+          <Link to={`/admin/course/${id}/edit`}>
             <Button backgroundColor="blue">
               <i className="bx bxs-edit"></i>
-              <span>Xem</span>
+              <span>Sửa</span>
             </Button>
           </Link>
-
-          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
+          <Button backgroundColor="red" onClick={() => {}}>
             <i className="bx bxs-trash"></i>
-            <span>Xóa</span>
+            <span>Gỡ bỏ</span>
           </Button>
         </div>
       </td>
@@ -137,4 +132,4 @@ const TableRow = ({ data }) => {
   );
 };
 
-export default ListCourse;
+export default ListConcepts;

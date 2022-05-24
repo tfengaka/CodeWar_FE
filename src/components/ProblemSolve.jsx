@@ -38,13 +38,11 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
   data = isContest ? exerciseContest : data;
 
   const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
-  console.log(data);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
 
-  console.log(sourceCodeOfContest);
   const handleChangeSourceCode = (value) => {
     setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
     if (isContest) {
