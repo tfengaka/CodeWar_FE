@@ -99,9 +99,8 @@ const ChallengesListAdmin = () => {
 };
 
 const TableRow = ({ data }) => {
-  const { id, name, des, startDate, endDate, account } = data;
+  const { id, name, des, startDate, endDate, account, exercises } = data;
   const displayID = id.substr(0, 8).toUpperCase();
-  const [show, setShow] = useState(false);
 
   const [removeChallenge] = useMutation(UPDATE_CHALLENGE);
 
@@ -150,7 +149,7 @@ const TableRow = ({ data }) => {
 
       <td className="table_body_content_item">
         <div className="table_cell tool">
-          <Link to="/admin/challenge/update" state={{ exerciseData: data }}>
+          <Link to="/admin/challenge/update" state={{ exerciseData: exercises[0], challengeData: data }}>
             <Button backgroundColor="blue">
               <i className="bx bxs-edit"></i>Sửa
             </Button>

@@ -1,18 +1,55 @@
+import { useMutation } from '@apollo/client';
 import Helmet from 'components/Helmet';
 import CreateExercise from 'features/problem/admin/CreateExercise';
+import { UPDATE_CHALLENGE } from 'graphql/Mutation';
+import { GET_ALL_CHALLENGE } from 'graphql/Queries';
+import moment from 'moment';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { useLocation } from 'react-router-dom';
 
 const CreateChallenge = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [input, setInput] = useState({
-    name: '',
-    des: '',
-  });
+  const [updateChallenge] = useMutation(UPDATE_CHALLENGE);
+  const location = useLocation();
+  const challengeData = location.state?.challengeData;
+  const haveChallengeData = challengeData ? true : false;
+  console.log(challengeData);
+  const [startDate, setStartDate] = useState(haveChallengeData ? new Date(challengeData.startDate) : Date.now());
+  const [endDate, setEndDate] = useState(haveChallengeData ? new Date(challengeData.endDate) : Date.now());
+  const [input, setInput] = useState(
+    haveChallengeData
+      ? {
+          name: challengeData.name,
+          des: challengeData.des,
+          startDate,
+          endDate,
+        }
+      : {},
+  );
 
   const [file, setFile] = useState(null);
   const thumbnailRef = React.useRef(null);
+
+  const handleChallengeUpdate = () => {
+    updateChallenge({
+      variables: {
+        challengeId: challengeData.id,
+        name: challengeData.name,
+        des: challengeData.des,
+        startDate: moment(startDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+        endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
+        status: 'active',
+      },
+      onCompleted: () => {
+        alert('Cập nhật thành công');
+      },
+      onError: (error) => {
+        alert('Tiêu đề đã tồn tại');
+        console.log(error.message);
+      },
+      refetchQueries: [GET_ALL_CHALLENGE],
+    });
+  };
 
   const handleChangeInput = (e) => {
     setInput((prev) => ({
@@ -40,6 +77,7 @@ const CreateChallenge = () => {
             onChange={(e) => handleChangeInput(e)}
           />
           <button onClick={() => thumbnailRef.current.click()}>
+            {}
             <input type="file" style={{ display: 'none' }} ref={thumbnailRef} onChange={(e) => handleChange(e)} />
             <i className="bx bx-image-add" style={{ fontSize: '3rem' }}></i>
           </button>
@@ -64,9 +102,9 @@ const CreateChallenge = () => {
                 backgroundColor: '#eee',
               }}
             >
-              {file && (
+              {(file || haveChallengeData) && (
                 <img
-                  src={URL.createObjectURL(file)}
+                  src={!haveChallengeData ? URL.createObjectURL(file) : challengeData.image}
                   alt=""
                   style={{
                     width: '100%',
@@ -107,7 +145,15 @@ const CreateChallenge = () => {
             </div>
           </div>
         </div>
-        <CreateExercise isChallenge={true} inputChallenge={input} file={file} startDate={startDate} endDate={endDate} />
+        <CreateExercise
+          isChallenge={true}
+          inputChallenge={input}
+          file={file}
+          startDate={startDate}
+          endDate={endDate}
+          haveChallengeData={haveChallengeData}
+          handleChallengeUpdate={handleChallengeUpdate}
+        />
       </section>
     </Helmet>
   );

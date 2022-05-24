@@ -242,8 +242,18 @@ export const UPDATE_CHALLENGE_IMAGE = gql`
 `;
 
 export const UPDATE_CHALLENGE = gql`
-  mutation UPDATE_CHALLENGE($challengeId: String!, $name: String!, $status: String!) {
-    update_challenges(where: { id: { _eq: $challengeId } }, _set: { name: $name, status: $status }) {
+  mutation UPDATE_CHALLENGE(
+    $challengeId: String!
+    $name: String!
+    $status: String!
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+  ) {
+    update_challenges(
+      where: { id: { _eq: $challengeId } }
+      _set: { name: $name, status: $status, des: $des, startDate: $startDate, endDate: $endDate }
+    ) {
       returning {
         id
       }

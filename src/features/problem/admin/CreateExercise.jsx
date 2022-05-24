@@ -18,7 +18,15 @@ const initialCase = {
   time: '',
 };
 
-const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate }) => {
+const CreateExercise = ({
+  isChallenge,
+  file,
+  inputChallenge,
+  startDate,
+  endDate,
+  haveChallengeData,
+  handleChallengeUpdate,
+}) => {
   const location = useLocation();
   const exerciseData = location.state?.exerciseData;
   const contestId = location.state?.contestId || null;
@@ -65,6 +73,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
     setCaseData([...caseData.slice(0, index), obj, ...caseData.slice(index + 1)]);
   };
 
+  // handle input exercise
   const handleChangeInput = (e) => {
     setInput({
       ...input,
@@ -83,9 +92,9 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
     if (isNull) {
       return alert('Vui lòng nhập đầy đủ các case');
     }
-    const allTags = input.topic.split(', ').join(', ');
+    const allTags = input.topic.split(', ');
 
-    if (isChallenge) {
+    if (isChallenge && !haveChallengeData) {
       let challengeId = null;
 
       await saveChallenge({
@@ -96,7 +105,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           endDate: moment(endDate).format('YYYY-MM-DDTHH:mm:ssZ'),
           level: input.level ? input.level : 1,
           desExercise: value,
-          topic: [allTags],
+          topic: allTags,
           metadata: caseData,
         },
         refetchQueries: [GET_ALL_EXERCISE],
@@ -132,7 +141,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           name: input.name,
           level: input.level ? input.level : 1,
           des: value,
-          topic: [allTags],
+          topic: allTags,
           metadata: caseData,
           status: 'active',
           updatedAt: moment(),
@@ -150,7 +159,7 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
           name: input.name,
           level: input.level ? input.level : 1,
           des: value,
-          topic: [allTags],
+          topic: allTags,
           metadata: caseData,
           contestId,
         },
@@ -275,8 +284,8 @@ const CreateExercise = ({ isChallenge, file, inputChallenge, startDate, endDate 
             Thêm case
           </Button>
 
-          <Button backgroundColor="green" onClick={handleSaveExercise}>
-            {isChallenge ? 'Tạo thử thách' : 'Lưu bài toán'}
+          <Button backgroundColor="green" onClick={haveChallengeData ? handleChallengeUpdate : handleSaveExercise}>
+            {isChallenge ? (haveChallengeData ? 'Lưu thử thách' : 'Tạo thử thách') : 'Lưu bài toán'}
           </Button>
         </div>
       </div>
