@@ -31,7 +31,7 @@ export const GET_ALL_EXERCISE = gql`
 
 export const GET_CONTEST = gql`
   query GET_CONTEST {
-    contests {
+    contests(order_by: { endDate: desc }) {
       id
       name
       des
@@ -39,6 +39,9 @@ export const GET_CONTEST = gql`
       endDate
       time
       status
+      exercises {
+        topic
+      }
       account {
         fullName
         avatarUrl
@@ -179,9 +182,18 @@ export const GET_ALL_CHALLENGE = gql`
         fullName
         avatarUrl
       }
-      exercise_results_aggregate {
-        aggregate {
-          count(columns: id)
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+        exercise_results_aggregate {
+          aggregate {
+            count(columns: id)
+          }
         }
       }
     }

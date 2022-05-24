@@ -140,7 +140,6 @@ const TableRow = ({ data }) => {
   };
 
   const result = new Date(time).toISOString().slice(11, 19);
-  console.log(result);
 
   return (
     <tr className="table_row">
