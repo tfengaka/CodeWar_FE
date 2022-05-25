@@ -15,6 +15,7 @@ const routing = [
   { path: '/problem', display: 'Luyện Tập', icon: 'bx bxs-grid' },
   { path: '/contest', display: 'Thi Đấu', icon: 'bx bxs-trophy' },
   { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
+  { path: '/challenge', display: 'Thử thách', icon: 'bx bxs-medal' },
   { path: '/blog', display: 'Blog', icon: 'bx bxl-blogger' },
 ];
 
@@ -23,12 +24,12 @@ export default function Navigation() {
   const activeNav = routing.findIndex((e) => pathname.includes(e.path));
 
   const auth = useAuth();
+  const { loading, uploadFile } = useFirebase('Avatar');
   const [showModal, setShowModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const avatarRef = React.useRef(null);
 
   const [updateAvatar] = useMutation(UPDATE_AVATAR);
-  const { loading, uploadFile } = useFirebase('Avatar');
 
   const changeHandler = async (event) => {
     const file = event.target.files[0];

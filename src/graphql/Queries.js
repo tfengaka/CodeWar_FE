@@ -14,7 +14,9 @@ export const GET_USER_INFO = gql`
 
 export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
-    exercises(where: { _and: { challengeId: { _is_null: true }, conceptId: { _is_null: true } } }) {
+    exercises(
+      where: { _and: { contestId: { _is_null: true }, challengeId: { _is_null: true }, conceptId: { _is_null: true } } }
+    ) {
       id
       des
       name
@@ -27,16 +29,23 @@ export const GET_ALL_EXERCISE = gql`
   }
 `;
 
-export const getContests = gql`
-  query getContests {
-    contests {
+export const GET_CONTEST = gql`
+  query GET_CONTEST {
+    contests(order_by: { endDate: desc }) {
       id
       name
       des
       startDate
       endDate
-      createdBy
+      time
       status
+      exercises {
+        topic
+      }
+      account {
+        fullName
+        avatarUrl
+      }
     }
   }
 `;
@@ -71,13 +80,26 @@ export const GET_ALL_COURSE = gql`
     courses {
       id
       name
-      image
       des
+      image
       createdBy
       createdAt
       account {
         fullName
+        avatarUrl
       }
+    }
+  }
+`;
+
+export const GET_ALL_CONCEPT_BY_COURSEID = gql`
+  query GET_ALL_CONCEPT_BY_COURSEID($courseId: String!) {
+    concepts(where: { courseId: { _eq: $courseId } }) {
+      id
+      name
+      priority
+      createdAt
+      createdBy
     }
   }
 `;
@@ -98,6 +120,7 @@ export const GET_ALL_BLOG = gql`
     }
   }
 `;
+
 export const GET_BLOG_BY_ID = gql`
   query GET_BLOG_BY_ID($blogID: String!) {
     blogs_by_pk(id: $blogID) {
@@ -135,6 +158,56 @@ export const GET_ALL_CONCEPT_IN_COURSE = gql`
         metadata
         updatedAt
         contestId
+      }
+    }
+  }
+`;
+
+export const GET_ALL_EXERCISE_CONTEST = gql`
+  query GET_ALL_EXERCISE_CONTEST($contestId: String!) {
+    contests_by_pk(id: $contestId) {
+      id
+      time
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_ALL_CHALLENGE = gql`
+  query GET_ALL_CHALLENGES {
+    challenges {
+      id
+      image
+      name
+      priority
+      startDate
+      endDate
+      des
+      account {
+        fullName
+        avatarUrl
+      }
+      exercises {
+        id
+        des
+        name
+        topic
+        level
+        metadata
+        updatedAt
+        exercise_results_aggregate {
+          aggregate {
+            count(columns: id)
+          }
+        }
       }
     }
   }

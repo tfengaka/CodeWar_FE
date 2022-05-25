@@ -7,7 +7,7 @@
 @import "./components/common/notfound";
 @import "./components/common/dropdown";
 @import "./components/common/table";
-@import "./components/common/formcontrol";
+@import "./components/common/itemcontrol";
 @import "./components/common/layout";
 @import "./components/common/mdeditor";
 
@@ -19,6 +19,7 @@
 @import "./components/contest/contentContest";
 @import "./components/contest/createContest";
 @import "./components/contest/updateContest";
+@import "./components/contest/competition";
 
 @import "./components/course/course-card";
 @import "./components/problem/editor";
@@ -30,3 +31,5 @@
 @import "./components/course/course-detail";
 
 @import "./components/blog/blog";
+
+@import "./components/challenge/challenge-card";

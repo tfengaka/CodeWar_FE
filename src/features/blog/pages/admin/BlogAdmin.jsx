@@ -29,14 +29,13 @@ const BlogAdmin = () => {
             <div className="table_body_heading">
               <table>
                 <colgroup>
-                  <col width="10" />
-                  <col width="100" />
                   <col />
-                  <col width="200" />
+                  <col width="110" />
+                  <col width="370" />
                   <col width="170" />
-                  <col width="100" />
-                  <col width="200" />
-                  <col width="270" />
+                  <col width="170" />
+                  <col width="120" />
+                  <col width="295" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -68,11 +67,6 @@ const BlogAdmin = () => {
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Duyệt bởi</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
                         <span>Thao Tác</span>
                       </div>
                     </th>
@@ -83,14 +77,13 @@ const BlogAdmin = () => {
             <div className="table_body_content">
               <table>
                 <colgroup>
-                  <col width="10" />
-                  <col width="100" />
                   <col />
-                  <col width="200" />
+                  <col width="110" />
+                  <col width="370" />
                   <col width="170" />
-                  <col width="100" />
-                  <col width="200" />
-                  <col width="270" />
+                  <col width="170" />
+                  <col width="120" />
+                  <col width="295" />
                 </colgroup>
                 <tbody>{data && data.blogs.map((blog, index) => <Row key={index} {...blog} />)}</tbody>
               </table>
@@ -149,7 +142,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }
       <td className="table_body_content_item">
         <div className="table_cell">
           <Link to={`/admin/blog/${generateSubStr(id, 8)}`} state={{ id }}>
-            {title.length > 170 ? <span>{`${generateSubStr(title, 170)}...`}</span> : <span>{title}</span>}
+            {title.length > 150 ? <span>{`${generateSubStr(title, 150)}...`}</span> : <span>{title}</span>}
           </Link>
         </div>
       </td>
@@ -174,11 +167,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }
           </div>
         </div>
       </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          <span>{`${isApproved ? (updatedBy ? updatedBy : 'None') : 'Đang chờ duyệt'}`}</span>
-        </div>
-      </td>
+
       <td className="table_body_content_item">
         <div className="table_cell actions">
           {!isApproved && (
@@ -195,7 +184,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }
           </Link>
           <Button backgroundColor="red" onClick={() => handleRemoveBlog()}>
             <i className="bx bxs-trash"></i>
-            <span>Gỡ</span>
+            <span>Gỡ bỏ</span>
           </Button>
         </div>
       </td>

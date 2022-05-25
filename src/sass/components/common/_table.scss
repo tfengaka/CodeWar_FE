@@ -22,6 +22,8 @@
     border-color: inherit;
   }
   &_head {
+    @include flex(center, center);
+    position: relative;
     border-bottom: 1px solid #e8eaec;
     border-bottom-width: 0;
     padding: 14px 16px;
@@ -33,7 +35,7 @@
     }
   }
   &_body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-weight: 500;
     color: #515a6e;
@@ -53,7 +55,7 @@
       }
     }
     &_content {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       font-weight: 500;
       font-size: 14px;
       color: #515a6e;

@@ -56,6 +56,20 @@ const sideBarOptions = [
       },
     ],
   },
+
+  {
+    title: 'Thử thách',
+    children: [
+      {
+        name: 'Danh sách Thử thách',
+        path: '/admin/challenge',
+      },
+      {
+        name: 'Tạo mới Thử thách',
+        path: '/admin/challenge/create',
+      },
+    ],
+  },
 ];
 
 const SideBar = () => {

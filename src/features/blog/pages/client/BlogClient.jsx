@@ -9,7 +9,10 @@ import React from 'react';
 const BlogClient = () => {
   const { loading, error, data } = useQuery(GET_ALL_BLOG);
   if (loading) return <PageLoading />;
-  if (error) return <ServerError />;
+  if (error) {
+    console.log(error.message)
+    return <ServerError/>
+  }
 
   const acceptedBlogs = data.blogs.filter((blog) => blog.isApproved);
   return (
