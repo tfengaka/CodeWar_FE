@@ -7,10 +7,12 @@
     font-size: 15px;
     padding: 70px 0px;
     text-align: center;
+    &-container {
+      @include flex(center, center);
+      flex-direction: column;
+    }
   }
-  &__header-btn {
-    transform: translateX(-50%, -50%);
-  }
+
   &__header-img {
     width: 100%;
     object-fit: cover;
@@ -29,7 +31,7 @@
     font-size: 42px;
     font-weight: 700;
     line-height: 52.92px;
-    margin: 0px 0px 80px;
+    margin: 0px 0px 60px;
     text-align: center;
   }
   &__info {
@@ -105,6 +107,7 @@
     text-align: center;
     width: 100%;
     max-width: 438px;
+    cursor: pointer;
   }
   &__step-img {
     background-color: #ffffff;
@@ -152,6 +155,7 @@
   }
 
   &__footer {
+    background-color: #d6d6d6;
     color: #1e266d;
     font-size: 14px;
     line-height: 19px;
@@ -195,12 +199,19 @@
 
     &__item {
       color: #1e266d;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 19px;
-      margin: 0px 0px 35px;
-      padding: 0px 15px;
+      margin: 20px;
+
       width: 100%;
       max-width: 170px;
+    }
+
+    &__select {
+      color: #1e266d;
+      font-size: 14px;
+      line-height: 19px;
+      margin: 10px 0;
     }
   }
 }

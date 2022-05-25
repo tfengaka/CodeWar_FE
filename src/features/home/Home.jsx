@@ -14,9 +14,11 @@ const Home = () => {
       <header className="home__header">
         <div className="home__header-banner">
           <div className="home__header-container">
-            <h2>Hãy bắt đầu lập trình cùng chúng tôi</h2>
-            <h4>Đăng ký và tham gia cộng đồng nhà phát triển tốt nhất!</h4>
-            <button className="home__header-button">Hãy bắt đầu ngay</button>
+            <h1>Hãy bắt đầu lập trình cùng chúng tôi</h1>
+            <h3>Đăng ký và tham gia cộng đồng nhà phát triển tốt nhất!</h3>
+            <Link to="/course">
+              <Button size="lg">Hãy bắt đầu ngay</Button>
+            </Link>
           </div>
         </div>
       </header>
@@ -53,33 +55,40 @@ const Home = () => {
         <div className="home__roadmap">
           <h2 className="home__title-roadmap">Lộ trình để trở thành lập trình viên</h2>
           <div className="home__step-list">
-            <div className="home__step-tiem">
-              <div className="home__step-img">
-                <img src={LearnCode} alt="" />
+            <Link to="/course">
+              <div className="home__step-tiem">
+                <div className="home__step-img">
+                  <img src={LearnCode} alt="" />
+                </div>
+                <div className="home__step-title">Học tập</div>
+                <div className="home__step-des">
+                  Bắt đầu học với một loạt các khóa học từ cơ bản đến nâng cao do các thầy cô tạo ra.
+                </div>
               </div>
-              <div className="home__step-title">Học tập</div>
-              <div className="home__step-des">
-                Bắt đầu học với một loạt các khóa học từ cơ bản đến nâng cao do các thầy cô tạo ra.
+            </Link>
+
+            <Link to="/problem">
+              <div className="home__step-tiem">
+                <div className="home__step-img">
+                  <img src={ExerciseCode} alt="" />
+                </div>
+                <div className="home__step-title">Luyện tập</div>
+                <div className="home__step-des">
+                  Nâng cao kỹ năng lập trình của bạn mỗi ngày với thư viện hơn 1000 thử thách của chúng tôi.
+                </div>
               </div>
-            </div>
-            <div className="home__step-tiem">
-              <div className="home__step-img">
-                <img src={ExerciseCode} alt="" />
+            </Link>
+            <Link to="/contest">
+              <div className="home__step-tiem">
+                <div className="home__step-img">
+                  <img src={ContestCode} alt="" />
+                </div>
+                <div className="home__step-title">Thi đấu</div>
+                <div className="home__step-des">
+                  Tham gia vào các cuộc thi để kiểm tra tính đam mê trong bạn và cải thiện kỹ năng viết mã của bạn.
+                </div>
               </div>
-              <div className="home__step-title">Luyện tập</div>
-              <div className="home__step-des">
-                Nâng cao kỹ năng lập trình của bạn mỗi ngày với thư viện hơn 1000 thử thách của chúng tôi.
-              </div>
-            </div>
-            <div className="home__step-tiem">
-              <div className="home__step-img">
-                <img src={ContestCode} alt="" />
-              </div>
-              <div className="home__step-title">Thi đấu</div>
-              <div className="home__step-des">
-                Tham gia vào các cuộc thi để kiểm tra tính đam mê trong bạn và cải thiện kỹ năng viết mã của bạn.
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </main>
