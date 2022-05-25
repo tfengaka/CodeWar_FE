@@ -7,12 +7,12 @@ import CompetitionCountDown from 'features/contest/client/CountDown';
 import CourseDetail from 'features/course/client/CourseDetail';
 import CoursesList from 'features/course/client/CoursesList';
 import Problem from 'features/exercise/Problem';
+import Home from 'features/home/Home';
 import Rank from 'features/rank/Rank';
 import React from 'react';
-import { Navigate, Route, Routes as Switch } from 'react-router-dom';
+import { Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
 import Contest from '../features/contest/client/Contest';
-import Home from 'features/home/Home';
 
 export function ClientRoutes() {
   return (

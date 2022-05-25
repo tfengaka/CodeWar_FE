@@ -5,8 +5,8 @@ import ServerError from 'components/ServerError';
 import { GET_CONCEPT_BY_ID } from 'graphql/Queries';
 import moment from 'moment';
 import React from 'react';
-import { generateSubStr } from 'utils';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { generateSubStr } from 'utils';
 const ConceptDetail = () => {
   const navigate = useNavigate();
   const { conceptID } = useParams();
@@ -133,7 +133,7 @@ const ConceptDetail = () => {
             </div>
           </div>
           <div className="concept_exercises_add">
-            <Link to={`${pathname}/problems/create`}>
+            <Link to={`${pathname}/problems/create`} state={{ conceptID: conceptID, conceptName: name }}>
               <Button size="full" backgroundColor="green">
                 <i className="bx bx-plus"></i>
                 Thêm bài tập
@@ -192,7 +192,7 @@ const Exercise = ({ id, name, level, updateAt, isEditing }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell actions">
-          <Button backgroundColor="blue">
+          <Button backgroundColor="blue" isDisabled={true}>
             <i className="bx bx-low-vision"></i>
             <span>Xem</span>
           </Button>

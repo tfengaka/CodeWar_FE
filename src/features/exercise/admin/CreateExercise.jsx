@@ -31,7 +31,6 @@ const CreateExercise = ({
 }) => {
   const { state } = useLocation();
   const exerciseData = state?.exerciseData;
-  const conceptID = state?.conceptID;
   const contestId = state?.contestId || null;
   const refetchQueries = [contestId ? GET_ALL_EXERCISE_CONTEST : GET_ALL_EXERCISE];
 
