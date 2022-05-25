@@ -55,6 +55,7 @@ export const GET_ALL_DISCUSSES = gql`
     discusses(where: { exerciseId: { _eq: $exerciseId } }) {
       account {
         fullName
+        avatarUrl
       }
       discuss_reacts_aggregate {
         aggregate {

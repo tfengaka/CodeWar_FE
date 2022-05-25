@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_CONTEST } from 'graphql/Queries';
+import { GET_ALL_CHALLENGE } from 'graphql/Queries';
 import { format, parse } from 'date-fns';
 import Button from 'components/Button';
-import UpdateContest from './UpdateContest';
-import { UPDATE_CONTEST } from 'graphql/Mutation';
+import { UPDATE_CHALLENGE } from 'graphql/Mutation';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import Helmet from 'components/Helmet';
 
-const ListContest = () => {
-  let { loading, error, data } = useQuery(GET_CONTEST);
+const ChallengesListAdmin = () => {
+  let { loading, error, data } = useQuery(GET_ALL_CHALLENGE);
 
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
@@ -21,7 +18,7 @@ const ListContest = () => {
         <div className="container">
           <div className="table_head">
             <div className="table_head_title">
-              <span>Danh sách cuộc thi</span>
+              <span>Danh sách thử thách</span>
             </div>
           </div>
 
@@ -31,14 +28,11 @@ const ListContest = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
+                  <col width="350" />
                   <col width="150" />
-                  <col width="300" />
-                  <col width="250" />
-                  <col width="250" />
-                  <col width="200" />
+                  <col width="150" />
                   <col width="120" />
-                  <col width="150" />
-                  <col width="380" />
+                  <col width="140" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -53,11 +47,7 @@ const ListContest = () => {
                         <span>Tiêu đề</span>
                       </div>
                     </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Nội dung</span>
-                      </div>
-                    </th>
+
                     <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span>Ngày bắt đầu</span>
@@ -70,19 +60,10 @@ const ListContest = () => {
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Thời gian làm bài</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
                         <span>Tạo bởi</span>
                       </div>
                     </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
-                        <span>Trạng thái</span>
-                      </div>
-                    </th>
+
                     <th className="table_body_heading_item">
                       <div className="table_cell">
                         <span> </span>
@@ -97,17 +78,14 @@ const ListContest = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
+                  <col width="350" />
                   <col width="150" />
-                  <col width="300" />
-                  <col width="250" />
-                  <col width="250" />
-                  <col width="200" />
+                  <col width="150" />
                   <col width="120" />
-                  <col width="150" />
-                  <col width="330" />
+                  <col width="140" />
                 </colgroup>
                 <tbody>
-                  {data?.contests.map((item, index) => (
+                  {data?.challenges.map((item, index) => (
                     <TableRow key={index} data={item} />
                   ))}
                 </tbody>
@@ -121,26 +99,23 @@ const ListContest = () => {
 };
 
 const TableRow = ({ data }) => {
-  const { id, name, des, startDate, endDate, time, account, status } = data;
+  const { id, name, des, startDate, endDate, account, exercises } = data;
   const displayID = id.substr(0, 8).toUpperCase();
-  const [show, setShow] = useState(false);
 
-  const [removeContest] = useMutation(UPDATE_CONTEST);
+  const [removeChallenge] = useMutation(UPDATE_CHALLENGE);
 
   const handleListRemove = () => {
-    removeContest({
-      variables: { contestId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate },
+    removeChallenge({
+      variables: { challengeId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate },
       onCompleted: () => {
         alert('Xóa thành công');
       },
       onError: (error) => {
         alert(error.message);
       },
-      refetchQueries: [GET_CONTEST],
+      refetchQueries: [GET_ALL_CHALLENGE],
     });
   };
-
-  const result = new Date(time).toISOString().slice(11, 19);
 
   return (
     <tr className="table_row">
@@ -151,9 +126,7 @@ const TableRow = ({ data }) => {
       <td className="table_body_content_item">
         <div className="table_cell">{name}</div>
       </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">{des}</div>
-      </td>
+
       <td className="table_body_content_item">
         <div className="table_cell">
           <span>{format(parse(startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
@@ -166,11 +139,6 @@ const TableRow = ({ data }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{result}</span>
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
           {account ? (
             <img id="avatar-contest_list" src={account?.avatarUrl} alt="" />
           ) : (
@@ -178,34 +146,21 @@ const TableRow = ({ data }) => {
           )}
         </div>
       </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">{status}</div>
-      </td>
+
       <td className="table_body_content_item">
         <div className="table_cell tool">
-          <Button
-            backgroundColor="green"
-            onClick={() => {
-              setShow(true);
-            }}
-          >
-            <i className="bx bxs-edit"></i>Sửa
-          </Button>
+          <Link to="/admin/challenge/update" state={{ exerciseData: exercises[0], challengeData: data }}>
+            <Button backgroundColor="blue">
+              <i className="bx bxs-edit"></i>Sửa
+            </Button>
+          </Link>
           <Button backgroundColor="red" onClick={() => handleListRemove()}>
             <i className="bx bxs-trash-alt"></i>Xóa
           </Button>
-          <Link to={`${id}`} state={{ contestId: id }}>
-            <Button backgroundColor="blue">
-              <i className="bx bx-question-mark"></i>Câu hỏi
-            </Button>
-          </Link>
         </div>
-      </td>
-      <td className="table_body_content_item">
-        <UpdateContest show={show} data={{ id, name, des, startDate, endDate }} onClose={() => setShow(false)} />
       </td>
     </tr>
   );
 };
 
-export default ListContest;
+export default ChallengesListAdmin;

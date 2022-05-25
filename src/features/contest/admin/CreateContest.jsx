@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import Helmet from 'components/Helmet';
 
 const CreateContest = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -50,7 +51,7 @@ const CreateContest = () => {
   };
 
   return (
-    <>
+    <Helmet title="Tạo cuộc thi">
       <div className="create_container">
         <div className="create_description">
           <h1>Tạo cuộc thi</h1>
@@ -129,7 +130,7 @@ const CreateContest = () => {
           </ul>
         </div>
       </div>
-    </>
+    </Helmet>
   );
 };
 

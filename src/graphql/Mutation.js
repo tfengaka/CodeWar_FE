@@ -106,6 +106,7 @@ export const UPDATE_PROBLEM = gql`
     $status: String
     $metadata: jsonb
     $contestId: String
+    $challengeId: String
   ) {
     update_exercises_by_pk(
       pk_columns: { id: $exerciseId }
@@ -118,6 +119,7 @@ export const UPDATE_PROBLEM = gql`
         status: $status
         metadata: $metadata
         contestId: $contestId
+        challengeId: $challengeId
       }
     ) {
       id
@@ -260,6 +262,26 @@ export const INSERT_CONTEST_RESULT = gql`
   mutation INSERT_CONTEST_RESULT($contestId: String!, $exerciseId: String!, $point: jsonb!, $completionTime: Int!) {
     insert_contest_results(
       objects: { contestId: $contestId, exerciseId: $exerciseId, point: $point, completionTime: $completionTime }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_CHALLENGE = gql`
+  mutation UPDATE_CHALLENGE(
+    $challengeId: String!
+    $name: String!
+    $status: String!
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+  ) {
+    update_challenges(
+      where: { id: { _eq: $challengeId } }
+      _set: { name: $name, status: $status, des: $des, startDate: $startDate, endDate: $endDate }
     ) {
       returning {
         id
