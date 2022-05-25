@@ -14,11 +14,25 @@ export const GET_USER_INFO = gql`
 export const GET_USER_PROCESS_BY_ID = gql`
   query GET_USER_PROCESS_BY_ID($userID: String!) {
     account_by_pk(id: $userID) {
-      contest_results {
-        contestId
+      contest_results_aggregate(distinct_on: [createdBy, contestId]) {
+        aggregate {
+          count
+        }
       }
-      exercise_results {
-        exerciseId
+      exercise_results_aggregate(where: { exercise: { conceptId: { _is_null: false } } }) {
+        aggregate {
+          count(columns: exerciseId, distinct: true)
+        }
+      }
+    }
+    contests_aggregate {
+      aggregate {
+        count
+      }
+    }
+    exercises_aggregate(where: { concept: { id: { _is_null: false } } }) {
+      aggregate {
+        count
       }
     }
   }
