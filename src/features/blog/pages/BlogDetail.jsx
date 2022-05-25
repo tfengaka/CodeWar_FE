@@ -33,7 +33,7 @@ const BlogDetail = () => {
         <div className="container">
           <BlogReview adminPage={isAdminPage} {...currentBlog} />
           <div className="blog_others">
-            <h3>Bài viết cùng tác giả</h3>
+            <h3>Bài viết liên quan</h3>
             <div className="divider"></div>
             <ul className="blog_others_list">
               {otherBlogs.map((item, index) => (
