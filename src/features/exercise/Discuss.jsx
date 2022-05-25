@@ -75,15 +75,16 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
         {data.discusses.map((discuss, index) => (
           <div className="discuss_body" key={index}>
             <div className="discuss_body-avatar">
-              <i className="bx bx-user bx-lg"></i>
+              {discuss.account.avatarUrl ? (
+                <img id="avatar-contest_list" src={discuss.account.avatarUrl} alt="" />
+              ) : (
+                <i className="bx bx-user bx-lg"></i>
+              )}
             </div>
             <div className="discuss_body-item">
               <div className="discuss_body-item_header">
                 <h3>{discuss.account.fullName}</h3>
                 <p>{discuss.content}</p>
-              </div>
-              <div className="discuss_body-item_footer">
-                <p>{moment(discuss.createdAt).format('DD/MM/YYYY - HH:MM:ss')}</p>
                 <div className="react">
                   <i
                     className="bx bxs-like bx-md"
@@ -100,8 +101,11 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
                     }
                   ></i>
                   <p>{discuss.discuss_reacts_aggregate.aggregate.count || 0}</p>
-                  <p>Phản hồi</p>
                 </div>
+              </div>
+              <div className="discuss_body-item_footer">
+                <p className="date">{moment(discuss.createdAt).format('DD/MM/YYYY - HH:MM:ss')}</p>
+                <h4>Phản hồi</h4>
               </div>
             </div>
           </div>
@@ -110,7 +114,11 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
       <div className="discuss_footer">
         <div className="discuss_comment">
           <div className="discuss_comment-avatar">
-            <i className="bx bx-user bx-lg"></i>
+            {auth.user.avatarUrl ? (
+              <img id="avatar-contest_list" src={auth.user.avatarUrl} alt="" />
+            ) : (
+              <i className="bx bx-user bx-lg"></i>
+            )}
           </div>
           <div className="discuss_comment-body">
             <textarea
