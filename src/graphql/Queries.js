@@ -39,12 +39,21 @@ export const GET_CONTEST = gql`
       endDate
       time
       status
+      logoUrl
       exercises {
         topic
       }
       account {
         fullName
         avatarUrl
+      }
+      contest_results_aggregate {
+        aggregate {
+          count(columns: createdBy, distinct: true)
+        }
+      }
+      contest_results(distinct_on: createdBy) {
+        createdBy
       }
     }
   }
