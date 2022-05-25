@@ -46,6 +46,14 @@ export const GET_CONTEST = gql`
         fullName
         avatarUrl
       }
+      contest_results_aggregate {
+        aggregate {
+          count(columns: createdBy, distinct: true)
+        }
+      }
+      contest_results(distinct_on: createdBy) {
+        createdBy
+      }
     }
   }
 `;
