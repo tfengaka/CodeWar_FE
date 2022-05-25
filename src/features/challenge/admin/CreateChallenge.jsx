@@ -64,11 +64,11 @@ const CreateChallenge = () => {
   };
 
   return (
-    <Helmet title="Viết blog">
-      <section className="blog post">
-        <h3 className="blog__header">Tạo thử thách</h3>
-        <h3 className="blog__label">Tiêu đề</h3>
-        <div className="title">
+    <Helmet title="Tạo Thử thách">
+      <section className="challenge-admin post">
+        <h3 className="challenge-admin__header">Tạo thử thách</h3>
+        <h3 className="challenge-admin__label">Tiêu đề</h3>
+        <div className="challenge-admin__title">
           <input
             value={input.name}
             name="name"
@@ -83,9 +83,9 @@ const CreateChallenge = () => {
             <i className="bx bx-image-add" style={{ fontSize: '3rem' }}></i>
           </button>
         </div>
-        <div className="blog__content">
+        <div className="challenge-admin__content">
           <h3>Nội dung</h3>
-          <div className="blog__content__input">
+          <div className="challenge-admin__content__input">
             <textarea
               name="des"
               value={input.des}
@@ -97,7 +97,7 @@ const CreateChallenge = () => {
             <div
               style={{
                 width: '100%',
-                maxWidth: '770px',
+                maxWidth: '760px',
                 padding: '40px',
                 height: '615px',
                 backgroundColor: '#eee',
