@@ -1,8 +1,9 @@
+import { useRedirect } from 'hooks/useRedirect';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Button from './Button';
 
 function NotFound() {
+  const { redirect } = useRedirect('');
   return (
     <div className="notfound">
       <div className="container">
@@ -14,8 +15,8 @@ function NotFound() {
           </p>
           <img src="/static/illustration_404.svg" alt="" />
         </div>
-        <Button size="lg">
-          <Link to="/">Go To Home</Link>
+        <Button size="lg" onClick={() => redirect()}>
+          Go to Home
         </Button>
       </div>
     </div>

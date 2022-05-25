@@ -5,6 +5,7 @@ import CreateBlog from 'features/blog/pages/CreateBlog';
 import EditBlog from 'features/blog/pages/EditBlog';
 import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
 import CreateCourse from 'features/course/admin/CreateCourse';
+import ListConcepts from 'features/course/admin/ListConcepts';
 import ListCourse from 'features/course/admin/ListCourse';
 import CreateExercise from 'features/exercise/admin/CreateExercise';
 import ListExercise from 'features/exercise/admin/ListExercise';
@@ -46,8 +47,11 @@ export function AdminRoutes() {
       </Route>
       <Route path="course">
         <Route index element={<ListCourse />} />
+        <Route path=":id">
+          <Route index element={<ListConcepts />} />
+          <Route path="edit" element={<CreateCourse />} />
+        </Route>
         <Route path="create" element={<CreateCourse />} />
-        <Route path="update" element={<CreateCourse />} />
       </Route>
 
       <Route path="challenge">

@@ -3,7 +3,7 @@ import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import ServerError from 'components/ServerError';
 import { EDIT_BLOG_BY_ID } from 'graphql/Mutation';
-import { GET_BLOG_BY_ID } from 'graphql/Queries';
+import { GET_ALL_BLOG, GET_BLOG_BY_ID } from 'graphql/Queries';
 import { useRedirect } from 'hooks/useRedirect';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -13,6 +13,7 @@ const EditBlog = () => {
   const { redirect } = useRedirect('blog');
   const { state } = useLocation();
   const [editBlog] = useMutation(EDIT_BLOG_BY_ID, {
+    refetchQueries: [GET_ALL_BLOG],
     onCompleted: () => {
       alert(`Bài viết đã được chỉnh sửa!\nVui lòng đợi quản trị viên xét duyệt lại`);
       redirect();

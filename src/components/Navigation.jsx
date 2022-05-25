@@ -24,12 +24,12 @@ export default function Navigation() {
   const activeNav = routing.findIndex((e) => pathname.includes(e.path));
 
   const auth = useAuth();
+  const { loading, uploadFile } = useFirebase('Avatar');
   const [showModal, setShowModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const avatarRef = React.useRef(null);
 
   const [updateAvatar] = useMutation(UPDATE_AVATAR);
-  const { loading, uploadFile } = useFirebase('Avatar');
 
   const changeHandler = async (event) => {
     const file = event.target.files[0];

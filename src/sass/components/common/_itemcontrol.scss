@@ -8,10 +8,9 @@
   outline: none;
   border: 2px solid transparent;
   transition: all 0.25s ease-in-out;
-
   &:hover {
     background-color: #fff;
-    border-color: rgba(240, 128, 128, 0.8);
+    border-color: rgba(240, 128, 128, 0.6);
   }
 
   &:focus {
@@ -21,6 +20,9 @@
   }
   &.error {
     border-color: #ff4e4e;
+  }
+  &[disabled='true'] {
+    pointer-events: none;
   }
 }
 .message-error {
@@ -64,7 +66,33 @@
     left: 0;
   }
 }
-
+.animate__animated {
+  animation-duration: 0.5s;
+}
+.rollback {
+  @include flex(center, center);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: #686c79;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  i {
+    margin-right: 6px;
+  }
+  &:hover {
+    color: $main-color;
+  }
+}
+.loading {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 9999;
+}
 .circleLoading {
   width: 24px;
   height: 24px;
@@ -90,10 +118,18 @@
   }
 }
 
-
-
 .dots-loading {
+  &_wrapper {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(230, 230, 230, 0.6);
+    user-select: none;
+    z-index: 9999;
+  }
   @include flex(center, auto);
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -104,6 +140,7 @@
     border-radius: 999px;
     background-color: $main-color;
     margin: 0 1rem;
+    z-index: 1000;
     animation: dotLoading 1s forwards infinite linear;
   }
   & > div:nth-child(2) {
