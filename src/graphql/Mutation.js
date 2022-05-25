@@ -68,12 +68,20 @@ export const INSERT_CONTEST = gql`
     insert_contests_one(
       object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, time: $time }
     ) {
-      name
-      des
+      id
     }
   }
 `;
-
+export const UPDATE_CONTEST_LOGO = gql`
+  mutation UPDATE_CONTEST_LOGO($contestId: String!, $logoUrl: String!) {
+    update_contests(where: { id: { _eq: $contestId } }, _set: { logoUrl: $logoUrl }) {
+      returning {
+        id
+        name
+      }
+    }
+  }
+`;
 export const INSERT_PROBLEM = gql`
   mutation INSERT_PROBLEM(
     $name: String!

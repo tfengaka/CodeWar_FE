@@ -3,11 +3,13 @@ import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import ServerError from 'components/ServerError';
 import { GET_CONTEST } from 'graphql/Queries';
+import { useAuth } from 'hooks/useAuth';
 import { React, useState } from 'react';
 import ItemContest from './ItemContest';
 
 const Contest = () => {
   const [search, setSearch] = useState('');
+  const { user } = useAuth();
 
   const { loading, error, data } = useQuery(GET_CONTEST);
   if (loading) return <PageLoading />;
@@ -17,11 +19,7 @@ const Contest = () => {
   }
 
   const items = data?.contests.filter((val) => {
-    if (search === '') {
-      return val;
-    } else if (val.name.toLowerCase().includes(search.toLowerCase())) {
-      return val;
-    }
+    return val.name.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
@@ -45,7 +43,7 @@ const Contest = () => {
               </li>
             </ul>
           </div>
-          <ItemContest itemProps={items} />
+          <ItemContest contestsList={items} currUserId={user?.id} />
         </div>
       </div>
     </Helmet>

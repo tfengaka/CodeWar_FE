@@ -17,14 +17,12 @@ export const CodeType = {
 
 export function useCompiler(metadata) {
   const [language, setLanguage] = React.useState(initialLanguage);
-  const [sourceCode, setSourceCode] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  const [resultData, setResultData] = React.useState(null);
   const [currentExercise, setCurrentExercise] = React.useState(0);
 
   const [saveResult] = useMutation(SUBMIT_CODE);
 
-  const handleSaveResult = (exerciseId) => {
+  const handleSaveResult = (exerciseId, resultData) => {
     let totalTime = 0,
       totalMemory = 0,
       totalPoint = 0;
@@ -57,7 +55,7 @@ export function useCompiler(metadata) {
     });
   };
 
-  const runCode = async (exerciseData, sourceCode, type) => {
+  const runCode = async (exerciseData, sourceCode, type, resultData = null) => {
     setLoading(true);
 
     if (!sourceCode) {
@@ -70,7 +68,7 @@ export function useCompiler(metadata) {
     switch (type) {
       case CodeType.Exercise:
         if (resultData) {
-          handleSaveResult(exerciseData.id);
+          handleSaveResult(exerciseData.id, resultData);
           return;
         }
         return await compilerCode(exerciseData.metadata, sourceCode);
@@ -163,11 +161,9 @@ export function useCompiler(metadata) {
   return {
     language,
     loading,
-    resultData,
     currentExercise,
     setCurrentExercise,
     setLanguage,
-    setSourceCode,
     runCode,
   };
 }
