@@ -1,15 +1,19 @@
-import Button from 'components/Button';
-import React from 'react';
-import { CodeType, useCompiler } from 'hooks/useCompiler';
-import ProblemSolve from '../../../components/ProblemSolve';
-import PageLoading from 'components/PageLoading';
 import { useMutation } from '@apollo/client';
+import Button from 'components/Button';
+import PageLoading from 'components/PageLoading';
 import { INSERT_CONTEST_RESULT } from 'graphql/Mutation';
+import { CodeType, useCompiler } from 'hooks/useCompiler';
 import moment from 'moment';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import ProblemSolve from '../../../components/ProblemSolve';
 
 const Competition = ({ contestData, component: Component, ...rest }) => {
   const [saveResultContest] = useMutation(INSERT_CONTEST_RESULT);
 
+  const navigate = useNavigate();
+
+  const [displayPoint, setDisplayPoint] = React.useState(null);
   const [sourceCode, setSourceCode] = React.useState([]);
   const [currentExercise, setCurrentExercise] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
@@ -28,7 +32,7 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
     const totalSeconds = moment.duration(date).asSeconds();
     const completionTime = contestData?.time - totalSeconds;
 
-    let results = [];
+    let resultPoint = [];
 
     if (sourceCode.length === 0) {
       return alert('Bạn chưa code bài nào cả sao nộp ?');
@@ -39,20 +43,20 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
         exercisesData.map(async (exercise, index) => {
           const exercisesResult = await runCode(exercise, sourceCode[index], CodeType.Contest);
 
+          const point = handleCalTotalPoint(exercisesResult, exercise.metadata);
+          resultPoint.push(...point);
+
           await saveResultContest({
             variables: {
               contestId: contestData.id,
               exerciseId: exercise.id,
-              point: handleCalTotalPoint(exercisesResult, exercise.metadata),
+              point,
               completionTime,
             },
-            onCompleted: () => {},
             onError: (error) => {
               console.log(error.message);
             },
           });
-
-          results.push(...exercisesResult);
         }),
       );
 
@@ -60,6 +64,10 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
 
       setSourceCode([]);
       setCurrentExercise(0);
+
+      // setDisplayPoint(resultPoint.reduce((a, b) => a + b, 0));
+      alert(`Kết quả đã được lưu lại. Số điểm của bạn là: ${resultPoint.reduce((a, b) => a + b, 0)}`);
+      navigate(`/contest`);
     } catch (error) {
       console.log(error);
       setLoading(false);
