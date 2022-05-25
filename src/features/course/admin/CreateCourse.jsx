@@ -63,7 +63,7 @@ const CreateCourse = () => {
   };
 
   return (
-    <Helmet title="Viết blog">
+    <Helmet title="Tạo khóa học">
       <section className="blog post">
         <h3 className="blog__header">Tạo khóa học</h3>
         <h3 className="blog__label">Tiêu đề</h3>

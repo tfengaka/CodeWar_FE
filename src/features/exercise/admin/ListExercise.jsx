@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import Button from 'components/Button';
+import Helmet from 'components/Helmet';
 import PageLoading from 'components/PageLoading';
 import { UPDATE_PROBLEM } from 'graphql/Mutation';
 import { GET_ALL_EXERCISE } from 'graphql/Queries';
@@ -134,51 +135,53 @@ const TableRow = ({ data }) => {
     });
   };
   return (
-    <tr className="table_row">
-      <td className="table_body_content_item"></td>
-      <td className="table_body_content_item">
-        <div className="table_cell">{displayID}</div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">{name}</div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          <div className={`tag bg-${levelColor}`}>
-            <span>{levelName}</span>
-          </div>
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          {topic.map((item, index) => (
-            <div key={index} className="tag topic">
-              <span>{item}</span>
+    <Helmet title="Danh sách bài tập">
+      <tr className="table_row">
+        <td className="table_body_content_item"></td>
+        <td className="table_body_content_item">
+          <div className="table_cell">{displayID}</div>
+        </td>
+        <td className="table_body_content_item">
+          <div className="table_cell">{name}</div>
+        </td>
+        <td className="table_body_content_item">
+          <div className="table_cell">
+            <div className={`tag bg-${levelColor}`}>
+              <span>{levelName}</span>
             </div>
-          ))}
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell actions">
-          <Link to="/admin/problems/update" state={{ exerciseData: data }}>
-            <Button backgroundColor="blue">
-              <i className="bx bxs-edit"></i>
-              <span>Sửa</span>
-            </Button>
-          </Link>
+          </div>
+        </td>
+        <td className="table_body_content_item">
+          <div className="table_cell">
+            {topic.map((item, index) => (
+              <div key={index} className="tag topic">
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </td>
+        <td className="table_body_content_item">
+          <div className="table_cell">
+            <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
+          </div>
+        </td>
+        <td className="table_body_content_item">
+          <div className="table_cell actions">
+            <Link to="/admin/problems/update" state={{ exerciseData: data }}>
+              <Button backgroundColor="blue">
+                <i className="bx bxs-edit"></i>
+                <span>Sửa</span>
+              </Button>
+            </Link>
 
-          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
-            <i className="bx bxs-trash"></i>
-            <span>Xóa</span>
-          </Button>
-        </div>
-      </td>
-    </tr>
+            <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
+              <i className="bx bxs-trash"></i>
+              <span>Xóa</span>
+            </Button>
+          </div>
+        </td>
+      </tr>
+    </Helmet>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
+import Helmet from 'components/Helmet';
 import MDEditor from 'components/MarkDownEdior/MDEditor';
 import PageLoading from 'components/PageLoading';
 import { INSERT_EXERCISE_CHALLENGE, INSERT_PROBLEM, UPDATE_CHALLENGE_IMAGE, UPDATE_PROBLEM } from 'graphql/Mutation';
@@ -186,118 +187,120 @@ const CreateExercise = ({
   };
 
   return (
-    <div className="container-card">
-      <div className="card">
-        {!isChallenge && (
-          <>
-            <h3>Tạo bài toán</h3>
-            <div className="card__item">
-              <label>Tiêu đề: </label>
-              <input
-                name="name"
-                onChange={handleChangeInput}
-                className="card__item-text card__item-input"
-                defaultValue={input.name}
-              ></input>
-            </div>
-          </>
-        )}
-        <div className="card__item wrap">
-          <label>Mức: </label>
+    <Helmet title="Tạo bài tập">
+      <div className="container-card">
+        <div className="card">
+          {!isChallenge && (
+            <>
+              <h3>Tạo bài toán</h3>
+              <div className="card__item">
+                <label>Tiêu đề: </label>
+                <input
+                  name="name"
+                  onChange={handleChangeInput}
+                  className="card__item-text card__item-input"
+                  defaultValue={input.name}
+                ></input>
+              </div>
+            </>
+          )}
+          <div className="card__item wrap">
+            <label>Mức: </label>
 
-          <select name="level" onChange={handleChangeInput} defaultValue={input.level}>
-            <option value={1}>Dễ</option>
-            <option value={2}>Trung bình</option>
-            <option value={3}>Khó</option>
-          </select>
+            <select name="level" onChange={handleChangeInput} defaultValue={input.level}>
+              <option value={1}>Dễ</option>
+              <option value={2}>Trung bình</option>
+              <option value={3}>Khó</option>
+            </select>
 
-          <label>Từ khóa: </label>
-          <input
-            name="topic"
-            onChange={handleChangeInput}
-            className="card__item-text card__item-input"
-            defaultValue={input.topic}
-          ></input>
-        </div>
-        <div className="card__item">
-          <label>Nội dung: </label>
-          <div data-color-mode="light">
-            <div className="wmde-markdown-var"> </div>
-            <MDEditor name="des" value={value} style={{ height: '600px' }} onChange={setValue} />
+            <label>Từ khóa: </label>
+            <input
+              name="topic"
+              onChange={handleChangeInput}
+              className="card__item-text card__item-input"
+              defaultValue={input.topic}
+            ></input>
           </div>
-        </div>
-
-        <div name="topic" className="card__item ">
-          <div className="problem_head">
-            <div className="problem_head_title">
-              <span>Tất cả các case</span>
+          <div className="card__item">
+            <label>Nội dung: </label>
+            <div data-color-mode="light">
+              <div className="wmde-markdown-var"> </div>
+              <MDEditor name="des" value={value} style={{ height: '600px' }} onChange={setValue} />
             </div>
           </div>
-        </div>
 
-        {caseData.length > 0 &&
-          caseData.map((item, index) => (
-            <div key={index}>
-              <div className="card__body">
-                <div className="card__body-control">
-                  <input
-                    value={item.input}
-                    type="text"
-                    name="input"
-                    placeholder="Đầu vào"
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                </div>
-                <div className="card__body-control">
-                  <input
-                    value={item.output}
-                    type="text"
-                    name="output"
-                    placeholder="Đầu ra"
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                </div>
-
-                <div className="card__body-control">
-                  <input
-                    value={item.point}
-                    type="number"
-                    name="point"
-                    placeholder="Điểm"
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                </div>
-                <div className="card__body-control">
-                  <input
-                    value={item.time}
-                    type="text"
-                    name="time"
-                    placeholder="Thời gian"
-                    onChange={(e) => handleChange(e, index)}
-                  />
-                </div>
-                <div className="card__body-submit">
-                  {caseData.length > 0 && (
-                    <Button backgroundColor="red" className="btn" onClick={(e) => handleQuestionRemove(index)}>
-                      Xóa
-                    </Button>
-                  )}
-                </div>
+          <div name="topic" className="card__item ">
+            <div className="problem_head">
+              <div className="problem_head_title">
+                <span>Tất cả các case</span>
               </div>
             </div>
-          ))}
-        <div className="card__crud">
-          <Button className="btn" onClick={handleQuestionAdd}>
-            Thêm case
-          </Button>
+          </div>
 
-          <Button backgroundColor="green" onClick={handleSaveExercise}>
-            {isChallenge ? (haveChallengeData ? 'Lưu thử thách' : 'Tạo thử thách') : 'Lưu bài toán'}
-          </Button>
+          {caseData.length > 0 &&
+            caseData.map((item, index) => (
+              <div key={index}>
+                <div className="card__body">
+                  <div className="card__body-control">
+                    <input
+                      value={item.input}
+                      type="text"
+                      name="input"
+                      placeholder="Đầu vào"
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </div>
+                  <div className="card__body-control">
+                    <input
+                      value={item.output}
+                      type="text"
+                      name="output"
+                      placeholder="Đầu ra"
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </div>
+
+                  <div className="card__body-control">
+                    <input
+                      value={item.point}
+                      type="number"
+                      name="point"
+                      placeholder="Điểm"
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </div>
+                  <div className="card__body-control">
+                    <input
+                      value={item.time}
+                      type="text"
+                      name="time"
+                      placeholder="Thời gian"
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </div>
+                  <div className="card__body-submit">
+                    {caseData.length > 0 && (
+                      <Button backgroundColor="red" className="btn" onClick={(e) => handleQuestionRemove(index)}>
+                        Xóa
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          <div className="card__crud">
+            <Button className="btn" onClick={handleQuestionAdd}>
+              Thêm case
+            </Button>
+
+            <Button backgroundColor="green" onClick={handleSaveExercise}>
+              {isChallenge ? (haveChallengeData ? 'Lưu thử thách' : 'Tạo thử thách') : 'Lưu bài toán'}
+            </Button>
+          </div>
         </div>
+        {loading && <PageLoading />}
       </div>
-      {loading && <PageLoading />}
-    </div>
+    </Helmet>
   );
 };
 

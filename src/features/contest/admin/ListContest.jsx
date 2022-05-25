@@ -7,6 +7,7 @@ import UpdateContest from './UpdateContest';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import Helmet from 'components/Helmet';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(GET_CONTEST);
