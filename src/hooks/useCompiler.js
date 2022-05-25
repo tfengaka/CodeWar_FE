@@ -8,11 +8,19 @@ const initialLanguage = {
   value: 'cpp',
 };
 
+export const CodeType = {
+  Exercise: 'exercise',
+  Course: 'course',
+  Challenge: 'challenge',
+  Contest: 'contest',
+};
+
 export function useCompiler(metadata) {
   const [language, setLanguage] = React.useState(initialLanguage);
   const [sourceCode, setSourceCode] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [resultData, setResultData] = React.useState(null);
+  const [currentExercise, setCurrentExercise] = React.useState(0);
 
   const [saveResult] = useMutation(SUBMIT_CODE);
 
@@ -49,12 +57,7 @@ export function useCompiler(metadata) {
     });
   };
 
-  const runCode = async (exerciseId, isSaveExercise = false) => {
-    if (resultData && isSaveExercise) {
-      handleSaveResult(exerciseId);
-      return;
-    }
-
+  const runCode = async (exerciseData, sourceCode, type) => {
     setLoading(true);
 
     if (!sourceCode) {
@@ -63,7 +66,20 @@ export function useCompiler(metadata) {
 
       return;
     }
+    // eslint-disable-next-line default-case
+    switch (type) {
+      case CodeType.Exercise:
+        if (resultData) {
+          handleSaveResult(exerciseData.id);
+          return;
+        }
+        return await compilerCode(exerciseData.metadata, sourceCode);
+      case CodeType.Contest:
+        return await compilerCode(exerciseData.metadata, sourceCode);
+    }
+  };
 
+  const compilerCode = async (metadata, sourceCode) => {
     let program;
     try {
       const result = await Promise.all(
@@ -88,13 +104,70 @@ export function useCompiler(metadata) {
         return;
       }
 
-      setResultData(result);
       setLoading(false);
+
+      return result;
     } catch (error) {
       console.error(error);
       setLoading(false);
     }
   };
 
-  return { language, loading, resultData, setLanguage, setSourceCode, runCode };
+  // const runCode = async (exerciseId, isSaveExercise = false) => {
+  //   if (resultData && isSaveExercise) {
+  //     handleSaveResult(exerciseId);
+  //     return;
+  //   }
+
+  //   setLoading(true);
+
+  //   if (!sourceCode) {
+  //     alert('Thực thi thất bại! Vui lòng kiểm tra lại bài làm');
+  //     setLoading(false);
+
+  //     return;
+  //   }
+
+  //   let program;
+  //   try {
+  //     const result = await Promise.all(
+  //       metadata.map(async (testcase) => {
+  //         program = {
+  //           stdin: testcase.input,
+  //           source_code: sourceCode,
+  //           language_id: language.id,
+  //           cpu_time_limit: Number(testcase.time / 1000),
+  //           expected_output: testcase.output,
+  //         };
+  //         return axios.post(
+  //           `${process.env.REACT_APP_JUDGE_API_URL}/submissions/?base64_encoded=false&wait=true`,
+  //           program,
+  //         );
+  //       }),
+  //     );
+
+  //     if (result[0].data.error) {
+  //       alert('Lỗi định dạng code! Vui lòng kiểm tra lại!');
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     setResultData(result);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoading(false);
+  //   }
+  // };
+
+  return {
+    language,
+    loading,
+    resultData,
+    currentExercise,
+    setCurrentExercise,
+    setLanguage,
+    setSourceCode,
+    runCode,
+  };
 }

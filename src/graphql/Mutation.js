@@ -258,6 +258,18 @@ export const UPDATE_CHALLENGE_IMAGE = gql`
   }
 `;
 
+export const INSERT_CONTEST_RESULT = gql`
+  mutation INSERT_CONTEST_RESULT($contestId: String!, $exerciseId: String!, $point: jsonb!, $completionTime: Int!) {
+    insert_contest_results(
+      objects: { contestId: $contestId, exerciseId: $exerciseId, point: $point, completionTime: $completionTime }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export const UPDATE_CHALLENGE = gql`
   mutation UPDATE_CHALLENGE(
     $challengeId: String!

@@ -1,6 +1,6 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
 import Discuss from 'features/exercise/Discuss';
-import { useCompiler } from 'hooks/useCompiler';
+import { CodeType, useCompiler } from 'hooks/useCompiler';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -37,21 +37,24 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
   let { data } = location.state;
   data = isContest ? exerciseContest : data;
 
-  const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
+  const { loading, language, resultData, sourceCode, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
 
   const handleChangeSourceCode = (value) => {
-    setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
+    if (!value) return;
     if (isContest) {
       setSourceCodeOfContest((prevSourceCode) => [
         ...prevSourceCode.slice(0, currentExercise),
         value,
         ...prevSourceCode.slice(currentExercise + 1),
       ]);
+
+      return;
     }
+    setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
   };
 
   const monaco = useMonaco();
@@ -179,7 +182,6 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
                     <div className="testcase_body_result_console">
                       {resultData ? (
                         <React.Fragment>
-                          {console.log(resultData[currentCase])}
                           <span>Time Excute: </span>
                           {resultData[currentCase].data.time || 0} ms
                           {resultData[currentCase].data?.stdout ? (
@@ -201,11 +203,20 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
               </div>
             </div>
             <div className="editor_submit">
-              <Button onClick={() => runCode(data.id)} backgroundColor="green" isDisabled={!auth.isLogged}>
+              <Button
+                onClick={() =>
+                  runCode(data, isContest ? sourceCodeOfContest[currentExercise] : sourceCode, CodeType.Exercise)
+                }
+                backgroundColor="green"
+                isDisabled={!auth.isLogged}
+              >
                 Run Code
               </Button>
               {!isContest && (
-                <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
+                <Button
+                  onClick={() => runCode(data, sourceCode, CodeType.Exercise)}
+                  isDisabled={!auth.isLogged || !resultData}
+                >
                   Submit
                 </Button>
               )}
