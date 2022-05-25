@@ -84,7 +84,10 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
             <div className="discuss_body-item">
               <div className="discuss_body-item_header">
                 <h3>{discuss.account.fullName}</h3>
-                <p>{discuss.content}</p>
+                <p className="date">{moment(discuss.createdAt).format('DD/MM/YYYY - HH:MM:ss')}</p>
+                {/* <p>{discuss.content}</p> */}
+              </div>
+              <div className="discuss_body-item_footer">
                 <div className="react">
                   <i
                     className="bx bxs-like bx-md"
@@ -102,9 +105,6 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
                   ></i>
                   <p>{discuss.discuss_reacts_aggregate.aggregate.count || 0}</p>
                 </div>
-              </div>
-              <div className="discuss_body-item_footer">
-                <p className="date">{moment(discuss.createdAt).format('DD/MM/YYYY - HH:MM:ss')}</p>
                 <h4>Phản hồi</h4>
               </div>
             </div>

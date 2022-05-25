@@ -46,35 +46,34 @@
 
       &-item {
         width: inherit;
-        display: grid;
-        grid-template-columns: 65% 35%;
         padding: 15px;
         // border: solid 1px #e6e6e6;
         border-radius: 1rem;
         background-color: #f2f3f5;
 
         &_header {
-          overflow: hidden;
-          width: inherit;
-          .react {
-            text-align: right;
-            padding-top: 5px;
-            display: grid;
-            grid-template-columns: 5% 5% 90%;
-
-            & > i {
-              cursor: pointer;
-            }
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          // overflow: hidden;
+          // width: inherit;
+          .date {
+            font-size: 15px;
           }
         }
 
         &_footer {
           display: flex;
-          flex-wrap: wrap;
-          justify-content: flex-end;
-          .date {
-            display: flex;
-            font-size: 15px;
+          justify-content: space-between;
+          .react {
+            text-align: right;
+            padding-top: 5px;
+            display: grid;
+            grid-template-columns: 35% 35% 30%;
+
+            & > i {
+              cursor: pointer;
+            }
           }
           h4 {
             display: flex;
