@@ -120,7 +120,7 @@ const TableRow = ({ data }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell actions">
-          <Link to={`/admin/course/${id}`} state={{ courseName: name }}>
+          <Link to={`/admin/course/${id}/concepts`} state={{ courseName: name }}>
             <Button backgroundColor="blue">
               <i className="bx bxs-edit"></i>
               <span>Xem</span>

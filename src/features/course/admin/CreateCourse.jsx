@@ -66,6 +66,14 @@ const CreateCourse = () => {
       {loading && <PageLoading />}
       <div className="course create">
         <div className="container">
+          <div className="rollback" onClick={() => redirect()}>
+            <i className="bx bx-arrow-back"></i>
+            <span>Quay lại</span>
+          </div>
+          <div className="course create_head">
+            <span className="course title">Tạo mới khoá học</span>
+          </div>
+
           <div className="course_title">
             <span className="course title">Tiêu đề khoá học:</span>
             <input
