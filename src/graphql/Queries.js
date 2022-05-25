@@ -11,7 +11,18 @@ export const GET_USER_INFO = gql`
     }
   }
 `;
-
+export const GET_USER_PROCESS_BY_ID = gql`
+  query GET_USER_PROCESS_BY_ID($userID: String!) {
+    account_by_pk(id: $userID) {
+      contest_results {
+        contestId
+      }
+      exercise_results {
+        exerciseId
+      }
+    }
+  }
+`;
 export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
     exercises(
