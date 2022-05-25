@@ -17,11 +17,7 @@ const Contest = () => {
   }
 
   const items = data?.contests.filter((val) => {
-    if (search === '') {
-      return val;
-    } else if (val.name.toLowerCase().includes(search.toLowerCase())) {
-      return val;
-    }
+    return val.name.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
@@ -45,7 +41,7 @@ const Contest = () => {
               </li>
             </ul>
           </div>
-          <ItemContest itemProps={items} />
+          <ItemContest contestsList={items} />
         </div>
       </div>
     </Helmet>
