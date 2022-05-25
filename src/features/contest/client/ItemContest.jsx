@@ -6,10 +6,7 @@ import { format, parse } from 'date-fns';
 import moment from 'moment';
 import Button from 'components/Button';
 
-const ItemContest = (props) => {
-  const contestsList = props.itemProps;
-  const { currUserId } = props;
-
+const ItemContest = ({ contestsList, currUserId }) => {
   const statusStart = 'Đang diễn ra';
   const statusEnd = 'Đã kết thúc';
 
@@ -21,21 +18,19 @@ const ItemContest = (props) => {
         topicsList = item.topic;
         continue;
       }
-
       // eslint-disable-next-line no-loop-func
       let diff = item.topic.filter((x) => !topicsList.includes(x));
       topicsList = [...topicsList, ...diff];
     }
     return topicsList;
   };
-
   return (
     <div className="panel_body">
       <ol>
         {contestsList.map((item) => (
           <li key={item.id}>
             <div className="body_card">
-              <img src={LogoUTC} alt="" className="body_card--logo" />
+              <img src={item.logoUrl || LogoUTC} alt="" />
               <div className="body_card--content">
                 <h3>{item.name}</h3>
                 <p title={item.des}>{item.des}</p>

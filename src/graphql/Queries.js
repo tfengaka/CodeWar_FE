@@ -39,6 +39,7 @@ export const GET_CONTEST = gql`
       endDate
       time
       status
+      logoUrl
       exercises {
         topic
       }
