@@ -20,7 +20,6 @@ export function useCompiler(metadata) {
   const [sourceCode, setSourceCode] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [resultData, setResultData] = React.useState(null);
-  const [resultDataContest, setResultDataContest] = React.useState([]);
   const [currentExercise, setCurrentExercise] = React.useState(0);
 
   const [saveResult] = useMutation(SUBMIT_CODE);
@@ -74,15 +73,13 @@ export function useCompiler(metadata) {
           handleSaveResult(exerciseData.id);
           return;
         }
-        await compilerCode(exerciseData.metadata, sourceCode, type);
-        break;
+        return await compilerCode(exerciseData.metadata, sourceCode);
       case CodeType.Contest:
-        await compilerCode(exerciseData.metadata, sourceCode, type);
-        break;
+        return await compilerCode(exerciseData.metadata, sourceCode);
     }
   };
 
-  const compilerCode = async (metadata, sourceCode, type) => {
+  const compilerCode = async (metadata, sourceCode) => {
     let program;
     try {
       const result = await Promise.all(
@@ -109,12 +106,7 @@ export function useCompiler(metadata) {
 
       setLoading(false);
 
-      if (type === CodeType.Contest) {
-        setResultDataContest((prevResult) => [...prevResult, result]);
-        console.log(result);
-        return;
-      }
-      setResultData(result);
+      return result;
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -173,8 +165,6 @@ export function useCompiler(metadata) {
     loading,
     resultData,
     currentExercise,
-    resultDataContest,
-    setResultDataContest,
     setCurrentExercise,
     setLanguage,
     setSourceCode,
