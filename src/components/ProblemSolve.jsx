@@ -43,7 +43,6 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
 
-  console.log(sourceCodeOfContest);
   const handleChangeSourceCode = (value) => {
     setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
     if (isContest) {
