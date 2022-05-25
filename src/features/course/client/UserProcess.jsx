@@ -11,7 +11,8 @@ const UserProcess = ({ user }) => {
     console.log(error);
     return <ServerError />;
   }
-  const { contest_results, exercise_results } = data.account_by_pk;
+  const { contest_results_aggregate, exercise_results_aggregate } = data.account_by_pk;
+  const { contests_aggregate, exercises_aggregate } = data;
   return (
     <section className="progress">
       <div className="progress__container">
@@ -35,21 +36,39 @@ const UserProcess = ({ user }) => {
             <div className="progress__item">
               <h4>Số bài tập đã nộp</h4>
               <div className="progress__item__content">
-                <span className="progress__item__result">{exercise_results?.length}</span>
+                <span className="progress__item__result">
+                  {exercise_results_aggregate.aggregate.count} / {exercises_aggregate.aggregate.count}
+                </span>
                 <span className="progress__item__progress-contest">Bài tập</span>
               </div>
               <div className="progress__item__progress">
-                <div className="progress__item__progress-bar" style={{ width: '100%' }}></div>
+                <div
+                  className="progress__item__progress-bar"
+                  style={{
+                    width: `calc(${
+                      (exercise_results_aggregate.aggregate.count / exercises_aggregate.aggregate.count) * 100
+                    }%)`,
+                  }}
+                ></div>
               </div>
             </div>
             <div className="progress__item">
               <h4>Số cuộc thi đã tham gia</h4>
               <div className="progress__item__content">
-                <span className="progress__item__result">{contest_results?.length}</span>
+                <span className="progress__item__result">
+                  {contest_results_aggregate.aggregate.count} / {contests_aggregate.aggregate.count}
+                </span>
                 <span className="progress__item__progress-contest">Cuộc thi</span>
               </div>
               <div className="progress__item__progress">
-                <div className="progress__item__progress-bar" style={{ width: '100%' }}></div>
+                <div
+                  className="progress__item__progress-bar"
+                  style={{
+                    width: `calc(${
+                      (contest_results_aggregate.aggregate.count / contests_aggregate.aggregate.count) * 100
+                    }%)`,
+                  }}
+                ></div>
               </div>
             </div>
           </div>

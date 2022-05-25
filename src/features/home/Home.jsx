@@ -105,10 +105,10 @@ const Home = () => {
             thi viết mã trực tuyến.
           </div>
           <div className="home__footer-left__network">
-            <i class="bx bxl-facebook-circle home__footer-left__network-item"></i>
-            <i class="bx bxl-google-plus-circle home__footer-left__network-item"></i>
-            <i class="bx bxl-youtube home__footer-left__network-item"></i>
-            <i class="bx bxl-instagram-alt home__footer-left__network-item"></i>
+            <i className="bx bxl-facebook-circle home__footer-left__network-item"></i>
+            <i className="bx bxl-google-plus-circle home__footer-left__network-item"></i>
+            <i className="bx bxl-youtube home__footer-left__network-item"></i>
+            <i className="bx bxl-instagram-alt home__footer-left__network-item"></i>
           </div>
         </div>
         <div className="home__footer-right">
