@@ -31,10 +31,10 @@
   }
   &__main {
     background-color: #35416e;
-    border-radius: 5px;
+    border-radius: 7px;
     color: #ffffff;
     font-size: 15px;
-    padding: 15px 20px 20px;
+    padding: 25px;
     width: 100%;
     max-width: 450px;
   }
@@ -79,31 +79,12 @@
       margin: 5px 0px 10px;
       width: 100%;
     }
-    &__current-level {
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    &__current-progress {
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    &__next-level {
-    }
-
-    &__progress-level {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
 
     &__header {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      padding: 10px;
       i {
         color: #ffffff;
         font-size: 27px;
@@ -146,6 +127,14 @@
       justify-content: space-between;
       margin: 0px 0px 10px;
     }
+    &__contest {
+      margin: 0 10px;
+      align-items: center;
+      color: #ffffff;
+      display: flex;
+      font-size: 15px;
+      margin: 0px 0px 10px;
+    }
     &__result {
       color: #f9cb00;
       font-size: 32px;
@@ -154,10 +143,19 @@
     &__progress {
       border-radius: 5px;
       background-color: #dbeaff;
-      color: #ffffff;
+
       font-size: 15px;
       width: 100%;
       height: 5px;
+    }
+    &__progress-bar {
+      background-color: #f9cb00;
+      border-radius: 5px;
+      height: 100%;
+    }
+
+    &__progress-contest {
+      margin: 0 10px;
     }
   }
 }
