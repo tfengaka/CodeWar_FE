@@ -24,6 +24,8 @@
 }
 .markdown {
   font-family: "Montserrat", sans-serif !important;
+  font-size: 15px;
+  font-weight: 400;
   color: #292929;
   &_inline {
     background-color: rgba(96, 125, 139, 0.2);
@@ -36,7 +38,6 @@
 .custom-html-style,
 .markdown {
   pre {
-    line-height: unset !important;
     background-color: transparent;
     margin: 0 !important;
     padding-left: 0 !important;

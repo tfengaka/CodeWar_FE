@@ -80,14 +80,26 @@ export const GET_ALL_COURSE = gql`
     courses {
       id
       name
-      image
       des
+      image
       createdBy
       createdAt
       account {
         fullName
         avatarUrl
       }
+    }
+  }
+`;
+
+export const GET_ALL_CONCEPT_BY_COURSEID = gql`
+  query GET_ALL_CONCEPT_BY_COURSEID($courseId: String!) {
+    concepts(where: { courseId: { _eq: $courseId } }) {
+      id
+      name
+      priority
+      createdAt
+      createdBy
     }
   }
 `;
@@ -108,6 +120,7 @@ export const GET_ALL_BLOG = gql`
     }
   }
 `;
+
 export const GET_BLOG_BY_ID = gql`
   query GET_BLOG_BY_ID($blogID: String!) {
     blogs_by_pk(id: $blogID) {

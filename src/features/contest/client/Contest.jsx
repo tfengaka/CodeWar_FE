@@ -11,7 +11,10 @@ const Contest = () => {
 
   const { loading, error, data } = useQuery(GET_CONTEST);
   if (loading) return <PageLoading />;
-  if (error) return <ServerError />;
+  if (error) {
+    console.error(error.message);
+    return <ServerError />;
+  }
 
   const items = data?.contests.filter((val) => {
     if (search === '') {

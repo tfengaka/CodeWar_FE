@@ -169,10 +169,22 @@ export const ADD_NEW_BLOG = gql`
 `;
 
 export const INSERT_COURSE = gql`
-  mutation INSERT_COURSE($name: String!, $des: String!) {
-    insert_courses(objects: { des: $des, name: $name }) {
+  mutation INSERT_COURSE(
+    $courseName: String!
+    $courseDes: String!
+    $banner: String!
+    $concepts: [concepts_insert_input!]!
+  ) {
+    insert_courses(objects: { name: $courseName, des: $courseDes, image: $banner, concepts: { data: $concepts } }) {
       returning {
         id
+        name
+        concepts {
+          name
+          des
+          priority
+          courseId
+        }
       }
     }
   }

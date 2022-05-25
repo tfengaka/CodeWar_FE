@@ -108,50 +108,34 @@
         line-height: 2;
       }
     }
-
-    &_others {
-      margin-top: 2rem;
-      padding: 0 16px;
-      h3 {
-        font-size: 21px;
-        font-weight: 600;
-        color: #3f4657;
-      }
-      &_list {
-        padding: 2rem 3rem;
-        &_link {
-          font-family: "Roboto", sans-serif;
-          font-size: 16px;
-          font-weight: 500;
-          color: #515661;
-          transition: all 0.3s ease;
-          &:hover {
-            color: $main-color;
-            text-decoration: underline;
-          }
-        }
-      }
+  }
+  &_others {
+    margin-top: 2rem;
+    padding: 0 16px;
+    h3 {
+      font-size: 21px;
+      font-weight: 600;
+      color: #3f4657;
     }
-    &.review {
-      position: relative;
-      background-color: #fff;
-      border-radius: 4px;
-      .rollback {
-        position: absolute;
-        top: 16px;
-        left: 16px;
+    &_list {
+      padding: 2rem 3rem;
+      &_link {
         font-family: "Roboto", sans-serif;
+        font-size: 16px;
         font-weight: 500;
-        color: #686c79;
+        color: #515661;
         transition: all 0.3s ease;
-        i {
-          margin-right: 6px;
-        }
         &:hover {
           color: $main-color;
+          text-decoration: underline;
         }
       }
     }
+  }
+  &.review {
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
   }
   &.post {
     font-family: "Montserrat", sans-serif;

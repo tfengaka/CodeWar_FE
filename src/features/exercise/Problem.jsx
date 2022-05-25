@@ -14,10 +14,7 @@ const Problem = () => {
   if (error) return <ServerError />;
   return (
     <Helmet title="Bài tập">
-      <div
-        style={{ animationDuration: '0.5s', padding: '16px 24px' }}
-        className="animate__animated animate__fadeInDown"
-      >
+      <div style={{ padding: '16px 24px' }} className="animate__animated animate__fadeInDown">
         <div className="table">
           <div className="container">
             <div className="table_head">
