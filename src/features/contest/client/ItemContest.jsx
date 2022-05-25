@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoUTC from '../../../assets/images/logo-utc.png';
 import { conversionURL } from './ConversionURL';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import moment from 'moment';
 import Button from 'components/Button';
 
@@ -49,9 +49,9 @@ const ItemContest = (props) => {
               <div className="body_card--item">
                 <div className="date">
                   <i className="bx bx-calendar bx-md"></i>
-                  {format(parse(item.startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}
+                  {format(new Date(item.startDate), 'dd-MM-yyyy - HH:mm:ss')}
                   <b>&nbsp;&nbsp;-&nbsp;&nbsp;</b>
-                  {format(parse(item.endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}
+                  {format(new Date(item.endDate), 'dd-MM-yyyy - HH:mm:ss')}
                 </div>
                 <div className="date">
                   <i className="bx bx-user bx-md"></i>0

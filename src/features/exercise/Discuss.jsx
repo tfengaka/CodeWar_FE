@@ -4,8 +4,8 @@ import ServerError from 'components/ServerError';
 import { ADD_DISCUSS, UPDATE_DISCUSS_REACT } from 'graphql/Mutation';
 import { GET_ALL_DISCUSSES } from 'graphql/Queries';
 import { useAuth } from 'hooks/useAuth';
-import moment from 'moment';
 import React from 'react';
+import { format } from 'date-fns';
 
 const Discuss = ({ exerciseId, setShowDiscuss }) => {
   const auth = useAuth();
@@ -66,11 +66,11 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
       className={`discuss_container animate__animated ${isMounted ? 'animate__fadeInLeft' : 'animate__fadeOutLeft'}`}
     >
       <div className="discuss_close">
+        <h2>Hỏi Đáp</h2>
         <Button onClick={handleClose}>
           <i className="bx bx-x bx-md"></i>
         </Button>
       </div>
-      <h2>Hỏi Đáp</h2>
       <div className="discuss">
         {data.discusses.map((discuss, index) => (
           <div className="discuss_body" key={index}>
@@ -84,9 +84,9 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
             <div className="discuss_body-item">
               <div className="discuss_body-item_header">
                 <h3>{discuss.account.fullName}</h3>
-                <p className="date">{moment(discuss.createdAt).format('DD/MM/YYYY - HH:MM:ss')}</p>
-                {/* <p>{discuss.content}</p> */}
+                <p className="date">{format(new Date(discuss.createdAt), 'dd-MM-yyyy - HH:mm:ss')}</p>
               </div>
+              <p>{discuss.content}</p>
               <div className="discuss_body-item_footer">
                 <div className="react">
                   <i
@@ -94,11 +94,11 @@ const Discuss = ({ exerciseId, setShowDiscuss }) => {
                     onClick={() =>
                       handleReact(
                         discuss.id,
-                        discuss.discuss_reacts.find((react) => react.accountId === auth.user.id)?.id,
+                        discuss.discuss_reacts.find((react) => react.createdBy === auth.user.id)?.id,
                       )
                     }
                     style={
-                      discuss.discuss_reacts.find((reacted) => reacted.accountId === auth.user?.id)
+                      discuss.discuss_reacts.find((reacted) => reacted.createdBy === auth.user?.id)
                         ? { color: '#4292FF' }
                         : null
                     }

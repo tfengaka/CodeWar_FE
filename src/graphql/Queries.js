@@ -64,7 +64,7 @@ export const GET_ALL_DISCUSSES = gql`
       }
       discuss_reacts {
         id
-        accountId
+        createdBy
       }
       id
       exerciseId
