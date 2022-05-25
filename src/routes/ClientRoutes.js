@@ -12,11 +12,12 @@ import React from 'react';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import ProblemSolve from '../components/ProblemSolve';
 import Contest from '../features/contest/client/Contest';
+import Home from 'features/home/Home';
 
 export function ClientRoutes() {
   return (
     <Switch>
-      <Route path="/" element={<Navigate to="/course" />} />
+      <Route path="/" element={<Home to="/" />} />
       <Route path="/course">
         <Route index element={<CoursesList />} />
         <Route path=":id">
