@@ -64,13 +64,8 @@ const ItemContest = (props) => {
                     <div className="status">
                       <i className="bx bxs-circle color-green"></i> {statusStart}
                     </div>
-                    {console.log(item)}
                     {item?.contest_results?.filter((user) => user.createdBy === currUserId).length ? (
-                      <Button isDisabled={true}>
-                        <Link to={`/contest/${conversionURL(item.name)}/competition`} state={{ contestId: item.id }}>
-                          Đã làm
-                        </Link>
-                      </Button>
+                      <Button isDisabled={true}>Đã làm</Button>
                     ) : (
                       <Button>
                         <Link to={`/contest/${conversionURL(item.name)}/competition`} state={{ contestId: item.id }}>

@@ -15,6 +15,7 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
 
   const [displayPoint, setDisplayPoint] = React.useState(null);
   const [sourceCode, setSourceCode] = React.useState([]);
+  const [resultDataContest, setResultDataContest] = React.useState([]);
   const [currentExercise, setCurrentExercise] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const { runCode } = useCompiler();
@@ -99,6 +100,8 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
           currentExercise={currentExercise}
           sourceCodeOfContest={sourceCode}
           setSourceCodeOfContest={setSourceCode}
+          setResultDataContest={setResultDataContest}
+          resultDataContest={resultDataContest}
         />
       </div>
       {loading && <PageLoading />}

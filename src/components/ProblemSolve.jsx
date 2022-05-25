@@ -31,7 +31,15 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeOfContest, setSourceCodeOfContest }) => {
+const ProblemSolve = ({
+  isContest,
+  exerciseContest,
+  currentExercise,
+  sourceCodeOfContest,
+  setSourceCodeOfContest,
+  setResultDataContest,
+  resultDataContest,
+}) => {
   const auth = useAuth();
   const location = useLocation();
   let { data } = location.state;
@@ -55,6 +63,16 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
       return;
     }
     setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
+  };
+
+  const handleClick = async (data, sourceCode, type) => {
+    console.log(true);
+    const result = await runCode(data, sourceCode, type);
+    setResultDataContest((prevResult) => [
+      ...prevResult.slice(0, currentExercise),
+      result,
+      ...prevResult.slice(currentExercise + 1),
+    ]);
   };
 
   const monaco = useMonaco();
@@ -144,7 +162,7 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
                         {loading && <div className="circleLoading sm"></div>}
                         {resultData && !loading && (
                           <div className="status">
-                            {resultData[index].data.status.id === 3 ? (
+                            {resultData[index]?.data.status.id === 3 ? (
                               <i className="bx bxs-check-circle color-green" />
                             ) : (
                               <i className="bx bxs-x-circle color-red" />
@@ -205,7 +223,7 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
             <div className="editor_submit">
               <Button
                 onClick={() =>
-                  runCode(data, isContest ? sourceCodeOfContest[currentExercise] : sourceCode, CodeType.Exercise)
+                  handleClick(data, isContest ? sourceCodeOfContest[currentExercise] : sourceCode, CodeType.Exercise)
                 }
                 backgroundColor="green"
                 isDisabled={!auth.isLogged}
