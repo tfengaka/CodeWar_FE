@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_CONTEST } from 'graphql/Queries';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import Button from 'components/Button';
 import UpdateContest from './UpdateContest';
 import { UPDATE_CONTEST } from 'graphql/Mutation';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import Helmet from 'components/Helmet';
 
 const ListContest = () => {
   let { loading, error, data } = useQuery(GET_CONTEST);
@@ -156,12 +154,12 @@ const TableRow = ({ data }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{format(parse(startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
+          <span>{format(new Date(startDate), 'dd-MM-yyyy - HH:mm:ss')}</span>
         </div>
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{format(parse(endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
+          <span>{format(new Date(endDate), 'dd-MM-yyyy - HH:mm:ss')}</span>
         </div>
       </td>
       <td className="table_body_content_item">

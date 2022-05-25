@@ -144,7 +144,7 @@ export const UPDATE_DISCUSS_REACT = gql`
 export const ADD_DISCUSS = gql`
   mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
     insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
-      accountId
+      createdBy
     }
   }
 `;
@@ -267,7 +267,7 @@ export const UPDATE_CHALLENGE_IMAGE = gql`
 `;
 
 export const INSERT_CONTEST_RESULT = gql`
-  mutation INSERT_CONTEST_RESULT($contestId: String!, $exerciseId: String!, $point: jsonb!, $completionTime: Int!) {
+  mutation INSERT_CONTEST_RESULT($contestId: String!, $exerciseId: String!, $point: Int!, $completionTime: Int!) {
     insert_contest_results(
       objects: { contestId: $contestId, exerciseId: $exerciseId, point: $point, completionTime: $completionTime }
     ) {

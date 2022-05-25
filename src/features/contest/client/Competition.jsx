@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import Button from 'components/Button';
 import PageLoading from 'components/PageLoading';
 import { INSERT_CONTEST_RESULT } from 'graphql/Mutation';
+import { GET_CONTEST } from 'graphql/Queries';
 import { CodeType, useCompiler } from 'hooks/useCompiler';
 import moment from 'moment';
 import React from 'react';
@@ -44,8 +45,8 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
         exercisesData.map(async (exercise, index) => {
           const exercisesResult = await runCode(exercise, sourceCode[index], CodeType.Contest);
 
-          const point = handleCalTotalPoint(exercisesResult, exercise.metadata);
-          resultPoint.push(...point);
+          const point = handleCalTotalPoint(exercisesResult, exercise.metadata).reduce((a, b) => a + b, 0);
+          resultPoint.push(point);
 
           await saveResultContest({
             variables: {
@@ -57,6 +58,7 @@ const Competition = ({ contestData, component: Component, ...rest }) => {
             onError: (error) => {
               console.log(error.message);
             },
+            refetchQueries: [GET_CONTEST],
           });
         }),
       );

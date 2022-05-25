@@ -73,7 +73,7 @@ export const GET_ALL_DISCUSSES = gql`
       }
       discuss_reacts {
         id
-        accountId
+        createdBy
       }
       id
       exerciseId
@@ -216,6 +216,37 @@ export const GET_ALL_CHALLENGE = gql`
         exercise_results_aggregate {
           aggregate {
             count(columns: id)
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_CONTEST_ID = gql`
+  query GET_CONTEST_ID {
+    contests {
+      id
+      name
+    }
+  }
+`;
+
+export const GET_RANK = gql`
+  query GET_RANK($contestId: String!) {
+    contests(where: { id: { _eq: $contestId } }) {
+      id
+      name
+      contest_results(distinct_on: createdBy) {
+        account {
+          fullName
+          avatarUrl
+          contest_results_aggregate(order_by: { point: desc }) {
+            aggregate {
+              sum {
+                point
+              }
+            }
           }
         }
       }

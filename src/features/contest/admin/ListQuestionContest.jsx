@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
 import { Link, useParams } from 'react-router-dom';
-import moment from 'moment';
+import { format } from 'date-fns';
 import Button from 'components/Button';
 import { UPDATE_PROBLEM } from 'graphql/Mutation';
 
@@ -170,7 +170,7 @@ const TableRow = ({ data, contestId }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{moment(updatedAt).format('DD/MM/YYYY - HH:MM:ss')}</span>
+          <span>{format(new Date(updatedAt), 'dd-MM-yyyy - HH:mm:ss')}</span>
         </div>
       </td>
       <td className="table_body_content_item">
