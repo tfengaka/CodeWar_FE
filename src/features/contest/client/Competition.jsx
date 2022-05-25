@@ -1,11 +1,37 @@
 import Button from 'components/Button';
 import React from 'react';
+import { CodeType, useCompiler } from 'hooks/useCompiler';
 import ProblemSolve from '../../../components/ProblemSolve';
+import PageLoading from 'components/PageLoading';
 
 const Competition = ({ exercisesData, component: Component, ...rest }) => {
-  const [currentExercise, setCurrentExercise] = React.useState(0);
   const [sourceCode, setSourceCode] = React.useState([]);
+  const [currentExercise, setCurrentExercise] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
+  const { runCode, resultDataContest } = useCompiler();
 
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    if (sourceCode.length === 0) {
+      return alert('Bạn chưa code bài nào cả sao nộp ?');
+    }
+
+    try {
+      await Promise.all(
+        exercisesData.map(async (exercise, index) => {
+          await runCode(exercise, sourceCode[index], CodeType.Contest);
+        }),
+      );
+      setLoading(false);
+      setSourceCode([]);
+      setCurrentExercise(0);
+      console.log(resultDataContest);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
   return (
     <div className="competition">
       <div className="competition_header">
@@ -22,7 +48,7 @@ const Competition = ({ exercisesData, component: Component, ...rest }) => {
         </div>
         <div className="competition_header-right">
           <Component {...rest} />
-          <Button>Nộp bài</Button>
+          <Button onClick={handleSubmit}>Nộp bài</Button>
         </div>
       </div>
       <div>
@@ -34,6 +60,7 @@ const Competition = ({ exercisesData, component: Component, ...rest }) => {
           setSourceCodeOfContest={setSourceCode}
         />
       </div>
+      {loading && <PageLoading />}
     </div>
   );
 };
