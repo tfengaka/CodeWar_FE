@@ -19,7 +19,7 @@ const routing = [
   { path: '/blog', display: 'Blog', icon: 'bx bxl-blogger' },
 ];
 
-export default function Navigation() {
+export default function Navigation() {  
   const { pathname } = useLocation();
   const activeNav = routing.findIndex((e) => pathname.includes(e.path));
 
