@@ -4,14 +4,28 @@ import background from '../../assets/images/background.png';
 import no1 from '../../assets/images/medal_no1.png';
 import no2 from '../../assets/images/medal_no2.png';
 import no3 from '../../assets/images/medal_no3.png';
+import { useQuery } from '@apollo/client';
+import { GET_CONTEST_ID, GET_RANK } from 'graphql/Queries';
+import PageLoading from 'components/PageLoading';
+import ServerError from 'components/ServerError';
+import Dropdown from 'components/Dropdown';
 const Rank = () => {
-  const item = [
-    { rank: 1, name: 'Nguyễn Văn A', nameContest: 'UTC2 TechWar', score: '100' },
-    { rank: 2, name: 'Nguyễn Văn B', nameContest: 'UTC2 TechWar', score: '90' },
-    { rank: 3, name: 'Nguyễn Văn B', nameContest: 'UTC2 TechWar', score: '90' },
-    { rank: 4, name: 'Nguyễn Văn B', nameContest: 'UTC2 TechWar', score: '90' },
-    { rank: 5, name: 'Nguyễn Văn B', nameContest: 'UTC2 TechWar', score: '90' },
-  ];
+  const contestData = useQuery(GET_CONTEST_ID);
+  const [showDropdown, setShowDropdown] = React.useState(false);
+  const [listContest, setListContest] = React.useState({
+    id: contestData.data?.contests[0].id,
+    name: contestData.data?.contests[0].name,
+  });
+
+  const { loading, error, data } = useQuery(GET_RANK, {
+    variables: { contestId: listContest.id || contestData.data?.contests[0].id },
+  });
+
+  if (loading || contestData.loading) return <PageLoading />;
+  if (error || contestData.error) {
+    console.error(error.message);
+    return <ServerError />;
+  }
 
   const handleRank = (items) => {
     if (items === 1) {
@@ -32,11 +46,39 @@ const Rank = () => {
           <img src={background} alt="" />
           <div className="rank_head-content">
             <div className="rank_head-content_detail">
-              <h1>Bảng xếp hạng</h1>
+              <h1 style={{ textTransform: 'uppercase', textAlign: 'center' }}>
+                Bảng xếp hạng <br />
+                {listContest.name || contestData.data?.contests[0].name}
+              </h1>
             </div>
           </div>
         </div>
         <div className="rank_container">
+          <div className="rank_editor">
+            <div className="rank_editor_header">
+              <span>Chọn tên cuộc thi </span>
+              <div className="rank_editor_header-input" onClick={() => setShowDropdown(true)}>
+                <span>{listContest.name || contestData.data?.contests[0].name}</span>
+                <i className="bx bx-chevron-down"></i>
+                {showDropdown && (
+                  <Dropdown setActive={setShowDropdown} darkMode={false}>
+                    {contestData.data?.contests.map((item, index) => (
+                      <div
+                        key={index}
+                        className="dropdown_item"
+                        onClick={() => {
+                          setListContest(item);
+                          return setTimeout(() => setShowDropdown(false), 1);
+                        }}
+                      >
+                        <span>{item.name}</span>
+                      </div>
+                    ))}
+                  </Dropdown>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="rank_body">
             <div className="rank_body_heading">
               <table>
@@ -83,25 +125,27 @@ const Rank = () => {
                   <col width="300" />
                   <col width="300" />
                 </colgroup>
-                <tbody>
-                  {item.map((item, index) => (
-                    <tr className="rank_row">
-                      <td className="rank_body_content_item"></td>
-                      <td className="rank_body_content_item">
-                        <div className="rank_cell-logo">{handleRank(index + 1)}</div>
-                      </td>
-                      <td className="rank_body_content_item">
-                        <div className="rank_cell">{item.name}</div>
-                      </td>
-                      <td className="rank_body_content_item">
-                        <div className="rank_cell">{item.nameContest}</div>
-                      </td>
-                      <td className="rank_body_content_item">
-                        <div className="rank_cell">{item.score}</div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                {data?.contests.map((item, index) => (
+                  <tbody key={index}>
+                    {item.contest_results.map((items, indexs) => (
+                      <tr className="rank_row" key={indexs}>
+                        <td className="rank_body_content_item"></td>
+                        <td className="rank_body_content_item">
+                          <div className="rank_cell-logo">{handleRank(indexs + 1)}</div>
+                        </td>
+                        <td className="rank_body_content_item">
+                          <div className="rank_cell">{items.account.fullName}</div>
+                        </td>
+                        <td className="rank_body_content_item">
+                          <div className="rank_cell">{item.name}</div>
+                        </td>
+                        <td className="rank_body_content_item">
+                          <div className="rank_cell">{items.account.contest_results_aggregate.aggregate.sum.point}</div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                ))}
               </table>
             </div>
           </div>
