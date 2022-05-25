@@ -3,19 +3,19 @@ import BlogAdmin from 'features/blog/pages/admin/BlogAdmin';
 import BlogDetail from 'features/blog/pages/BlogDetail';
 import CreateBlog from 'features/blog/pages/CreateBlog';
 import EditBlog from 'features/blog/pages/EditBlog';
+import ChallengesListAdmin from 'features/challenge/admin/ChallengesListAdmin';
+import CreateChallenge from 'features/challenge/admin/CreateChallenge';
 import ListQuestionContest from 'features/contest/admin/ListQuestionContest';
 import ConceptDetail from 'features/course/admin/ConceptDetail';
 import CreateCourse from 'features/course/admin/CreateCourse';
 import ListConcepts from 'features/course/admin/ListConcepts';
 import ListCourse from 'features/course/admin/ListCourse';
+import EditExercise from 'features/course/EditExercise/EditExercise';
 import CreateExercise from 'features/exercise/admin/CreateExercise';
 import ListExercise from 'features/exercise/admin/ListExercise';
 import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 import CreateContest from '../features/contest/admin/CreateContest';
 import ListContest from '../features/contest/admin/ListContest';
-import CreateChallenge from 'features/challenge/admin/CreateChallenge';
-import ChallengesListAdmin from 'features/challenge/admin/ChallengesListAdmin';
-import EditExercise from 'features/course/EditExercise';
 
 export function AdminRoutes() {
   return (
