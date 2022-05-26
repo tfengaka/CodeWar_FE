@@ -6,11 +6,11 @@ import ServerError from 'components/ServerError';
 import { GET_ALL_CONCEPT_BY_COURSEID } from 'graphql/Queries';
 import moment from 'moment';
 import React from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { generateSubStr } from 'utils';
 const ListConcepts = () => {
   const { id } = useParams();
-  const { state } = useLocation();
+  const { pathname, state } = useLocation();
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_ALL_CONCEPT_BY_COURSEID, { variables: { courseId: id } });
   if (loading) return <PageLoading />;
@@ -80,7 +80,9 @@ const ListConcepts = () => {
                   <col width="200" />
                   <col width="300" />
                 </colgroup>
-                {data && data.concepts.map((concept, index) => <Concept key={index} {...concept} />)}
+                {data.concepts.map((concept, index) => (
+                  <Concept key={index} {...concept} location={pathname} navigate={navigate} />
+                ))}
               </table>
             </div>
           </div>
@@ -90,7 +92,7 @@ const ListConcepts = () => {
   );
 };
 
-const Concept = ({ id, name, createdAt }) => {
+const Concept = ({ id, name, createdAt, location, navigate }) => {
   return (
     <tr className="table_row">
       <td className="table_body_content_item"></td>
@@ -111,17 +113,10 @@ const Concept = ({ id, name, createdAt }) => {
       </td>
       <td className="table_body_content_item">
         <div className="table_cell actions">
-          <Button backgroundColor="green" onClick={() => {}}>
+          <Button backgroundColor="green" onClick={() => navigate(`${location}/${id}`)}>
             <i className="bx bxs-book-content"></i>
-            <span>Bài tập</span>
+            <span>Chi tiết</span>
           </Button>
-
-          <Link to={`/admin/course/${id}/edit`}>
-            <Button backgroundColor="blue">
-              <i className="bx bxs-edit"></i>
-              <span>Sửa</span>
-            </Button>
-          </Link>
           <Button backgroundColor="red" onClick={() => {}}>
             <i className="bx bxs-trash"></i>
             <span>Gỡ bỏ</span>

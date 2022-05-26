@@ -35,7 +35,6 @@ const BlogAdmin = () => {
                   <col width="200" />
                   <col width="170" />
                   <col width="100" />
-                  <col width="200" />
                   <col width="270" />
                 </colgroup>
                 <thead>
@@ -68,11 +67,6 @@ const BlogAdmin = () => {
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Duyệt bởi</span>
-                      </div>
-                    </th>
-                    <th className="table_body_heading_item">
-                      <div className="table_cell">
                         <span>Thao Tác</span>
                       </div>
                     </th>
@@ -89,7 +83,6 @@ const BlogAdmin = () => {
                   <col width="200" />
                   <col width="170" />
                   <col width="100" />
-                  <col width="200" />
                   <col width="270" />
                 </colgroup>
                 <tbody>{data && data.blogs.map((blog, index) => <Row key={index} {...blog} />)}</tbody>
@@ -105,7 +98,6 @@ const BlogAdmin = () => {
 export default BlogAdmin;
 
 const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }) => {
-  const { user } = useAuth();
   const [removeBlog] = useMutation(REMOVE_BLOG_BY_ID, {
     variables: { blogID: id },
     onCompleted: () => {
@@ -117,7 +109,7 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }
     refetchQueries: [GET_ALL_BLOG],
   });
   const [confirmBlog] = useMutation(APPROVED_NEW_BLOG, {
-    variables: { blogID: id, reviewer: user.fullName },
+    variables: { blogID: id },
     onCompleted: () => {
       alert('Bài viết đã được duyệt');
     },
@@ -172,11 +164,6 @@ const Row = ({ id, title, account, isApproved, updatedBy, createdAt, updatedAt }
           <div className={`tag bg-${isApproved ? 'green' : 'orange'}`}>
             <span>{`${isApproved ? 'Đã duyệt' : 'Chờ duyệt'}`}</span>
           </div>
-        </div>
-      </td>
-      <td className="table_body_content_item">
-        <div className="table_cell">
-          <span>{`${isApproved ? (updatedBy ? updatedBy : 'None') : 'Đang chờ duyệt'}`}</span>
         </div>
       </td>
       <td className="table_body_content_item">

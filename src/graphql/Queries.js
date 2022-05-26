@@ -138,7 +138,22 @@ export const GET_ALL_CONCEPT_BY_COURSEID = gql`
     }
   }
 `;
-
+export const GET_CONCEPT_BY_ID = gql`
+  query GET_CONCEPT_BY_ID($conceptId: String!) {
+    concepts_by_pk(id: $conceptId) {
+      name
+      exercises {
+        id
+        name
+        des
+        level
+        createdAt
+        updatedAt
+        metadata
+      }
+    }
+  }
+`;
 export const GET_ALL_BLOG = gql`
   query GET_ALL_BLOGS {
     blogs(order_by: { isApproved: desc }) {

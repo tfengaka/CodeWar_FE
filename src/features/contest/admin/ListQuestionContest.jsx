@@ -9,7 +9,7 @@ import { UPDATE_PROBLEM } from 'graphql/Mutation';
 const ListQuestionContest = () => {
   const { id } = useParams();
 
-  let { loading, error, data } = useQuery(GET_ALL_EXERCISE_CONTEST, { variables: { contestId: id } });
+  const { loading, error, data } = useQuery(GET_ALL_EXERCISE_CONTEST, { variables: { contestId: id } });
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
 

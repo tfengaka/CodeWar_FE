@@ -59,13 +59,23 @@
     .container {
       background-color: rgba(255, 255, 255, 0.7);
       border-radius: 4px;
-      padding: 16px;
+      padding: 0 16px 16px;
     }
     input[disabled],
     textarea[disabled] {
       pointer-events: none;
       user-select: none;
     }
+    &_head {
+      font-family: "Roboto", sans-serif;
+      text-align: center;
+      span {
+        font-size: 2rem;
+      }
+    }
+  }
+  &_title {
+    margin-top: 8px;
   }
   &_banner {
     margin: 16px 0 8px;
@@ -134,6 +144,7 @@
       &_title {
         @include flex(center, center);
         gap: 8px;
+        user-select: none;
         input {
           flex: 1;
         }

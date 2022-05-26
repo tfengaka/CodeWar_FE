@@ -29,10 +29,9 @@ const CreateExercise = ({
   handleChallengeUpdate,
   challengeId,
 }) => {
-  const location = useLocation();
-  const exerciseData = location.state?.exerciseData;
-  const challengeData = location.state?.challengeData;
-  const contestId = location.state?.contestId || null;
+  const { state } = useLocation();
+  const exerciseData = state?.exerciseData;
+  const contestId = state?.contestId || null;
   const refetchQueries = [contestId ? GET_ALL_EXERCISE_CONTEST : GET_ALL_EXERCISE];
 
   const navigate = useNavigate();

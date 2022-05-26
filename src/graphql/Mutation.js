@@ -150,8 +150,8 @@ export const ADD_DISCUSS = gql`
 `;
 
 export const APPROVED_NEW_BLOG = gql`
-  mutation APPROVED_NEW_BLOG($blogID: String!, $reviewer: String!) {
-    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true, updatedBy: $reviewer }) {
+  mutation APPROVED_NEW_BLOG($blogID: String!) {
+    update_blogs_by_pk(pk_columns: { id: $blogID }, _set: { isApproved: true }) {
       id
       isApproved
     }
@@ -166,8 +166,8 @@ export const REMOVE_BLOG_BY_ID = gql`
 `;
 
 export const ADD_NEW_BLOG = gql`
-  mutation ADD_NEW_BLOG($blogContent: String!, $authorID: String, $blogTitle: String!) {
-    insert_blogs(objects: { content: $blogContent, accountId: $authorID, title: $blogTitle }) {
+  mutation ADD_NEW_BLOG($blogContent: String!, $blogTitle: String!) {
+    insert_blogs(objects: { content: $blogContent, title: $blogTitle }) {
       returning {
         id
         title
@@ -195,6 +195,25 @@ export const INSERT_COURSE = gql`
           priority
           courseId
         }
+      }
+    }
+  }
+`;
+export const INSERT_EXERCISE_CONCEPT = gql`
+  mutation INSERT_EXERCISE_CONCEPT(
+    $title: String!
+    $content: String!
+    $level: Int!
+    $topic: jsonb!
+    $metadata: jsonb!
+    $conceptId: String
+  ) {
+    insert_exercises(
+      objects: { conceptId: $conceptId, name: $title, des: $content, topic: $topic, level: $level, metadata: $metadata }
+    ) {
+      returning {
+        id
+        conceptId
       }
     }
   }

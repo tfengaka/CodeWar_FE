@@ -14,6 +14,7 @@ const CreateBlog = () => {
     },
     onError: (err) => {
       alert('Có lỗi xảy ra trong quá trình tải lên, vui lòng thử lại sau');
+      console.error(err.message);
     },
     refetchQueries: [GET_ALL_BLOG],
   });

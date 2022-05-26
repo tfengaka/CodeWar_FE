@@ -10,11 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import ProblemSolve from '../../../components/ProblemSolve';
 
 const Competition = ({ contestData, component: Component, ...rest }) => {
-  const [saveResultContest] = useMutation(INSERT_CONTEST_RESULT);
-
   const navigate = useNavigate();
-
-  const [displayPoint, setDisplayPoint] = React.useState(null);
+  const [saveResultContest] = useMutation(INSERT_CONTEST_RESULT);
   const [sourceCode, setSourceCode] = React.useState([]);
   const [resultDataContest, setResultDataContest] = React.useState([]);
   const [currentExercise, setCurrentExercise] = React.useState(0);
