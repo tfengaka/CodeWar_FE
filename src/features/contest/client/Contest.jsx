@@ -23,8 +23,8 @@ const Contest = () => {
   });
 
   return (
-    <Helmet title={'Cuộc thi'}>
-      <div className="content">
+    <Helmet title="Cuộc thi">
+      <div className="content animate__animated animate__fadeInDown">
         <div className="content_container">
           <div className="panel__title">Tất cả cuộc thi</div>
           <div className="panel__extra">

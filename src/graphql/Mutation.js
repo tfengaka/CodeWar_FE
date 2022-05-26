@@ -199,6 +199,25 @@ export const INSERT_COURSE = gql`
     }
   }
 `;
+export const INSERT_EXERCISE_CONCEPT = gql`
+  mutation INSERT_EXERCISE_CONCEPT(
+    $title: String!
+    $content: String!
+    $level: Int!
+    $topic: jsonb!
+    $metadata: jsonb!
+    $conceptId: String
+  ) {
+    insert_exercises(
+      objects: { conceptId: $conceptId, name: $title, des: $content, topic: $topic, level: $level, metadata: $metadata }
+    ) {
+      returning {
+        id
+        conceptId
+      }
+    }
+  }
+`;
 
 export const UPDATE_COURSE_IMAGE = gql`
   mutation UPDATE_COURSE_IMAGE($image: String!, $courseId: String!) {
