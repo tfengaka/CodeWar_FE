@@ -9,7 +9,7 @@ const BlogWritting = ({ blogid, blogcontent, blogtitle, mutationHandle }) => {
   const [title, setTitle] = React.useState(blogtitle || '');
 
   const onHandleSubmit = () => {
-    const blog = { blogID: blogid, blogTitle: title, blogContent: content, authorID: user.id };
+    const blog = { blogID: blogid, blogTitle: title, blogContent: content };
     if (window.confirm('Bạn đã chắc chắn sẽ tải lên bài viết này?')) {
       mutationHandle({ variables: { ...blog } });
     }
