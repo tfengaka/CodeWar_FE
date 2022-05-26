@@ -71,9 +71,11 @@
     margin: 16px 0 8px;
     background-color: #eee;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid #eee;
     border-radius: 4px;
     &:hover {
+      border-color: $main-color;
+      box-shadow: rgba(240, 128, 128, 0.6) 0px 0px 16px;
       background-color: #fff;
     }
     &_img {

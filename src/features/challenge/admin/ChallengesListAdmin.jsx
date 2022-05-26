@@ -1,19 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_ALL_EXERCISE, GET_ALL_EXERCISE_CONTEST } from 'graphql/Queries';
-import { Link, useParams } from 'react-router-dom';
-import { format } from 'date-fns';
+import { GET_ALL_CHALLENGE } from 'graphql/Queries';
+import { format, parse } from 'date-fns';
 import Button from 'components/Button';
-import { UPDATE_PROBLEM } from 'graphql/Mutation';
+import { UPDATE_CHALLENGE } from 'graphql/Mutation';
+import { Link } from 'react-router-dom';
 
-const ListQuestionContest = () => {
-  const { id } = useParams();
+const ChallengesListAdmin = () => {
+  let { loading, error, data } = useQuery(GET_ALL_CHALLENGE);
 
-  let { loading, error, data } = useQuery(GET_ALL_EXERCISE_CONTEST, { variables: { contestId: id } });
   if (loading) return <div className="loading"></div>;
   if (error) return <div>Load data failed</div>;
-
-  const exerciseList = data?.contests_by_pk?.exercises || [];
 
   return (
     <div style={{ padding: '16px' }}>
@@ -21,7 +18,7 @@ const ListQuestionContest = () => {
         <div className="container">
           <div className="table_head">
             <div className="table_head_title">
-              <span>Danh sách câu hỏi</span>
+              <span>Danh sách thử thách</span>
             </div>
           </div>
 
@@ -31,11 +28,11 @@ const ListQuestionContest = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
-                  <col width="400" />
+                  <col width="350" />
                   <col width="150" />
-                  <col width="400" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="150" />
+                  <col width="120" />
+                  <col width="140" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -50,24 +47,26 @@ const ListQuestionContest = () => {
                         <span>Tiêu đề</span>
                       </div>
                     </th>
+
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Độ khó</span>
+                        <span>Ngày bắt đầu</span>
                       </div>
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Chủ đề</span>
+                        <span>Ngày kết thúc</span>
                       </div>
                     </th>
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Cập nhật lúc</span>
+                        <span>Tạo bởi</span>
                       </div>
                     </th>
+
                     <th className="table_body_heading_item">
                       <div className="table_cell">
-                        <span>Thao tác</span>
+                        <span> </span>
                       </div>
                     </th>
                   </tr>
@@ -79,25 +78,18 @@ const ListQuestionContest = () => {
                 <colgroup>
                   <col width="30" />
                   <col width="120" />
-                  <col width="400" />
+                  <col width="350" />
                   <col width="150" />
-                  <col width="400" />
-                  <col width="200" />
-                  <col width="200" />
+                  <col width="150" />
+                  <col width="120" />
+                  <col width="140" />
                 </colgroup>
                 <tbody>
-                  {exerciseList?.map((item, index) => (
-                    <TableRow key={index} data={item} contestId={id} />
+                  {data?.challenges.map((item, index) => (
+                    <TableRow key={index} data={item} />
                   ))}
                 </tbody>
               </table>
-            </div>
-            <div className="table_body_button">
-              <Link to={`/admin/contest/${id}/problems/create`} state={{ contestId: id }}>
-                <Button backgroundColor="blue">
-                  <i className="bx bx-plus"></i>Thêm câu hỏi
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
@@ -106,40 +98,22 @@ const ListQuestionContest = () => {
   );
 };
 
-const TableRow = ({ data, contestId }) => {
-  const { id, des, name, level, topic, updatedAt, metadata } = data;
+const TableRow = ({ data }) => {
+  const { id, name, des, startDate, endDate, account, exercises } = data;
   const displayID = id.substr(0, 8).toUpperCase();
-  let levelName = '';
-  let levelColor = '';
 
-  switch (level) {
-    case 1:
-      levelName = 'Dễ';
-      levelColor = 'green';
-      break;
-    case 2:
-      levelName = 'Trung bình';
-      levelColor = 'blue';
-      break;
-    case 3:
-      levelName = 'Khó';
-      levelColor = 'orange';
-      break;
-    default:
-      break;
-  }
+  const [removeChallenge] = useMutation(UPDATE_CHALLENGE);
 
-  const [removeProblem] = useMutation(UPDATE_PROBLEM);
   const handleListRemove = () => {
-    removeProblem({
-      variables: { exerciseId: id, des, name, topic, level, updatedAt, metadata, status: 'deleted' },
+    removeChallenge({
+      variables: { challengeId: id, status: 'deleted', name: '[deleted]' + name, des, startDate, endDate },
       onCompleted: () => {
         alert('Xóa thành công');
       },
       onError: (error) => {
         alert(error.message);
       },
-      refetchQueries: [GET_ALL_EXERCISE_CONTEST, GET_ALL_EXERCISE],
+      refetchQueries: [GET_ALL_CHALLENGE],
     });
   };
 
@@ -152,39 +126,36 @@ const TableRow = ({ data, contestId }) => {
       <td className="table_body_content_item">
         <div className="table_cell">{name}</div>
       </td>
+
       <td className="table_body_content_item">
         <div className="table_cell">
-          <div className={`tag bg-${levelColor}`}>
-            <span>{levelName}</span>
-          </div>
+          <span>{format(parse(startDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
         </div>
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          {topic.map((item, index) => (
-            <div key={index} className="tag topic">
-              <span>{item}</span>
-            </div>
-          ))}
+          <span>{format(parse(endDate, "yyyy-MM-dd'T'HH:mm:ssxxx", new Date()), 'dd-MM-yyyy h:mm aa')}</span>
         </div>
       </td>
       <td className="table_body_content_item">
         <div className="table_cell">
-          <span>{format(new Date(updatedAt), 'dd-MM-yyyy - HH:mm:ss')}</span>
+          {account ? (
+            <img id="avatar-contest_list" src={account?.avatarUrl} alt="" />
+          ) : (
+            <i className="bx bxs-user-circle" style={{ fontSize: 40 }}></i>
+          )}
         </div>
       </td>
+
       <td className="table_body_content_item">
-        <div className="table_cell actions">
-          <Link to={`/admin/contest/${contestId}/problems/update`} state={{ exerciseData: data, contestId: contestId }}>
+        <div className="table_cell tool">
+          <Link to="/admin/challenge/update" state={{ exerciseData: exercises[0], challengeData: data }}>
             <Button backgroundColor="blue">
-              <i className="bx bxs-edit"></i>
-              <span>Sửa</span>
+              <i className="bx bxs-edit"></i>Sửa
             </Button>
           </Link>
-
-          <Button backgroundColor="red" onClick={() => handleListRemove(id)}>
-            <i className="bx bxs-trash"></i>
-            <span>Xóa</span>
+          <Button backgroundColor="red" onClick={() => handleListRemove()}>
+            <i className="bx bxs-trash-alt"></i>Xóa
           </Button>
         </div>
       </td>
@@ -192,4 +163,4 @@ const TableRow = ({ data, contestId }) => {
   );
 };
 
-export default ListQuestionContest;
+export default ChallengesListAdmin;

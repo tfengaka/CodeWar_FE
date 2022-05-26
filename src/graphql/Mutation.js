@@ -68,12 +68,20 @@ export const INSERT_CONTEST = gql`
     insert_contests_one(
       object: { name: $name, des: $des, endDate: $endDate, startDate: $startDate, status: $status, time: $time }
     ) {
-      name
-      des
+      id
     }
   }
 `;
-
+export const UPDATE_CONTEST_LOGO = gql`
+  mutation UPDATE_CONTEST_LOGO($contestId: String!, $logoUrl: String!) {
+    update_contests(where: { id: { _eq: $contestId } }, _set: { logoUrl: $logoUrl }) {
+      returning {
+        id
+        name
+      }
+    }
+  }
+`;
 export const INSERT_PROBLEM = gql`
   mutation INSERT_PROBLEM(
     $name: String!
@@ -106,6 +114,7 @@ export const UPDATE_PROBLEM = gql`
     $status: String
     $metadata: jsonb
     $contestId: String
+    $challengeId: String
   ) {
     update_exercises_by_pk(
       pk_columns: { id: $exerciseId }
@@ -118,6 +127,7 @@ export const UPDATE_PROBLEM = gql`
         status: $status
         metadata: $metadata
         contestId: $contestId
+        challengeId: $challengeId
       }
     ) {
       id
@@ -134,7 +144,7 @@ export const UPDATE_DISCUSS_REACT = gql`
 export const ADD_DISCUSS = gql`
   mutation ADD_DISCUSS($exerciseId: String!, $content: String!) {
     insert_discusses_one(object: { exerciseId: $exerciseId, content: $content }) {
-      accountId
+      createdBy
     }
   }
 `;
@@ -249,6 +259,38 @@ export const INSERT_EXERCISE_CHALLENGE = gql`
 export const UPDATE_CHALLENGE_IMAGE = gql`
   mutation UPDATE_CHALLENGE_IMAGE($image: String!, $challengeId: String!) {
     update_challenges(where: { id: { _eq: $challengeId } }, _set: { image: $image }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const INSERT_CONTEST_RESULT = gql`
+  mutation INSERT_CONTEST_RESULT($contestId: String!, $exerciseId: String!, $point: Int!, $completionTime: Int!) {
+    insert_contest_results(
+      objects: { contestId: $contestId, exerciseId: $exerciseId, point: $point, completionTime: $completionTime }
+    ) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+export const UPDATE_CHALLENGE = gql`
+  mutation UPDATE_CHALLENGE(
+    $challengeId: String!
+    $name: String!
+    $status: String!
+    $des: String
+    $startDate: timestamptz
+    $endDate: timestamptz
+  ) {
+    update_challenges(
+      where: { id: { _eq: $challengeId } }
+      _set: { name: $name, status: $status, des: $des, startDate: $startDate, endDate: $endDate }
+    ) {
       returning {
         id
       }

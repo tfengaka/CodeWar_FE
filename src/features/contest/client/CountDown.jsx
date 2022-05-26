@@ -30,7 +30,7 @@ const CompetitionCountDown = () => {
   };
   return (
     <Competition
-      exercisesData={data?.contests_by_pk.exercises}
+      contestData={data?.contests_by_pk}
       component={Countdown}
       date={Date.now() + data?.contests_by_pk.time}
       renderer={renderer}

@@ -11,7 +11,32 @@ export const GET_USER_INFO = gql`
     }
   }
 `;
-
+export const GET_USER_PROCESS_BY_ID = gql`
+  query GET_USER_PROCESS_BY_ID($userID: String!) {
+    account_by_pk(id: $userID) {
+      contest_results_aggregate(distinct_on: [createdBy, contestId]) {
+        aggregate {
+          count
+        }
+      }
+      exercise_results_aggregate(where: { exercise: { conceptId: { _is_null: false } } }) {
+        aggregate {
+          count(columns: exerciseId, distinct: true)
+        }
+      }
+    }
+    contests_aggregate {
+      aggregate {
+        count
+      }
+    }
+    exercises_aggregate(where: { concept: { id: { _is_null: false } } }) {
+      aggregate {
+        count
+      }
+    }
+  }
+`;
 export const GET_ALL_EXERCISE = gql`
   query GET_ALL_EXERCISE {
     exercises(
@@ -39,12 +64,21 @@ export const GET_CONTEST = gql`
       endDate
       time
       status
+      logoUrl
       exercises {
         topic
       }
       account {
         fullName
         avatarUrl
+      }
+      contest_results_aggregate {
+        aggregate {
+          count(columns: createdBy, distinct: true)
+        }
+      }
+      contest_results(distinct_on: createdBy) {
+        createdBy
       }
     }
   }
@@ -55,6 +89,7 @@ export const GET_ALL_DISCUSSES = gql`
     discusses(where: { exerciseId: { _eq: $exerciseId } }) {
       account {
         fullName
+        avatarUrl
       }
       discuss_reacts_aggregate {
         aggregate {
@@ -63,7 +98,7 @@ export const GET_ALL_DISCUSSES = gql`
       }
       discuss_reacts {
         id
-        accountId
+        createdBy
       }
       id
       exerciseId
@@ -206,6 +241,37 @@ export const GET_ALL_CHALLENGE = gql`
         exercise_results_aggregate {
           aggregate {
             count(columns: id)
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_CONTEST_ID = gql`
+  query GET_CONTEST_ID {
+    contests {
+      id
+      name
+    }
+  }
+`;
+
+export const GET_RANK = gql`
+  query GET_RANK($contestId: String!) {
+    contests(where: { id: { _eq: $contestId } }) {
+      id
+      name
+      contest_results(distinct_on: createdBy) {
+        account {
+          fullName
+          avatarUrl
+          contest_results_aggregate(order_by: { point: desc }) {
+            aggregate {
+              sum {
+                point
+              }
+            }
           }
         }
       }

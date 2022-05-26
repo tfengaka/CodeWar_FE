@@ -14,9 +14,9 @@ const routing = [
   { path: '/course', display: 'Học Tập', icon: 'bx bxs-book-reader' },
   { path: '/problem', display: 'Luyện Tập', icon: 'bx bxs-grid' },
   { path: '/contest', display: 'Thi Đấu', icon: 'bx bxs-trophy' },
-  { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
   { path: '/challenge', display: 'Thử thách', icon: 'bx bxs-medal' },
-  { path: '/blog', display: 'Blog', icon: 'bx bxl-blogger' },
+  { path: '/rank', display: 'Xếp hạng', icon: 'bx bxs-bar-chart-alt-2' },
+  { path: '/blog', display: 'Bài viết', icon: 'bx bxl-blogger' },
 ];
 
 export default function Navigation() {

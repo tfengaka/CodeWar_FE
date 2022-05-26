@@ -1,8 +1,8 @@
 import MonacoEditor, { useMonaco } from '@monaco-editor/react';
 import Discuss from 'features/exercise/Discuss';
-import { useCompiler } from 'hooks/useCompiler';
+import { CodeType, useCompiler } from 'hooks/useCompiler';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Button from './Button';
 import Dropdown from './Dropdown';
@@ -31,27 +31,60 @@ const languageOptions = {
   },
 };
 
-const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeOfContest, setSourceCodeOfContest }) => {
+const ProblemSolve = ({
+  isContest,
+  exerciseContest,
+  currentExercise,
+  sourceCodeOfContest,
+  setSourceCodeOfContest,
+  setResultDataContest,
+  resultDataContest,
+}) => {
+  const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
   let { data } = location.state;
   data = isContest ? exerciseContest : data;
 
-  const { loading, language, resultData, setLanguage, setSourceCode, runCode } = useCompiler(data.metadata);
+  const { loading, language, setLanguage, runCode } = useCompiler(data.metadata);
   const [showDropdown, setShowDropdown] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState(0);
   const [currentCase, setCurrentCase] = React.useState(0);
   const [showDiscuss, setShowDiscuss] = React.useState(false);
+  const [sourceCodeExercise, setSourceCodeExercise] = React.useState(null);
+  const [resultData, setResultData] = React.useState(null);
 
   const handleChangeSourceCode = (value) => {
-    setSourceCode(!isContest ? value : sourceCodeOfContest[currentExercise]);
+    if (!value) return;
     if (isContest) {
       setSourceCodeOfContest((prevSourceCode) => [
         ...prevSourceCode.slice(0, currentExercise),
         value,
         ...prevSourceCode.slice(currentExercise + 1),
       ]);
+
+      return;
     }
+    setSourceCodeExercise(value);
+  };
+
+  const handleClick = async (data, sourceCode, type) => {
+    const result = await runCode(data, sourceCode, type);
+    if (isContest) {
+      setResultDataContest((prevResult) => [
+        ...prevResult.slice(0, currentExercise),
+        result,
+        ...prevResult.slice(currentExercise + 1),
+      ]);
+      return;
+    }
+
+    setResultData(result);
+  };
+
+  const handleSubmit = async () => {
+    await runCode(data, sourceCodeExercise, CodeType.Exercise, resultData);
+    navigate(-1);
   };
 
   const monaco = useMonaco();
@@ -141,7 +174,7 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
                         {loading && <div className="circleLoading sm"></div>}
                         {resultData && !loading && (
                           <div className="status">
-                            {resultData[index].data.status.id === 3 ? (
+                            {resultData[index]?.data.status.id === 3 ? (
                               <i className="bx bxs-check-circle color-green" />
                             ) : (
                               <i className="bx bxs-x-circle color-red" />
@@ -179,7 +212,6 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
                     <div className="testcase_body_result_console">
                       {resultData ? (
                         <React.Fragment>
-                          {console.log(resultData[currentCase])}
                           <span>Time Excute: </span>
                           {resultData[currentCase].data.time || 0} ms
                           {resultData[currentCase].data?.stdout ? (
@@ -201,11 +233,21 @@ const ProblemSolve = ({ isContest, exerciseContest, currentExercise, sourceCodeO
               </div>
             </div>
             <div className="editor_submit">
-              <Button onClick={() => runCode(data.id)} backgroundColor="green" isDisabled={!auth.isLogged}>
+              <Button
+                onClick={() =>
+                  handleClick(
+                    data,
+                    isContest ? sourceCodeOfContest[currentExercise] : sourceCodeExercise,
+                    CodeType.Exercise,
+                  )
+                }
+                backgroundColor="green"
+                isDisabled={!auth.isLogged}
+              >
                 Run Code
               </Button>
               {!isContest && (
-                <Button onClick={() => runCode(data.id, true)} isDisabled={!auth.isLogged || !resultData}>
+                <Button onClick={handleSubmit} isDisabled={!auth.isLogged || !resultData}>
                   Submit
                 </Button>
               )}
